@@ -99,6 +99,27 @@ document.addEventListener("DOMContentLoaded", function () {
     let finalUrl = url;
     let finalKey = key;
 
+    // إذا كان الرابط من YouTube
+    if (url.includes("youtube.com/watch")) {
+        try {
+            const response = await fetch(url);
+            const text = await response.text();
+
+            // البحث عن hlsManifestUrl في محتوى الصفحة
+            const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
+            if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
+                finalUrl = hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
+                console.log("تم سحب رابط البث من YouTube:", finalUrl);
+            } else {
+                console.error("لم يتم العثور على رابط البث في صفحة YouTube.");
+                return;
+            }
+        } catch (error) {
+            console.error("حدث خطأ أثناء جلب بيانات YouTube:", error);
+            return;
+        }
+    }
+
     // إذا كان الرابط ينتهي بـ .php، جلب البيانات منه
     if (url.endsWith('.php')) {
         const { manifestUri } = await fetchManifestAndKeys(url);
