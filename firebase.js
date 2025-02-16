@@ -1,13 +1,1 @@
-const firebaseConfig = {
-    apiKey: "AIzaSyCvvvLTYpR3QsxYBEM7KrN_m3IfT8ZCmsE",
-    authDomain: "moviball-2a66a.firebaseapp.com",
-    projectId: "moviball-2a66a",
-    storageBucket: "moviball-2a66a.firebasestorage.app",
-    messagingSenderId: "728145809854",
-    appId: "1:728145809854:web:e5e15a3c097ed20a4be9ef",
-    measurementId: "G-9LQKNXKZ56"
-};
-
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const _0x55e68d=_0x13a3;(function(_0x5a7f3f,_0x29cf06){const _0x51feb1=_0x13a3,_0x1f19a3=_0x5a7f3f();while(!![]){try{const _0x47bfdc=parseInt(_0x51feb1(0x138))/0x1*(-parseInt(_0x51feb1(0x129))/0x2)+parseInt(_0x51feb1(0x12c))/0x3*(parseInt(_0x51feb1(0x12f))/0x4)+-parseInt(_0x51feb1(0x12a))/0x5+-parseInt(_0x51feb1(0x136))/0x6*(-parseInt(_0x51feb1(0x130))/0x7)+-parseInt(_0x51feb1(0x131))/0x8*(-parseInt(_0x51feb1(0x12e))/0x9)+-parseInt(_0x51feb1(0x12b))/0xa+-parseInt(_0x51feb1(0x12d))/0xb*(-parseInt(_0x51feb1(0x132))/0xc);if(_0x47bfdc===_0x29cf06)break;else _0x1f19a3['push'](_0x1f19a3['shift']());}catch(_0x870822){_0x1f19a3['push'](_0x1f19a3['shift']());}}}(_0x3ad3,0xe06f9));function _0x3ad3(){const _0xef6454=['moviball-2a66a.firebasestorage.app','1:728145809854:web:e5e15a3c097ed20a4be9ef','moviball-2a66a','738zDjHzf','firestore','22mJUlhe','728145809854','moviball-2a66a.firebaseapp.com','G-9LQKNXKZ56','146002gRtZyT','7353315zVaeMo','11980080RVsAiZ','3lopjbn','20000596DAJcAW','2454102piYvDb','3160012KBkFNB','28161WXCqwc','8FNbCaW','24eJdSAs'];_0x3ad3=function(){return _0xef6454;};return _0x3ad3();}function _0x13a3(_0x483ace,_0x3c04d9){const _0x3ad381=_0x3ad3();return _0x13a3=function(_0x13a310,_0x22d51a){_0x13a310=_0x13a310-0x126;let _0x15bd39=_0x3ad381[_0x13a310];return _0x15bd39;},_0x13a3(_0x483ace,_0x3c04d9);}const firebaseConfig={'apiKey':'AIzaSyCvvvLTYpR3QsxYBEM7KrN_m3IfT8ZCmsE','authDomain':_0x55e68d(0x127),'projectId':_0x55e68d(0x135),'storageBucket':_0x55e68d(0x133),'messagingSenderId':_0x55e68d(0x126),'appId':_0x55e68d(0x134),'measurementId':_0x55e68d(0x128)},app=firebase['initializeApp'](firebaseConfig),db=firebase[_0x55e68d(0x137)]();
