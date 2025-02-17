@@ -11,8 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeSidebar = document.getElementById("close-sidebar");
     const matchesDialog = document.getElementById("matches-dialog");
     const closeMatchesDialog = document.getElementById("close-matches-dialog");
-    const errorDialog = document.getElementById("error-dialog");
-    const closeErrorDialog = document.getElementById("close-error-dialog");
 
     // إخفاء القائمة عند النقر خارجها
     document.addEventListener("click", (event) => {
@@ -70,20 +68,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // إظهار ديالوج الخطأ
-    function showErrorDialog(message) {
-        const errorMessage = document.getElementById("error-message");
-        errorMessage.textContent = message;
-        errorDialog.style.display = "block";
-    }
-
-    // إغلاق ديالوج الخطأ
-    closeErrorDialog.addEventListener("click", () => {
-        errorDialog.style.display = "none";
-    });
-
     // دالة لجلب manifestUri و clearkeys من ملف PHP
-    async function playChannel(url, key) {
+ async function playChannel(url, key) {
     if (!url) {
         console.error("رابط القناة غير موجود!");
         return;
@@ -243,6 +229,41 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("حدث خطأ في إعداد المشغل:", error);
     });
 }
+
+// دالة لاستخراج رابط البث من ملف PHP
+async function fetchManifestAndKeys(phpUrl) {
+    try {
+        const response = await fetch(phpUrl);
+        const text = await response.text();
+
+        // استخراج رابط الـ manifestUri
+        const manifestUriMatch = text.match(/const manifestUri\s*=\s*["']([^"']+)["']/);
+        const manifestUri = manifestUriMatch ? manifestUriMatch[1] : null;
+
+        return { manifestUri };
+    } catch (error) {
+        console.error("حدث خطأ أثناء جلب البيانات من ملف PHP:", error);
+        return { manifestUri: null };
+    }
+}
+
+// دالة لتحديد نوع الملف تلقائيًا
+function getStreamType(url) {
+    if (url.includes(".m3u8")) {
+        return "hls";
+    } else if (url.includes(".mpd")) {
+        return "dash";
+    } else if (url.includes(".mp4") || url.includes(".m4v")) {
+        return "mp4";
+    } else if (url.includes(".ts") || url.includes(".mpegts")) {
+        return "mpegts";
+    } else if (url.includes(".php") || url.includes(".embed")) {
+        return "html5";
+    } else {
+        return "auto";
+    }
+}
+
     // البحث عن القنوات
     searchInput.addEventListener("input", () => {
         const searchTerm = searchInput.value.toLowerCase();
