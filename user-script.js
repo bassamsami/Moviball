@@ -137,24 +137,31 @@ document.addEventListener("DOMContentLoaded", function () {
         return null;
     }
 
-    // سحب الروابط من PHP و Worker في نفس الوقت
-    const [phpUrl, workerUrl] = urls;
-    const phpResult = await fetchFromPHP(phpUrl);
-    const workerResult = await fetchFromWorker(workerUrl);
-
-    // استخدام الرابط الذي يعمل أولاً
-    if (phpResult) {
-        finalUrl = phpResult.url;
-        finalKey = phpResult.key;
-        console.log("تم سحب الرابط من PHP:", finalUrl);
-    } else if (workerResult) {
-        finalUrl = workerResult.url;
-        finalKey = workerResult.key;
-        console.log("تم سحب الرابط من Worker:", finalUrl);
+    // إذا كان الرابط مباشرًا (m3u8 أو mpd)
+    if (url.endsWith('.m3u8') || url.endsWith('.mpd')) {
+        console.log("تم استخدام الرابط المباشر:", url);
+        finalUrl = url;
+        finalKey = key || staticKeyCombined; // استخدام المفاتيح الثابتة إذا لم يتم إدخال مفاتيح يدويًا
     } else {
-        console.error("لم يتم سحب أي رابط يعمل.");
-        alert("القناة لم يتم تحديثها، يرجى المحاولة لاحقًا.");
-        return;
+        // سحب الروابط من PHP و Worker في نفس الوقت
+        const [phpUrl, workerUrl] = urls;
+        const phpResult = await fetchFromPHP(phpUrl);
+        const workerResult = await fetchFromWorker(workerUrl);
+
+        // استخدام الرابط الذي يعمل أولاً
+        if (phpResult) {
+            finalUrl = phpResult.url;
+            finalKey = phpResult.key;
+            console.log("تم سحب الرابط من PHP:", finalUrl);
+        } else if (workerResult) {
+            finalUrl = workerResult.url;
+            finalKey = workerResult.key;
+            console.log("تم سحب الرابط من Worker:", finalUrl);
+        } else {
+            console.error("لم يتم سحب أي رابط يعمل.");
+            alert("القناة لم يتم تحديثها، يرجى المحاولة لاحقًا.");
+            return;
+        }
     }
 
     // إذا تمت إضافة مفتاح جديد يدويًا (بالطريقة التقليدية)، استخدامه بدلاً من المفاتيح الثابتة
@@ -195,6 +202,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     playerInstance.on('error', async (error) => {
         console.error("حدث خطأ في المشغل:", error);
+
+        // إذا كان الرابط مباشرًا، لا يوجد رابط آخر للتبديل
+        if (url.endsWith('.m3u8') || url.endsWith('.mpd')) {
+            console.error("لا يوجد رابط آخر متاح.");
+            alert("القناة لم يتم تحديثها، يرجى المحاولة لاحقًا.");
+            return;
+        }
 
         // إذا فشل الرابط الأول، يتم التبديل إلى الرابط الثاني
         if (finalUrl === phpResult?.url && workerResult) {
