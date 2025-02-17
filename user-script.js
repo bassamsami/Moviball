@@ -78,83 +78,93 @@ document.addEventListener("DOMContentLoaded", function () {
     let finalUrl = url;
     let finalKey = key;
 
-    // إذا كان الرابط من YouTube
-    if (url.includes("youtube.com/watch")) {
-        try {
-            const response = await fetch(url); // جلب محتوى الصفحة
-            const text = await response.text();
+    // إذا كان الرابط يحتوي على رابطين (PHP & Worker)
+    const urls = url.split('&').map(u => u.trim()); // فصل الرابطين
 
-            // البحث عن رابط البث المباشر (Live Stream)
-            const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
-            if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
-                finalUrl = hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
-                console.log("تم سحب رابط البث المباشر من YouTube:", finalUrl);
-            } 
-            // إذا لم يكن بثًا مباشرًا، البحث عن رابط الفيديو العادي
-            else {
-                const serverAbrStreamingUrlMatch = text.match(/"serverAbrStreamingUrl":"([^"]+)"/);
-                if (serverAbrStreamingUrlMatch && serverAbrStreamingUrlMatch[1]) {
-                    finalUrl = serverAbrStreamingUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
-                    console.log("تم سحب رابط الفيديو العادي من YouTube:", finalUrl);
-                } else {
-                    console.error("لم يتم العثور على رابط البث أو الفيديو في صفحة YouTube.");
-                    return;
+    for (const currentUrl of urls) {
+        try {
+            // إذا كان الرابط من YouTube
+            if (currentUrl.includes("youtube.com/watch")) {
+                const response = await fetch(currentUrl); // جلب محتوى الصفحة
+                const text = await response.text();
+
+                // البحث عن رابط البث المباشر (Live Stream)
+                const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
+                if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
+                    finalUrl = hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
+                    console.log("تم سحب رابط البث المباشر من YouTube:", finalUrl);
+                    break;
+                } 
+                // إذا لم يكن بثًا مباشرًا، البحث عن رابط الفيديو العادي
+                else {
+                    const serverAbrStreamingUrlMatch = text.match(/"serverAbrStreamingUrl":"([^"]+)"/);
+                    if (serverAbrStreamingUrlMatch && serverAbrStreamingUrlMatch[1]) {
+                        finalUrl = serverAbrStreamingUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
+                        console.log("تم سحب رابط الفيديو العادي من YouTube:", finalUrl);
+                        break;
+                    }
                 }
             }
-        } catch (error) {
-            console.error("حدث خطأ أثناء جلب بيانات YouTube:", error);
-            return;
-        }
-    }
 
-    // إذا كان الرابط ينتهي بـ .php
-    if (url.endsWith('.php')) {
-        try {
-            const { manifestUri } = await fetchManifestAndKeys(url);
-            if (manifestUri) {
-                finalUrl = manifestUri; // استخدام الرابط المسحوب
-                console.log("تم سحب الرابط النهائي من PHP:", finalUrl);
+            // إذا كان الرابط ينتهي بـ .php
+            if (currentUrl.endsWith('.php')) {
+                const response = await fetch(currentUrl);
+                const text = await response.text();
 
-                // استخدام المفاتيح الثابتة
+                // البحث عن الوسم manifestUri = "
+                const manifestUriMatch = text.match(/manifestUri\s*=\s*["']([^"']+)["']/);
+                if (manifestUriMatch && manifestUriMatch[1]) {
+                    finalUrl = manifestUriMatch[1];
+                    console.log("تم سحب الرابط من manifestUri:", finalUrl);
+					// استخدام المفاتيح الثابتة
                 const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
                 const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
                 finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
                 console.log("تم استخدام المفاتيح الثابتة:", finalKey);
-            } else {
-                console.error("لم يتم العثور على رابط البث في ملف PHP.");
-            }
-        } catch (error) {
-            console.error("حدث خطأ أثناء جلب البيانات من PHP:", error);
-        }
-    }
+                    break;
+                }
 
-    // إذا كان الرابط من Worker
-    if (url.includes("workers.dev")) {
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-
-            // استخدام stream_url إذا كان موجودًا
-            if (data.stream_url) {
-                finalUrl = data.stream_url; // استخدام الرابط المسحوب
-                console.log("تم سحب رابط البث من Worker:", finalUrl);
-				 // استخدام المفاتيح الثابتة
+                // البحث عن الوسم file: "
+                const fileMatch = text.match(/file:\s*["']([^"']+)["']/);
+                if (fileMatch && fileMatch[1]) {
+                    finalUrl = fileMatch[1];
+                    console.log("تم سحب الرابط من file:", finalUrl);
+					// استخدام المفاتيح الثابتة
                 const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
                 const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
                 finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
                 console.log("تم استخدام المفاتيح الثابتة:", finalKey);
-            } else {
-                console.error("لم يتم العثور على رابط البث في Worker.");
+                    break;
+                }
+            }
+
+            // إذا كان الرابط من Worker
+            if (currentUrl.includes("workers.dev")) {
+                const response = await fetch(currentUrl);
+                const data = await response.json();
+
+                // استخدام stream_url إذا كان موجودًا
+                if (data.stream_url) {
+                    finalUrl = data.stream_url;
+                    console.log("تم سحب رابط البث من Worker:", finalUrl);
+					// استخدام المفاتيح الثابتة
+                const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
+                const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
+                finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
+                console.log("تم استخدام المفاتيح الثابتة:", finalKey);
+                    break;
+                }
+            }
+
+            // إذا كان الرابط مباشرًا (MPD أو M3U8)
+            if (currentUrl.endsWith('.mpd') || currentUrl.endsWith('.m3u8')) {
+                finalUrl = currentUrl; // استخدام الرابط مباشرة
+                console.log("تم استخدام رابط البث المباشر:", finalUrl);
+                break;
             }
         } catch (error) {
-            console.error("حدث خطأ أثناء جلب البيانات من Worker:", error);
+            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${currentUrl}`, error);
         }
-    }
-
-    // إذا كان الرابط مباشرًا (MPD أو M3U8)
-    if (url.endsWith('.mpd') || url.endsWith('.m3u8')) {
-        finalUrl = url; // استخدام الرابط مباشرة
-        console.log("تم استخدام رابط البث المباشر:", finalUrl);
     }
 
     // إذا تمت إضافة مفتاح جديد يدويًا (بالطريقة التقليدية)، استخدامه بدلاً من المفاتيح الثابتة
