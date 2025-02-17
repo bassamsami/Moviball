@@ -121,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
                 finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
                 console.log("تم استخدام المفاتيح الثابتة:", finalKey);
+                    
                     break;
                 }
 
@@ -134,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
                 finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
                 console.log("تم استخدام المفاتيح الثابتة:", finalKey);
+                    
                     break;
                 }
             }
@@ -152,6 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
                 finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
                 console.log("تم استخدام المفاتيح الثابتة:", finalKey);
+                    
                     break;
                 }
             }
@@ -165,6 +168,12 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${currentUrl}`, error);
         }
+    }
+
+    // إذا لم يتم سحب أي رابط، نستخدم الرابط الأصلي
+    if (!finalUrl) {
+        finalUrl = url;
+        console.log("تم استخدام الرابط الأصلي:", finalUrl);
     }
 
     // إذا تمت إضافة مفتاح جديد يدويًا (بالطريقة التقليدية)، استخدامه بدلاً من المفاتيح الثابتة
