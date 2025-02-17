@@ -132,14 +132,13 @@ async function playChannel(url, key) {
 
         try {
             const response = await fetch(workerUrl);
-            const text = await response.text(); // جلب محتوى الصفحة كـ نص
+            const data = await response.json(); // جلب البيانات كـ JSON
 
-            // البحث عن الوسم stream_url
-            const streamUrlMatch = text.match(/"stream_url"\s*:\s*"([^"]+)"/);
-            if (streamUrlMatch && streamUrlMatch[1]) {
+            // استخدام stream_url إذا كان موجودًا
+            if (data.stream_url) {
                 console.log("تم استخدام المفاتيح الثابتة:", staticKeyCombined);
                 return {
-                    url: streamUrlMatch[1],
+                    url: data.stream_url,
                     key: staticKeyCombined // استخدام المفاتيح الثابتة
                 };
             }
