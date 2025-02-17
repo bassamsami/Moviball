@@ -92,6 +92,9 @@ async function playChannel(url, key) {
     const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
     const staticKeyCombined = `${staticKeyid}:${staticKey}`;
 
+    let phpResult = null;
+    let workerResult = null;
+
     // دالة لسحب الرابط من PHP
     async function fetchFromPHP(phpUrl) {
         try {
@@ -186,8 +189,8 @@ async function playChannel(url, key) {
     else {
         // سحب الروابط من PHP و Worker في نفس الوقت
         const [phpUrl, workerUrl] = urls;
-        const phpResult = await fetchFromPHP(phpUrl);
-        const workerResult = await fetchFromWorker(workerUrl);
+        phpResult = await fetchFromPHP(phpUrl);
+        workerResult = await fetchFromWorker(workerUrl);
 
         // استخدام الرابط الذي يعمل أولاً
         if (phpResult) {
@@ -285,23 +288,6 @@ async function playChannel(url, key) {
     playerInstance.on('setupError', (error) => {
         console.error("حدث خطأ في إعداد المشغل:", error);
     });
-}
-    
-// دالة لاستخراج رابط البث من ملف PHP
-async function fetchManifestAndKeys(phpUrl) {
-    try {
-        const response = await fetch(phpUrl);
-        const text = await response.text();
-
-        // استخراج رابط الـ manifestUri
-        const manifestUriMatch = text.match(/const manifestUri\s*=\s*["']([^"']+)["']/);
-        const manifestUri = manifestUriMatch ? manifestUriMatch[1] : null;
-
-        return { manifestUri };
-    } catch (error) {
-        console.error("حدث خطأ أثناء جلب البيانات من ملف PHP:", error);
-        return { manifestUri: null };
-    }
 }
 
 // دالة لتحديد نوع الملف تلقائيًا
