@@ -80,7 +80,9 @@ async function playChannel(url, key) {
 
     // إخفاء المشغل حتى يتم تجربة كلا الرابطين
     const playerElement = document.getElementById("player");
-    playerElement.style.display = "none";
+    if (playerElement) {
+        playerElement.style.display = "none";
+    }
 
     // إذا كان الرابط يحتوي على رابطين (PHP & Worker)
     const urls = url.split('&').map(u => u.trim()); // فصل الرابطين
@@ -123,6 +125,11 @@ async function playChannel(url, key) {
 
     // دالة لسحب الرابط من Worker
     async function fetchFromWorker(workerUrl) {
+        if (!workerUrl) {
+            console.error("رابط Worker غير موجود!");
+            return null;
+        }
+
         try {
             const response = await fetch(workerUrl);
             const text = await response.text(); // جلب محتوى الصفحة كـ نص
@@ -230,7 +237,9 @@ async function playChannel(url, key) {
     });
 
     // إظهار المشغل بعد تجربة كلا الرابطين
-    playerElement.style.display = "block";
+    if (playerElement) {
+        playerElement.style.display = "block";
+    }
 
     // إعداد الأحداث للمشغل
     playerInstance.on('ready', () => {
