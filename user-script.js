@@ -101,10 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
     const staticKeyCombined = `${staticKeyid}:${staticKey}`;
 
-    // تعريف المتغيرات في نطاق أوسع
-    let phpResult = null;
-    let workerResult = null;
-
     // دالة لسحب الرابط من PHP
     async function fetchFromPHP(phpUrl) {
         try {
@@ -160,27 +156,26 @@ document.addEventListener("DOMContentLoaded", function () {
     if (urls.length > 1) {
         const [phpUrl, workerUrl] = urls;
 
-        // جرب الرابط الأول (PHP)
-        phpResult = await fetchFromPHP(phpUrl);
+        // جرب سحب الرابطين في نفس الوقت
+        const [phpResult, workerResult] = await Promise.all([
+            fetchFromPHP(phpUrl),
+            fetchFromWorker(workerUrl)
+        ]);
 
+        // استخدام الرابط الذي يعمل أولاً
         if (phpResult) {
             finalUrl = phpResult.url;
             finalKey = phpResult.key;
             console.log("تم سحب الرابط من PHP:", finalUrl);
+        } else if (workerResult) {
+            finalUrl = workerResult.url;
+            finalKey = workerResult.key;
+            console.log("تم سحب الرابط من Worker:", finalUrl);
         } else {
-            // إذا فشل الرابط الأول، جرب الرابط الثاني (Worker)
-            workerResult = await fetchFromWorker(workerUrl);
-
-            if (workerResult) {
-                finalUrl = workerResult.url;
-                finalKey = workerResult.key;
-                console.log("تم سحب الرابط من Worker:", finalUrl);
-            } else {
-                // إذا فشل الرابط الثاني أيضًا
-                console.error("لم يتم سحب أي رابط يعمل.");
-                showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
-                return;
-            }
+            // إذا فشل الرابطان
+            console.error("لم يتم سحب أي رابط يعمل.");
+            showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
+            return;
         }
     } else {
         // إذا كان الرابط مباشرًا (مثل mpd أو m3u8)، نستخدمه مباشرة
@@ -236,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (finalUrl === phpResult?.url) {
                 // إذا كان الرابط الأول هو الذي فشل، جرب الرابط الثاني
-                workerResult = await fetchFromWorker(workerUrl);
+                const workerResult = await fetchFromWorker(workerUrl);
 
                 if (workerResult) {
                     finalUrl = workerResult.url;
@@ -254,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             } else if (finalUrl === workerResult?.url) {
                 // إذا كان الرابط الثاني هو الذي فشل، جرب الرابط الأول
-                phpResult = await fetchFromPHP(phpUrl);
+                const phpResult = await fetchFromPHP(phpUrl);
 
                 if (phpResult) {
                     finalUrl = phpResult.url;
@@ -288,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
             playerContainer.style.height = "100%";
         } else {
             playerContainer.style.width = "100%";
-            playerContainer.style.height = "80vh";
+            playerContainer.style.height = "70vh";
         }
     });
 }
