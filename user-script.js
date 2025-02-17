@@ -137,12 +137,42 @@ document.addEventListener("DOMContentLoaded", function () {
         return null;
     }
 
+    // دالة لسحب رابط البث المباشر من YouTube
+    async function fetchFromYouTube(youtubeUrl) {
+        try {
+            const response = await fetch(youtubeUrl);
+            const text = await response.text();
+
+            // البحث عن رابط البث المباشر (Live Stream)
+            const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
+            if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
+                return hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
+            }
+        } catch (error) {
+            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${youtubeUrl}`, error);
+        }
+        return null;
+    }
+
     // إذا كان الرابط مباشرًا (m3u8 أو mpd)
     if (url.endsWith('.m3u8') || url.endsWith('.mpd')) {
         console.log("تم استخدام الرابط المباشر:", url);
         finalUrl = url;
         finalKey = key || staticKeyCombined; // استخدام المفاتيح الثابتة إذا لم يتم إدخال مفاتيح يدويًا
-    } else {
+    }
+    // إذا كان الرابط من YouTube
+    else if (url.includes("youtube.com/watch")) {
+        const youtubeUrl = await fetchFromYouTube(url);
+        if (youtubeUrl) {
+            finalUrl = youtubeUrl;
+            console.log("تم سحب رابط البث المباشر من YouTube:", finalUrl);
+        } else {
+            console.error("لم يتم سحب رابط البث من YouTube.");
+            return;
+        }
+    }
+    // إذا كان الرابط يحتوي على رابطين (PHP & Worker)
+    else {
         // سحب الروابط من PHP و Worker في نفس الوقت
         const [phpUrl, workerUrl] = urls;
         const phpResult = await fetchFromPHP(phpUrl);
@@ -159,7 +189,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("تم سحب الرابط من Worker:", finalUrl);
         } else {
             console.error("لم يتم سحب أي رابط يعمل.");
-            alert("القناة لم يتم تحديثها، يرجى المحاولة لاحقًا.");
             return;
         }
     }
@@ -203,10 +232,9 @@ document.addEventListener("DOMContentLoaded", function () {
     playerInstance.on('error', async (error) => {
         console.error("حدث خطأ في المشغل:", error);
 
-        // إذا كان الرابط مباشرًا، لا يوجد رابط آخر للتبديل
-        if (url.endsWith('.m3u8') || url.endsWith('.mpd')) {
+        // إذا كان الرابط مباشرًا أو من YouTube، لا يوجد رابط آخر للتبديل
+        if (url.endsWith('.m3u8') || url.endsWith('.mpd') || url.includes("youtube.com/watch")) {
             console.error("لا يوجد رابط آخر متاح.");
-            alert("القناة لم يتم تحديثها، يرجى المحاولة لاحقًا.");
             return;
         }
 
@@ -235,7 +263,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }]);
         } else {
             console.error("لا يوجد رابط آخر متاح.");
-            alert("القناة لم يتم تحديثها، يرجى المحاولة لاحقًا.");
         }
     });
 
