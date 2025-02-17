@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta name="title" content="MoviBall | بث مباشر للمباريات والقنوات الرياضية بجودة عالية">
+    <meta name="title" content="MoviBall | بث مباشر للمباريات والقنوات الرياضية بجودة عالية">
     <meta name="description" content="مشاهدة مباريات اليوم بث مباشر بدون تقطيع على موقع MoviBall. استمتع بمشاهدة قنوات beIN Sports و SSC والعديد من القنوات الرياضية المشفرة والمفتوحة بجودة عالية.">
     <meta name="keywords" content="بث مباشر, مباريات اليوم, beIN Sports مباشر, SSC بث مباشر, قنوات رياضية, مشاهدة المباريات, قنوات مشفرة, الدوري الإسباني, الدوري الإنجليزي, البث المباشر">
     <meta name="author" content="Bassam Samir">
@@ -45,7 +45,7 @@
         <div id="main-page">
             <!-- المشغل -->
             <div id="player-container">
-			<div id="player"></div>
+                <div id="player"></div>
             </div>
 
             <!-- زر عرض القنوات -->
@@ -82,6 +82,15 @@
                     <!-- المباريات سيتم إضافتها هنا عبر JavaScript -->
                 </div>
                 <button id="close-matches-dialog" class="close-dialog"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+
+        <!-- ديالوج فشل التشغيل -->
+        <div id="error-dialog" class="dialog">
+            <div class="dialog-content">
+                <h2>خطأ في التشغيل</h2>
+                <p id="error-message">لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.</p>
+                <button id="close-error-dialog" class="close-dialog"><i class="fas fa-times"></i></button>
             </div>
         </div>
     </main>
