@@ -225,7 +225,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
     playerInstance.on('error', async (error) => {
         console.error("حدث خطأ في المشغل:", error);
-        showErrorDialog("حدث خطأ في تشغيل القناة. يرجى التحقق من الرابط والمفتاح.");
+
+        // إذا كان الرابط يحتوي على رابطين، جرب الرابط الآخر
+        if (urls.length > 1) {
+            const [phpUrl, workerUrl] = urls;
+
+            if (finalUrl === phpResult?.url) {
+                // إذا كان الرابط الأول هو الذي فشل، جرب الرابط الثاني
+                const workerResult = await fetchFromWorker(workerUrl);
+
+                if (workerResult) {
+                    finalUrl = workerResult.url;
+                    finalKey = workerResult.key;
+                    console.log("تم التبديل إلى الرابط من Worker:", finalUrl);
+
+                    // إعادة تحميل المشغل بالرابط الجديد
+                    playerInstance.load([{
+                        file: finalUrl,
+                        type: getStreamType(finalUrl),
+                        drm: drmConfig
+                    }]);
+                } else {
+                    showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
+                }
+            } else if (finalUrl === workerResult?.url) {
+                // إذا كان الرابط الثاني هو الذي فشل، جرب الرابط الأول
+                const phpResult = await fetchFromPHP(phpUrl);
+
+                if (phpResult) {
+                    finalUrl = phpResult.url;
+                    finalKey = phpResult.key;
+                    console.log("تم التبديل إلى الرابط من PHP:", finalUrl);
+
+                    // إعادة تحميل المشغل بالرابط الجديد
+                    playerInstance.load([{
+                        file: finalUrl,
+                        type: getStreamType(finalUrl),
+                        drm: drmConfig
+                    }]);
+                } else {
+                    showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
+                }
+            }
+        } else {
+            showErrorDialog("حدث خطأ في تشغيل القناة. يرجى التحقق من الرابط والمفتاح.");
+        }
     });
 
     playerInstance.on('setupError', (error) => {
