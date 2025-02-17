@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
  // دالة لجلب manifestUri و clearkeys من ملف PHP
- async function playChannel(url, key) {
+async function playChannel(url, key) {
     if (!url) {
         console.error("رابط القناة غير موجود!");
         return;
@@ -81,99 +81,80 @@ document.addEventListener("DOMContentLoaded", function () {
     // إذا كان الرابط يحتوي على رابطين (PHP & Worker)
     const urls = url.split('&').map(u => u.trim()); // فصل الرابطين
 
-    for (const currentUrl of urls) {
+    // المفاتيح الثابتة
+    const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
+    const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
+    const staticKeyCombined = `${staticKeyid}:${staticKey}`;
+
+    // دالة لسحب الرابط من PHP
+    async function fetchFromPHP(phpUrl) {
         try {
-            // إذا كان الرابط من YouTube
-            if (currentUrl.includes("youtube.com/watch")) {
-                const response = await fetch(currentUrl); // جلب محتوى الصفحة
-                const text = await response.text();
+            const response = await fetch(phpUrl);
+            const text = await response.text();
 
-                // البحث عن رابط البث المباشر (Live Stream)
-                const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
-                if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
-                    finalUrl = hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
-                    console.log("تم سحب رابط البث المباشر من YouTube:", finalUrl);
-                    break;
-                } 
-                // إذا لم يكن بثًا مباشرًا، البحث عن رابط الفيديو العادي
-                else {
-                    const serverAbrStreamingUrlMatch = text.match(/"serverAbrStreamingUrl":"([^"]+)"/);
-                    if (serverAbrStreamingUrlMatch && serverAbrStreamingUrlMatch[1]) {
-                        finalUrl = serverAbrStreamingUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
-                        console.log("تم سحب رابط الفيديو العادي من YouTube:", finalUrl);
-                        break;
-                    }
-                }
+            // البحث عن الوسم manifestUri = "
+            const manifestUriMatch = text.match(/manifestUri\s*=\s*["']([^"']+)["']/);
+            if (manifestUriMatch && manifestUriMatch[1]) {
+                console.log("تم استخدام المفاتيح الثابتة:", staticKeyCombined);
+                return {
+                    url: manifestUriMatch[1],
+                    key: staticKeyCombined // استخدام المفاتيح الثابتة
+                };
             }
 
-            // إذا كان الرابط ينتهي بـ .php
-            if (currentUrl.endsWith('.php')) {
-                const response = await fetch(currentUrl);
-                const text = await response.text();
-
-                // البحث عن الوسم manifestUri = "
-                const manifestUriMatch = text.match(/manifestUri\s*=\s*["']([^"']+)["']/);
-                if (manifestUriMatch && manifestUriMatch[1]) {
-                    finalUrl = manifestUriMatch[1];
-                    console.log("تم سحب الرابط من manifestUri:", finalUrl);
-					// استخدام المفاتيح الثابتة
-                const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
-                const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
-                finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
-                console.log("تم استخدام المفاتيح الثابتة:", finalKey);
-                    
-                    break;
-                }
-
-                // البحث عن الوسم file: "
-                const fileMatch = text.match(/file:\s*["']([^"']+)["']/);
-                if (fileMatch && fileMatch[1]) {
-                    finalUrl = fileMatch[1];
-                    console.log("تم سحب الرابط من file:", finalUrl);
-					// استخدام المفاتيح الثابتة
-                const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
-                const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
-                finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
-                console.log("تم استخدام المفاتيح الثابتة:", finalKey);
-                    
-                    break;
-                }
-            }
-
-            // إذا كان الرابط من Worker
-            if (currentUrl.includes("workers.dev")) {
-                const response = await fetch(currentUrl);
-                const data = await response.json();
-
-                // استخدام stream_url إذا كان موجودًا
-                if (data.stream_url) {
-                    finalUrl = data.stream_url;
-                    console.log("تم سحب رابط البث من Worker:", finalUrl);
-					// استخدام المفاتيح الثابتة
-                const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
-                const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
-                finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
-                console.log("تم استخدام المفاتيح الثابتة:", finalKey);
-                    
-                    break;
-                }
-            }
-
-            // إذا كان الرابط مباشرًا (MPD أو M3U8)
-            if (currentUrl.endsWith('.mpd') || currentUrl.endsWith('.m3u8')) {
-                finalUrl = currentUrl; // استخدام الرابط مباشرة
-                console.log("تم استخدام رابط البث المباشر:", finalUrl);
-                break;
+            // البحث عن الوسم file: "
+            const fileMatch = text.match(/file:\s*["']([^"']+)["']/);
+            if (fileMatch && fileMatch[1]) {
+                console.log("تم استخدام المفاتيح الثابتة:", staticKeyCombined);
+                return {
+                    url: fileMatch[1],
+                    key: staticKeyCombined // استخدام المفاتيح الثابتة
+                };
             }
         } catch (error) {
-            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${currentUrl}`, error);
+            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${phpUrl}`, error);
         }
+        return null;
     }
 
-    // إذا لم يتم سحب أي رابط، نستخدم الرابط الأصلي
-    if (!finalUrl) {
-        finalUrl = url;
-        console.log("تم استخدام الرابط الأصلي:", finalUrl);
+    // دالة لسحب الرابط من Worker
+    async function fetchFromWorker(workerUrl) {
+        try {
+            const response = await fetch(workerUrl);
+            const data = await response.json();
+
+            // استخدام stream_url إذا كان موجودًا
+            if (data.stream_url) {
+                console.log("تم استخدام المفاتيح الثابتة:", staticKeyCombined);
+                return {
+                    url: data.stream_url,
+                    key: staticKeyCombined // استخدام المفاتيح الثابتة
+                };
+            }
+        } catch (error) {
+            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${workerUrl}`, error);
+        }
+        return null;
+    }
+
+    // سحب الروابط من PHP و Worker في نفس الوقت
+    const [phpUrl, workerUrl] = urls;
+    const phpResult = await fetchFromPHP(phpUrl);
+    const workerResult = await fetchFromWorker(workerUrl);
+
+    // استخدام الرابط الذي يعمل أولاً
+    if (phpResult) {
+        finalUrl = phpResult.url;
+        finalKey = phpResult.key;
+        console.log("تم سحب الرابط من PHP:", finalUrl);
+    } else if (workerResult) {
+        finalUrl = workerResult.url;
+        finalKey = workerResult.key;
+        console.log("تم سحب الرابط من Worker:", finalUrl);
+    } else {
+        console.error("لم يتم سحب أي رابط يعمل.");
+        alert("القناة لم يتم تحديثها، يرجى المحاولة لاحقًا.");
+        return;
     }
 
     // إذا تمت إضافة مفتاح جديد يدويًا (بالطريقة التقليدية)، استخدامه بدلاً من المفاتيح الثابتة
@@ -212,10 +193,35 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("المشغل جاهز للتشغيل!");
     });
 
-    playerInstance.on('error', (error) => {
+    playerInstance.on('error', async (error) => {
         console.error("حدث خطأ في المشغل:", error);
-        if (error.code === 246012) {
-            console.error("السبب المحتمل: الرابط أو المفاتيح غير صحيحة.");
+
+        // إذا فشل الرابط الأول، يتم التبديل إلى الرابط الثاني
+        if (finalUrl === phpResult?.url && workerResult) {
+            console.log("الرابط الأول لم يعمل، يتم التبديل إلى الرابط الثاني...");
+            finalUrl = workerResult.url;
+            finalKey = workerResult.key;
+
+            // إعادة تحميل المشغل بالرابط الجديد
+            playerInstance.load([{
+                file: finalUrl,
+                type: getStreamType(finalUrl),
+                drm: drmConfig
+            }]);
+        } else if (finalUrl === workerResult?.url && phpResult) {
+            console.log("الرابط الثاني لم يعمل، يتم التبديل إلى الرابط الأول...");
+            finalUrl = phpResult.url;
+            finalKey = phpResult.key;
+
+            // إعادة تحميل المشغل بالرابط الجديد
+            playerInstance.load([{
+                file: finalUrl,
+                type: getStreamType(finalUrl),
+                drm: drmConfig
+            }]);
+        } else {
+            console.error("لا يوجد رابط آخر متاح.");
+            alert("القناة لم يتم تحديثها، يرجى المحاولة لاحقًا.");
         }
     });
 
