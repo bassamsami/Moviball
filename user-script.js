@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // دالة لجلب manifestUri و clearkeys من ملف PHP
- async function playChannel(url, key) {
+async function playChannel(url, key) {
     if (!url) {
         console.error("رابط القناة غير موجود!");
         return;
@@ -77,6 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let finalUrl = url;
     let finalKey = key;
+
+    // إخفاء المشغل حتى يتم تجربة كلا الرابطين
+    const playerElement = document.getElementById("player");
+    playerElement.style.display = "none";
 
     // إذا كان الرابط يحتوي على رابطين (PHP & Worker)
     const urls = url.split('&').map(u => u.trim()); // فصل الرابطين
@@ -224,6 +228,9 @@ document.addEventListener("DOMContentLoaded", function () {
         sharing: false
     });
 
+    // إظهار المشغل بعد تجربة كلا الرابطين
+    playerElement.style.display = "block";
+
     // إعداد الأحداث للمشغل
     playerInstance.on('ready', () => {
         console.log("المشغل جاهز للتشغيل!");
@@ -270,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("حدث خطأ في إعداد المشغل:", error);
     });
 }
-
+    
 // دالة لاستخراج رابط البث من ملف PHP
 async function fetchManifestAndKeys(phpUrl) {
     try {
