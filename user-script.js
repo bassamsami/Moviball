@@ -155,22 +155,28 @@ document.addEventListener("DOMContentLoaded", function () {
     // إذا كان الرابط يحتوي على رابطين (PHP & Worker)، نقوم بجلب البيانات
     if (urls.length > 1) {
         const [phpUrl, workerUrl] = urls;
-        const phpResult = await fetchFromPHP(phpUrl);
-        const workerResult = await fetchFromWorker(workerUrl);
 
-        // استخدام الرابط الذي يعمل أولاً
+        // جرب الرابط الأول (PHP)
+        let phpResult = await fetchFromPHP(phpUrl);
+
         if (phpResult) {
             finalUrl = phpResult.url;
             finalKey = phpResult.key;
             console.log("تم سحب الرابط من PHP:", finalUrl);
-        } else if (workerResult) {
-            finalUrl = workerResult.url;
-            finalKey = workerResult.key;
-            console.log("تم سحب الرابط من Worker:", finalUrl);
         } else {
-            console.error("لم يتم سحب أي رابط يعمل.");
-            showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
-            return;
+            // إذا فشل الرابط الأول، جرب الرابط الثاني (Worker)
+            let workerResult = await fetchFromWorker(workerUrl);
+
+            if (workerResult) {
+                finalUrl = workerResult.url;
+                finalKey = workerResult.key;
+                console.log("تم سحب الرابط من Worker:", finalUrl);
+            } else {
+                // إذا فشل الرابط الثاني أيضًا
+                console.error("لم يتم سحب أي رابط يعمل.");
+                showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
+                return;
+            }
         }
     } else {
         // إذا كان الرابط مباشرًا (مثل mpd أو m3u8)، نستخدمه مباشرة
@@ -219,7 +225,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
     playerInstance.on('error', async (error) => {
         console.error("حدث خطأ في المشغل:", error);
-        showErrorDialog("حدث خطأ في تشغيل القناة. يرجى التحقق من الرابط والمفتاح.");
+
+        // إذا كان الرابط يحتوي على رابطين، جرب الرابط الآخر
+        if (urls.length > 1) {
+            const [phpUrl, workerUrl] = urls;
+
+            if (finalUrl === phpUrl) {
+                // إذا كان الرابط الأول هو الذي فشل، جرب الرابط الثاني
+                const workerResult = await fetchFromWorker(workerUrl);
+
+                if (workerResult) {
+                    finalUrl = workerResult.url;
+                    finalKey = workerResult.key;
+                    console.log("تم التبديل إلى الرابط من Worker:", finalUrl);
+
+                    // إعادة تحميل المشغل بالرابط الجديد
+                    playerInstance.load([{
+                        file: finalUrl,
+                        type: getStreamType(finalUrl),
+                        drm: drmConfig
+                    }]);
+                } else {
+                    showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
+                }
+            } else if (finalUrl === workerUrl) {
+                // إذا كان الرابط الثاني هو الذي فشل، جرب الرابط الأول
+                const phpResult = await fetchFromPHP(phpUrl);
+
+                if (phpResult) {
+                    finalUrl = phpResult.url;
+                    finalKey = phpResult.key;
+                    console.log("تم التبديل إلى الرابط من PHP:", finalUrl);
+
+                    // إعادة تحميل المشغل بالرابط الجديد
+                    playerInstance.load([{
+                        file: finalUrl,
+                        type: getStreamType(finalUrl),
+                        drm: drmConfig
+                    }]);
+                } else {
+                    showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
+                }
+            }
+        } else {
+            showErrorDialog("حدث خطأ في تشغيل القناة. يرجى التحقق من الرابط والمفتاح.");
+        }
     });
 
     playerInstance.on('setupError', (error) => {
