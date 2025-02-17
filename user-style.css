@@ -544,6 +544,7 @@ main {
     background: #f44336;
     border: 2px solid #d32f2f;
 }
+
 .dark-theme #theme-toggle i {
     color: #00bcd4; /* لون سماوي مريح */
     transition: color 0.3s ease, transform 0.3s ease;
@@ -553,6 +554,7 @@ main {
     color: #0097a7; /* لون سماوي داكن عند التحويم */
     transform: scale(1.2); /* تكبير الأيقونة عند التحويم */
 }
+
 .dark-theme .social-icons a {
     color: #00bcd4; /* لون سماوي مريح */
     transition: color 0.3s ease, transform 0.3s ease;
@@ -590,7 +592,7 @@ main {
 
     /* المشغل */
     #player-container {
-        height: 80vh; /* تقليل ارتفاع المشغل */
+        height: 70vh; /* تقليل ارتفاع المشغل */
         border-radius: 5px; /* تقليل زوايا التدوير */
     }
 
