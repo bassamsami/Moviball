@@ -128,29 +128,29 @@ async function playChannel(url, key) {
 
     // دالة لسحب الرابط من Worker
     async function fetchFromWorker(workerUrl) {
-        if (!workerUrl) {
-            console.error("رابط Worker غير موجود!");
-            return null;
-        }
-
-        try {
-            const response = await fetch(workerUrl);
-            const text = await response.text(); // جلب محتوى الصفحة كـ نص
-
-            // البحث عن الوسم stream_url
-            const streamUrlMatch = text.match(/"stream_url"\s*:\s*"([^"]+)"/);
-            if (streamUrlMatch && streamUrlMatch[1]) {
-                console.log("تم استخدام المفاتيح الثابتة:", staticKeyCombined);
-                return {
-                    url: streamUrlMatch[1],
-                    key: staticKeyCombined // استخدام المفاتيح الثابتة
-                };
-            }
-        } catch (error) {
-            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${workerUrl}`, error);
-        }
+    if (!workerUrl) {
+        console.error("رابط Worker غير موجود!");
         return null;
     }
+
+    try {
+        const response = await fetch(workerUrl);
+        const text = await response.text(); // جلب محتوى الصفحة كـ نص
+
+        // البحث عن القيمة stream_url
+        const streamUrlMatch = text.match(/stream_url\s*:\s*"([^"]+)"/);
+        if (streamUrlMatch && streamUrlMatch[1]) {
+            console.log("تم استخدام المفاتيح الثابتة:", staticKeyCombined);
+            return {
+                url: streamUrlMatch[1],
+                key: staticKeyCombined // استخدام المفاتيح الثابتة
+            };
+        }
+    } catch (error) {
+        console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${workerUrl}`, error);
+    }
+    return null;
+}
 
     // دالة لسحب رابط البث المباشر من YouTube
     async function fetchFromYouTube(youtubeUrl) {
