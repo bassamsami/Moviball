@@ -104,20 +104,54 @@ async function playChannel(url, key) {
         return null;
     }
 
-    // دالة لسحب البث المباشر من اليوتيوب
+    // دالة لسحب رابط البث من رابط mejarserver
+    async function fetchFromMejar(mejarUrl) {
+        try {
+            const response = await fetch(mejarUrl);
+            const text = await response.text();
+
+            // البحث عن الوسم manifestUri = "
+            const manifestUriMatch = text.match(/manifestUri\s*=\s*["']([^"']+)["']/);
+            if (manifestUriMatch && manifestUriMatch[1]) {
+                return {
+                    url: manifestUriMatch[1],
+                    key: staticKeyCombined // استخدام المفاتيح الثابتة
+                };
+            }
+
+            // البحث عن الوسم file: "
+            const fileMatch = text.match(/file:\s*["']([^"']+)["']/);
+            if (fileMatch && fileMatch[1]) {
+                return {
+                    url: fileMatch[1],
+                    key: staticKeyCombined // استخدام المفاتيح الثابتة
+                };
+            }
+        } catch (error) {
+            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${mejarUrl}`, error);
+        }
+        return null;
+    }
+
+    // دالة لسحب رابط البث المباشر من YouTube
     async function fetchFromYouTube(youtubeUrl) {
         try {
-            // يمكنك استخدام مكتبة مثل youtube-dl أو API خاص باليوتيوب لسحب رابط البث المباشر
-            // هنا نستخدم الرابط مباشرة كتجربة
-            return {
-                url: youtubeUrl,
-                key: null // لا يوجد مفاتيح تشفير لليوتيوب
-            };
+            const response = await fetch(youtubeUrl);
+            const text = await response.text();
+
+            // البحث عن رابط البث المباشر (Live Stream)
+            const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
+            if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
+                return hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
+            }
         } catch (error) {
             console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${youtubeUrl}`, error);
         }
         return null;
     }
+
+    // إخفاء المشغل حتى يتم العثور على رابط شغال
+    document.getElementById("player-container").style.display = "none";
 
     // إذا كان الرابط يحتوي على api.php، نقوم بجلب البيانات
     if (url.includes("api.php")) {
@@ -131,6 +165,28 @@ async function playChannel(url, key) {
             console.error("لم يتم سحب أي رابط يعمل.");
             showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
             return;
+        }
+    } else if (url.includes("mejarserver.site")) {
+        // إذا كان الرابط من mejarserver، نقوم بجلب البيانات
+        const mejorarResult = await fetchFromMejar(url);
+
+        if (mejarserverResult) {
+            finalUrl = mejarserverResult.url;
+            finalKey = mejarserverResult.key;
+            console.log("تم سحب الرابط من Mejarserver:", finalUrl);
+        } else {
+            // إذا فشل الرابط من mejarserver، جرب الرابط من api.php
+            const apiResult = await fetchFromAPI("https://get.bassamnetflix2.workers.dev/TOD/WEB/BEIN/api.php?id=20");
+
+            if (apiResult) {
+                finalUrl = apiResult.url;
+                finalKey = apiResult.key;
+                console.log("تم التبديل إلى الرابط من API:", finalUrl);
+            } else {
+                console.error("لم يتم سحب أي رابط يعمل.");
+                showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
+                return;
+            }
         }
     } else if (url.includes("youtube.com") || url.includes("youtu.be")) {
         // إذا كان الرابط من اليوتيوب، نقوم بجلب البيانات
@@ -184,6 +240,9 @@ async function playChannel(url, key) {
         cast: {},
         sharing: false
     });
+
+    // إظهار المشغل بعد العثور على رابط شغال
+    document.getElementById("player-container").style.display = "block";
 
     // إعداد الأحداث للمشغل
     playerInstance.on('ready', () => {
