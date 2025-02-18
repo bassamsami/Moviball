@@ -79,49 +79,15 @@ async function playChannel(url, key) {
     let finalUrl = url;
     let finalKey = key;
 
-    // إذا كان الرابط يحتوي على رابطين (PHP & Worker)
-    const urls = url.split('&').map(u => u.trim()); // فصل الرابطين
-
     // المفاتيح الثابتة
     const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
     const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
     const staticKeyCombined = `${staticKeyid}:${staticKey}`;
 
-    // دالة لسحب الرابط من PHP
-    async function fetchFromPHP(phpUrl) {
+    // دالة لسحب رابط البث من رابط يحتوي على api.php
+    async function fetchFromAPI(apiUrl) {
         try {
-            const response = await fetch(phpUrl);
-            const text = await response.text();
-
-            // البحث عن الوسم manifestUri = "
-            const manifestUriMatch = text.match(/manifestUri\s*=\s*["']([^"']+)["']/);
-            if (manifestUriMatch && manifestUriMatch[1]) {
-                console.log("تم استخدام المفاتيح الثابتة:", staticKeyCombined);
-                return {
-                    url: manifestUriMatch[1],
-                    key: staticKeyCombined // استخدام المفاتيح الثابتة
-                };
-            }
-
-            // البحث عن الوسم file: "
-            const fileMatch = text.match(/file:\s*["']([^"']+)["']/);
-            if (fileMatch && fileMatch[1]) {
-                console.log("تم استخدام المفاتيح الثابتة:", staticKeyCombined);
-                return {
-                    url: fileMatch[1],
-                    key: staticKeyCombined // استخدام المفاتيح الثابتة
-                };
-            }
-        } catch (error) {
-            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${phpUrl}`, error);
-        }
-        return null;
-    }
-
-    // دالة لسحب الرابط من Worker
-    async function fetchFromWorker(workerUrl) {
-        try {
-            const response = await fetch(workerUrl);
+            const response = await fetch(apiUrl);
             const data = await response.json();
 
             // استخدام stream_url إذا كان موجودًا
@@ -133,49 +99,48 @@ async function playChannel(url, key) {
                 };
             }
         } catch (error) {
-            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${workerUrl}`, error);
+            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${apiUrl}`, error);
         }
         return null;
     }
-    
-    // دالة لسحب رابط البث المباشر من YouTube
+
+    // دالة لسحب البث المباشر من اليوتيوب
     async function fetchFromYouTube(youtubeUrl) {
         try {
-            const response = await fetch(youtubeUrl);
-            const text = await response.text();
-
-            // البحث عن رابط البث المباشر (Live Stream)
-            const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
-            if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
-                return hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
-            }
+            // يمكنك استخدام مكتبة مثل youtube-dl أو API خاص باليوتيوب لسحب رابط البث المباشر
+            // هنا نستخدم الرابط مباشرة كتجربة
+            return {
+                url: youtubeUrl,
+                key: null // لا يوجد مفاتيح تشفير لليوتيوب
+            };
         } catch (error) {
             console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${youtubeUrl}`, error);
         }
         return null;
     }
-    
-    // إذا كان الرابط يحتوي على رابطين (PHP & Worker)، نقوم بجلب البيانات
-    if (urls.length > 1) {
-        const [phpUrl, workerUrl] = urls;
 
-        // جرب سحب الرابطين في نفس الوقت
-        const [phpResult, workerResult] = await Promise.all([
-            fetchFromPHP(phpUrl),
-            fetchFromWorker(workerUrl)
-        ]);
+    // إذا كان الرابط يحتوي على api.php، نقوم بجلب البيانات
+    if (url.includes("api.php")) {
+        const apiResult = await fetchFromAPI(url);
 
-        // استخدام الرابط الذي يعمل أولاً
-        if (phpResult) {
-            finalUrl = phpResult.url;
-            finalKey = phpResult.key;
-            console.log("تم سحب الرابط من PHP:", finalUrl);
-        } else if (workerResult) {
-            finalUrl = workerResult.url;
-            finalKey = workerResult.key;
-            console.log("تم سحب الرابط من Worker:", finalUrl);
+        if (apiResult) {
+            finalUrl = apiResult.url;
+            finalKey = apiResult.key;
+            console.log("تم سحب الرابط من API:", finalUrl);
         } else {
-            // إذا فشل الرابطان
+            console.error("لم يتم سحب أي رابط يعمل.");
+            showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
+            return;
+        }
+    } else if (url.includes("youtube.com") || url.includes("youtu.be")) {
+        // إذا كان الرابط من اليوتيوب، نقوم بجلب البيانات
+        const youtubeResult = await fetchFromYouTube(url);
+
+        if (youtubeResult) {
+            finalUrl = youtubeResult.url;
+            finalKey = youtubeResult.key;
+            console.log("تم سحب الرابط من اليوتيوب:", finalUrl);
+        } else {
             console.error("لم يتم سحب أي رابط يعمل.");
             showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
             return;
@@ -227,51 +192,7 @@ async function playChannel(url, key) {
 
     playerInstance.on('error', async (error) => {
         console.error("حدث خطأ في المشغل:", error);
-
-        // إذا كان الرابط يحتوي على رابطين، جرب الرابط الآخر
-        if (urls.length > 1) {
-            const [phpUrl, workerUrl] = urls;
-
-            if (finalUrl === phpResult?.url) {
-                // إذا كان الرابط الأول هو الذي فشل، جرب الرابط الثاني
-                const workerResult = await fetchFromWorker(workerUrl);
-
-                if (workerResult) {
-                    finalUrl = workerResult.url;
-                    finalKey = workerResult.key;
-                    console.log("تم التبديل إلى الرابط من Worker:", finalUrl);
-
-                    // إعادة تحميل المشغل بالرابط الجديد
-                    playerInstance.load([{
-                        file: finalUrl,
-                        type: getStreamType(finalUrl),
-                        drm: drmConfig
-                    }]);
-                } else {
-                    showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
-                }
-            } else if (finalUrl === workerResult?.url) {
-                // إذا كان الرابط الثاني هو الذي فشل، جرب الرابط الأول
-                const phpResult = await fetchFromPHP(phpUrl);
-
-                if (phpResult) {
-                    finalUrl = phpResult.url;
-                    finalKey = phpResult.key;
-                    console.log("تم التبديل إلى الرابط من PHP:", finalUrl);
-
-                    // إعادة تحميل المشغل بالرابط الجديد
-                    playerInstance.load([{
-                        file: finalUrl,
-                        type: getStreamType(finalUrl),
-                        drm: drmConfig
-                    }]);
-                } else {
-                    showErrorDialog("لم يتم تحديث القناة حتى الآن، يرجى المحاولة لاحقًا.");
-                }
-            }
-        } else {
-            showErrorDialog("حدث خطأ في تشغيل القناة. يرجى التحقق من الرابط والمفتاح.");
-        }
+        showErrorDialog("حدث خطأ في تشغيل القناة. يرجى التحقق من الرابط والمفتاح.");
     });
 
     playerInstance.on('setupError', (error) => {
@@ -303,22 +224,8 @@ function getStreamType(url) {
         return "mpegts";
     } else if (url.includes(".php") || url.includes(".embed")) {
         return "html5";
-    } else {
-        return "auto";
-    }
-}
-// دالة لتحديد نوع الملف تلقائيًا
-function getStreamType(url) {
-    if (url.includes(".m3u8")) {
-        return "hls";
-    } else if (url.includes(".mpd")) {
-        return "dash";
-    } else if (url.includes(".mp4") || url.includes(".m4v")) {
-        return "mp4";
-    } else if (url.includes(".ts") || url.includes(".mpegts")) {
-        return "mpegts";
-    } else if (url.includes(".php") || url.includes(".embed")) {
-        return "html5";
+    } else if (url.includes("youtube.com") || url.includes("youtu.be")) {
+        return "youtube"; // نوع خاص لليوتيوب
     } else {
         return "auto";
     }
