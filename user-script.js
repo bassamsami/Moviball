@@ -74,23 +74,42 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = await fetch(phpUrl);
         const text = await response.text();
 
-        // استخراج رابط الـ manifestUri فقط
-        const manifestUriMatch = text.match(/const manifestUri\s*=\s*["']([^"']+)["']/);
-        const manifestUri = manifestUriMatch ? manifestUriMatch[1] : null;
+        // استخراج رابط البث المباشر بعد الوسم file: "
+        const fileUrlMatch = text.match(/file:\s*"([^"]+)"/);
+        const fileUrl = fileUrlMatch ? fileUrlMatch[1] : null;
 
-        if (!manifestUri) {
+        if (!fileUrl) {
             console.error("لم يتم العثور على رابط البث في ملف PHP.");
         }
 
-        return { manifestUri };
+        return { fileUrl };
     } catch (error) {
         console.error("حدث خطأ أثناء جلب البيانات من ملف PHP:", error);
-        return { manifestUri: null };
+        return { fileUrl: null };
     }
 }
 
-    // دالة لتحويل clearkeys إلى التنسيق المطلوب
-   async function playChannel(url, key) {
+async function fetchFromYouTube(youtubeUrl) {
+    try {
+        const response = await fetch(youtubeUrl);
+        const text = await response.text();
+
+        // البحث عن رابط البث المباشر (Live Stream) باستخدام hlsManifestUrl
+        const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
+        if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
+            const hlsManifestUrl = hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
+            return hlsManifestUrl;
+        } else {
+            console.error("لم يتم العثور على رابط البث المباشر في صفحة YouTube.");
+            return null;
+        }
+    } catch (error) {
+        console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${youtubeUrl}`, error);
+        return null;
+    }
+}
+
+async function playChannel(url, key) {
     if (!url) {
         console.error("رابط القناة غير موجود!");
         return;
@@ -101,18 +120,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // إذا كان الرابط ينتهي بـ .php، جلب البيانات منه
     if (url.endsWith('.php')) {
-        const { manifestUri } = await fetchManifestAndKeys(url);
-        if (manifestUri) {
-            finalUrl = manifestUri; // استخدام الرابط المسحوب
-           
+        const { fileUrl } = await fetchManifestAndKeys(url);
+        if (fileUrl) {
+            finalUrl = fileUrl; // استخدام الرابط المسحوب
 
             // استخدام المفاتيح الثابتة عند سحبها من ملف الـ .php
             const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
             const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
             finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
-            
         } else {
             console.error("لم يتم العثور على رابط البث في ملف PHP.");
+            return;
+        }
+    }
+
+    // إذا كان الرابط من YouTube، جلب رابط البث المباشر
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        const youtubeStreamUrl = await fetchFromYouTube(url);
+        if (youtubeStreamUrl) {
+            finalUrl = youtubeStreamUrl; // استخدام الرابط المسحوب من YouTube
+        } else {
+            console.error("لم يتم العثور على رابط البث المباشر من YouTube.");
             return;
         }
     }
@@ -120,25 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // إذا تمت إضافة مفتاح جديد يدويًا (بالطريقة التقليدية)، استخدامه بدلاً من المفاتيح الثابتة
     if (key) {
         finalKey = key; // استخدام المفتاح الجديد
-        
     }
-       // دالة لسحب رابط البث المباشر من YouTube
-    async function fetchFromYouTube(youtubeUrl) {
-        try {
-            const response = await fetch(youtubeUrl);
-            const text = await response.text();
-
-            // البحث عن رابط البث المباشر (Live Stream)
-            const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
-            if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
-                return hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
-            }
-        } catch (error) {
-            console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${youtubeUrl}`, error);
-        }
-        return null;
-    }
-
 
     // تحويل التنسيق keyid:key إلى إعدادات DRM
     const drmConfig = finalKey ? {
