@@ -68,38 +68,25 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
     
-// دالة لجلب رابط البث من ملف PHP
-async function fetchStreamUrlFromPHP(phpUrl) {
+// دالة لجلب الرابط والمفاتيح من API
+async function get(apiUrl) {
     try {
-        const response = await fetch(phpUrl);
-        const text = await response.text();
+        const response = await fetch(apiUrl);
+        const data = await response.json(); // تحويل النص إلى JSON
 
-        // قائمة بالوسوم المحتملة التي قد تظهر قبل رابط البث
-        const possibleTags = [
-            /"stream_url":\s*"([^"]+)"/, // وسم stream_url
-            /"file":\s*"([^"]+)"/,      // وسم file
-            /"stream":\s*"([^"]+)"/,     // وسم stream
-            /"url":\s*"([^"]+)"/,        // وسم url
-            /"manifest":\s*"([^"]+)"/    // وسم manifest
-        ];
+        // استخراج رابط البث والمفاتيح
+        const streamUrl = data.stream_url; // الرابط الرئيسي
+        const drmKeys = data.drm_keys; // المفاتيح
 
-        // البحث عن الرابط باستخدام الوسوم المحتملة
-        for (const tag of possibleTags) {
-            const match = text.match(tag);
-            if (match && match[1]) {
-                const url = match[1];
-                // التأكد من أن الرابط يحتوي على manifest.mpd أو playlist.m3u8
-                if (url.includes("manifest.mpd") || url.includes("playlist.m3u8")) {
-                    return url; // إرجاع الرابط الصحيح
-                }
-            }
-        }
+        // استخدام المفاتيح الثابتة
+        const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
+        const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
+        const finalKey = `${staticKeyid}:${staticKey}`;
 
-        console.error("لم يتم العثور على رابط بث صالح في ملف PHP.");
-        return null;
+        return { streamUrl, finalKey };
     } catch (error) {
-        console.error("حدث خطأ أثناء جلب البيانات من ملف PHP:", error);
-        return null;
+        console.error("حدث خطأ أثناء جلب البيانات من API:", error);
+        return { streamUrl: null, finalKey: null };
     }
 }
 
@@ -125,40 +112,42 @@ async function fetchFromYouTube(youtubeUrl) {
 }
 
 // دالة لتشغيل القناة
-async function playChannel(url, key) {
+async function playChannel(url) {
     if (!url) {
-        console.error("رابط القناة غير موجود!");
+        console.error("الرابط غير موجود!");
         return;
     }
 
-    let finalUrl = url;
-    let finalKey = key;
+    let finalUrl = null;
+    let finalKey = null;
 
-    // إذا كان الرابط ينتهي بـ .php، جلب الرابط الصحيح منه
+    // إذا كان الرابط ينتهي بـ .php، جلب الرابط والمفاتيح من API
     if (url.endsWith('.php')) {
-        const streamUrl = await fetchStreamUrlFromPHP(url);
+        const { streamUrl, finalKey: apiKey } = await get(url);
         if (streamUrl) {
-            finalUrl = streamUrl; // استخدام الرابط المسحوب
+            finalUrl = streamUrl;
+            finalKey = apiKey;
         } else {
-            console.error("لم يتم العثور على رابط بث صالح في ملف PHP.");
+            console.error("لم يتم العثور على رابط بث صالح في API.");
             return;
         }
     }
 
     // إذا كان الرابط من YouTube، جلب رابط البث المباشر
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+    else if (url.includes('youtube.com') || url.includes('youtu.be')) {
         const youtubeStreamUrl = await fetchFromYouTube(url);
         if (youtubeStreamUrl) {
-            finalUrl = youtubeStreamUrl; // استخدام الرابط المسحوب من YouTube
+            finalUrl = youtubeStreamUrl;
         } else {
             console.error("لم يتم العثور على رابط البث المباشر من YouTube.");
             return;
         }
     }
 
-    // إذا تمت إضافة مفتاح جديد يدويًا (بالطريقة التقليدية)، استخدامه بدلاً من المفاتيح الثابتة
-    if (key) {
-        finalKey = key; // استخدام المفتاح الجديد
+    // إذا لم يتم العثور على رابط صالح
+    if (!finalUrl) {
+        console.error("الرابط غير صالح أو غير مدعوم.");
+        return;
     }
 
     // تحديد نوع الملف تلقائيًا
@@ -170,7 +159,7 @@ async function playChannel(url, key) {
         return;
     }
 
-    // تحويل التنسيق keyid:key إلى إعدادات DRM
+    // تحويل التنسيق keyid:key إلى إعدادات DRM (فقط لروابط API)
     const drmConfig = finalKey ? {
         clearkey: {
             keyId: finalKey.split(':')[0], // الجزء الأول هو keyid
@@ -178,6 +167,12 @@ async function playChannel(url, key) {
         },
         robustness: 'SW_SECURE_CRYPTO' // إضافة robustness
     } : null;
+
+    // التأكد من وجود عنصر المشغل في DOM
+    if (!document.getElementById("player")) {
+        console.error("عنصر المشغل غير موجود في الصفحة.");
+        return;
+    }
 
     // إعداد المشغل
     try {
