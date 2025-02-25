@@ -69,26 +69,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // دالة لجلب manifestUri و clearkeys من ملف PHP
- async function fetchManifestAndKeys(phpUrl) {
+async function fetchManifestAndKeys(phpUrl) {
     try {
         const response = await fetch(phpUrl);
         const text = await response.text();
 
-        // استخراج رابط البث المباشر بعد الوسم file: "
-        const fileUrlMatch = text.match(/file:\s*"([^"]+)"/);
-        const fileUrl = fileUrlMatch ? fileUrlMatch[1] : null;
+        // استخراج رابط البث المباشر بعد الوسم stream_url: "
+        const streamUrlMatch = text.match(/"stream_url":\s*"([^"]+)"/);
+        const streamUrl = streamUrlMatch ? streamUrlMatch[1] : null;
 
-        if (!fileUrl) {
+        if (!streamUrl) {
             console.error("لم يتم العثور على رابط البث في ملف PHP.");
+            return { streamUrl: null };
         }
 
-        return { fileUrl };
+        // استخدام المفاتيح الثابتة عند سحبها من ملف الـ .php
+        const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
+        const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
+        const finalKey = `${staticKeyid}:${staticKey}`;
+
+        return { streamUrl, finalKey };
     } catch (error) {
         console.error("حدث خطأ أثناء جلب البيانات من ملف PHP:", error);
-        return { fileUrl: null };
+        return { streamUrl: null, finalKey: null };
     }
 }
 
+// دالة لجلب رابط البث المباشر من YouTube
 async function fetchFromYouTube(youtubeUrl) {
     try {
         const response = await fetch(youtubeUrl);
@@ -109,6 +116,7 @@ async function fetchFromYouTube(youtubeUrl) {
     }
 }
 
+// دالة لتشغيل القناة
 async function playChannel(url, key) {
     if (!url) {
         console.error("رابط القناة غير موجود!");
@@ -120,14 +128,10 @@ async function playChannel(url, key) {
 
     // إذا كان الرابط ينتهي بـ .php، جلب البيانات منه
     if (url.endsWith('.php')) {
-        const { fileUrl } = await fetchManifestAndKeys(url);
-        if (fileUrl) {
-            finalUrl = fileUrl; // استخدام الرابط المسحوب
-
-            // استخدام المفاتيح الثابتة عند سحبها من ملف الـ .php
-            const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
-            const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
-            finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
+        const { streamUrl, finalKey: phpKey } = await fetchManifestAndKeys(url);
+        if (streamUrl) {
+            finalUrl = streamUrl; // استخدام الرابط المسحوب
+            finalKey = phpKey; // استخدام المفاتيح الثابتة
         } else {
             console.error("لم يتم العثور على رابط البث في ملف PHP.");
             return;
@@ -191,22 +195,23 @@ async function playChannel(url, key) {
         console.error("حدث خطأ في إعداد المشغل:", error);
     });
 }
-    // تحديد نوع الملف تلقائيًا
-    function getStreamType(url) {
-        if (url.includes(".m3u8")) {
-            return "hls";
-        } else if (url.includes(".mpd")) {
-            return "dash";
-        } else if (url.includes(".mp4") || url.includes(".m4v")) {
-            return "mp4";
-        } else if (url.includes(".ts") || url.includes(".mpegts")) {
-            return "mpegts";
-        } else if (url.includes(".php") || url.includes(".embed")) {
-            return "html5";
-        } else {
-            return "auto";
-        }
+
+// تحديد نوع الملف تلقائيًا
+function getStreamType(url) {
+    if (url.includes(".m3u8")) {
+        return "hls";
+    } else if (url.includes(".mpd")) {
+        return "dash";
+    } else if (url.includes(".mp4") || url.includes(".m4v")) {
+        return "mp4";
+    } else if (url.includes(".ts") || url.includes(".mpegts")) {
+        return "mpegts";
+    } else if (url.includes(".php") || url.includes(".embed")) {
+        return "html5";
+    } else {
+        return "auto";
     }
+}
     // البحث عن القنوات
     searchInput.addEventListener("input", () => {
         const searchTerm = searchInput.value.toLowerCase();
