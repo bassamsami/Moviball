@@ -67,8 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
-
-    // دالة لجلب رابط البث من ملف PHP باستخدام وسوم مختلفة
+// دالة لجلب رابط البث من ملف PHP باستخدام وسوم مختلفة
 async function fetchManifestAndKeys(phpUrl) {
     try {
         const response = await fetch(phpUrl);
@@ -89,13 +88,17 @@ async function fetchManifestAndKeys(phpUrl) {
         for (const tag of possibleTags) {
             const match = text.match(tag);
             if (match && match[1]) {
-                streamUrl = match[1];
-                break; // إيقاف البحث عند العثور على الرابط
+                const url = match[1];
+                // التأكد من أن الرابط يحتوي على manifest.mpd (فقط لروابط PHP)
+                if (url.includes("manifest.mpd")) {
+                    streamUrl = url;
+                    break; // إيقاف البحث عند العثور على الرابط الصحيح
+                }
             }
         }
 
         if (!streamUrl) {
-            console.error("لم يتم العثور على رابط البث في ملف PHP.");
+            console.error("لم يتم العثور على رابط البث (manifest.mpd) في ملف PHP.");
             return { streamUrl: null, finalKey: null };
         }
 
@@ -165,10 +168,19 @@ async function playChannel(url, key) {
         }
     }
 
+    // إذا كان الرابط من PHP ولا يحتوي على manifest.mpd، لا نقوم بتشغيله
+    if (url.endsWith('.php') && !finalUrl.includes("manifest.mpd")) {
+        console.error("الرابط المسحوب من PHP لا يحتوي على manifest.mpd.");
+        return;
+    }
+
     // إذا تمت إضافة مفتاح جديد يدويًا (بالطريقة التقليدية)، استخدامه بدلاً من المفاتيح الثابتة
     if (key) {
         finalKey = key; // استخدام المفتاح الجديد
     }
+
+    // تحديد نوع الملف تلقائيًا
+    const streamType = getStreamType(finalUrl);
 
     // تحويل التنسيق keyid:key إلى إعدادات DRM
     const drmConfig = finalKey ? {
@@ -184,7 +196,7 @@ async function playChannel(url, key) {
         playlist: [{
             sources: [{
                 file: finalUrl,
-                type: getStreamType(finalUrl),
+                type: streamType, // تحديد نوع الملف تلقائيًا
                 drm: drmConfig
             }]
         }],
@@ -215,17 +227,15 @@ async function playChannel(url, key) {
 // تحديد نوع الملف تلقائيًا
 function getStreamType(url) {
     if (url.includes(".m3u8")) {
-        return "hls";
+        return "hls"; // تنسيق HLS
     } else if (url.includes(".mpd")) {
-        return "dash";
+        return "dash"; // تنسيق DASH
     } else if (url.includes(".mp4") || url.includes(".m4v")) {
-        return "mp4";
+        return "mp4"; // تنسيق MP4
     } else if (url.includes(".ts") || url.includes(".mpegts")) {
-        return "mpegts";
-    } else if (url.includes(".php") || url.includes(".embed")) {
-        return "html5";
+        return "mpegts"; // تنسيق MPEG-TS
     } else {
-        return "auto";
+        return "auto"; // تلقائي
     }
 }
     // البحث عن القنوات
