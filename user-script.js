@@ -136,6 +136,7 @@ async function fetchFromYouTube(youtubeUrl) {
 }
 
 // دالة لتشغيل القناة
+// دالة لتشغيل القناة
 async function playChannel(url, key) {
     if (!url) {
         console.error("رابط القناة غير موجود!");
@@ -182,6 +183,12 @@ async function playChannel(url, key) {
     // تحديد نوع الملف تلقائيًا
     const streamType = getStreamType(finalUrl);
 
+    // إذا لم يتم تحديد نوع الملف، لا نقوم بتشغيل الرابط
+    if (!streamType) {
+        console.error("نوع الملف غير مدعوم أو غير معروف:", finalUrl);
+        return;
+    }
+
     // تحويل التنسيق keyid:key إلى إعدادات DRM
     const drmConfig = finalKey ? {
         clearkey: {
@@ -192,36 +199,40 @@ async function playChannel(url, key) {
     } : null;
 
     // إعداد المشغل
-    const playerInstance = jwplayer("player").setup({
-        playlist: [{
-            sources: [{
-                file: finalUrl,
-                type: streamType, // تحديد نوع الملف تلقائيًا
-                drm: drmConfig
-            }]
-        }],
-        width: "100%",
-        height: "100%",
-        autostart: true,
-        cast: {},
-        sharing: false
-    });
+    try {
+        const playerInstance = jwplayer("player").setup({
+            playlist: [{
+                sources: [{
+                    file: finalUrl,
+                    type: streamType, // تحديد نوع الملف تلقائيًا
+                    drm: drmConfig
+                }]
+            }],
+            width: "100%",
+            height: "100%",
+            autostart: true,
+            cast: {},
+            sharing: false
+        });
 
-    // إعداد الأحداث للمشغل
-    playerInstance.on('ready', () => {
-        console.log("المشغل جاهز للتشغيل");
-    });
+        // إعداد الأحداث للمشغل
+        playerInstance.on('ready', () => {
+            console.log("المشغل جاهز للتشغيل");
+        });
 
-    playerInstance.on('error', (error) => {
-        console.error("حدث خطأ في المشغل:", error);
-        if (error.code === 246012) {
-            console.error("السبب المحتمل: الرابط أو المفاتيح غير صحيحة.");
-        }
-    });
+        playerInstance.on('error', (error) => {
+            console.error("حدث خطأ في المشغل:", error);
+            if (error.code === 246012) {
+                console.error("السبب المحتمل: الرابط أو المفاتيح غير صحيحة.");
+            }
+        });
 
-    playerInstance.on('setupError', (error) => {
-        console.error("حدث خطأ في إعداد المشغل:", error);
-    });
+        playerInstance.on('setupError', (error) => {
+            console.error("حدث خطأ في إعداد المشغل:", error);
+        });
+    } catch (error) {
+        console.error("حدث خطأ أثناء إعداد المشغل:", error);
+    }
 }
 
 // تحديد نوع الملف تلقائيًا
@@ -235,7 +246,7 @@ function getStreamType(url) {
     } else if (url.includes(".ts") || url.includes(".mpegts")) {
         return "mpegts"; // تنسيق MPEG-TS
     } else {
-        return "auto"; // تلقائي
+        return null; // نوع غير معروف
     }
 }
     // البحث عن القنوات
