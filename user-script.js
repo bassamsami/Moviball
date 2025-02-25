@@ -68,15 +68,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
     
-// دالة لجلب الرابط والمفاتيح من API
+// دالة لجلب الرابط من API (نص عادي)
 async function get(apiUrl) {
     try {
         const response = await fetch(apiUrl);
-        const data = await response.json(); // تحويل النص إلى JSON
+        const text = await response.text(); // النص العادي وليس JSON
 
-        // استخراج رابط البث والمفاتيح
-        const streamUrl = data.stream_url; // الرابط الرئيسي
-        const drmKeys = data.drm_keys; // المفاتيح
+        // البحث عن الرابط باستخدام تعبير منتظم
+        const streamUrlMatch = text.match(/"stream_url":\s*"([^"]+)"/);
+        const streamUrl = streamUrlMatch ? streamUrlMatch[1] : null;
+
+        if (!streamUrl) {
+            console.error("لم يتم العثور على رابط البث في API.");
+            return { streamUrl: null, finalKey: null };
+        }
 
         // استخدام المفاتيح الثابتة
         const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
