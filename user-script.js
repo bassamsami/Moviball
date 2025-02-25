@@ -68,19 +68,35 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // دالة لجلب manifestUri و clearkeys من ملف PHP
+    // دالة لجلب رابط البث من ملف PHP باستخدام وسوم مختلفة
 async function fetchManifestAndKeys(phpUrl) {
     try {
         const response = await fetch(phpUrl);
         const text = await response.text();
 
-        // استخراج رابط البث المباشر بعد الوسم stream_url: "
-        const streamUrlMatch = text.match(/"stream_url":\s*"([^"]+)"/);
-        const streamUrl = streamUrlMatch ? streamUrlMatch[1] : null;
+        // قائمة بالوسوم المحتملة التي قد تظهر قبل رابط البث
+        const possibleTags = [
+            /"stream":\s*"([^"]+)"/, // وسم stream
+            /"file":\s*"([^"]+)"/,   // وسم file
+            /"stream_url":\s*"([^"]+)"/, // وسم stream_url
+            /"url":\s*"([^"]+)"/,    // وسم url
+            /"manifest":\s*"([^"]+)"/ // وسم manifest
+        ];
+
+        let streamUrl = null;
+
+        // البحث عن الرابط باستخدام الوسوم المحتملة
+        for (const tag of possibleTags) {
+            const match = text.match(tag);
+            if (match && match[1]) {
+                streamUrl = match[1];
+                break; // إيقاف البحث عند العثور على الرابط
+            }
+        }
 
         if (!streamUrl) {
             console.error("لم يتم العثور على رابط البث في ملف PHP.");
-            return { streamUrl: null };
+            return { streamUrl: null, finalKey: null };
         }
 
         // استخدام المفاتيح الثابتة عند سحبها من ملف الـ .php
