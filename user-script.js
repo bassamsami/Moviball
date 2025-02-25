@@ -76,11 +76,11 @@ async function fetchStreamUrlFromPHP(phpUrl) {
 
         // قائمة بالوسوم المحتملة التي قد تظهر قبل رابط البث
         const possibleTags = [
-            /"stream":\s*"([^"]+)"/, // وسم stream
-            /"file":\s*"([^"]+)"/,   // وسم file
             /"stream_url":\s*"([^"]+)"/, // وسم stream_url
-            /"url":\s*"([^"]+)"/,    // وسم url
-            /"manifest":\s*"([^"]+)"/ // وسم manifest
+            /"file":\s*"([^"]+)"/,      // وسم file
+            /"stream":\s*"([^"]+)"/,     // وسم stream
+            /"url":\s*"([^"]+)"/,        // وسم url
+            /"manifest":\s*"([^"]+)"/    // وسم manifest
         ];
 
         // البحث عن الرابط باستخدام الوسوم المحتملة
