@@ -67,120 +67,124 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
-    
- // دالة لجلب manifestUri و clearkeys من ملف PHP
- async function fetchManifestAndKeys(phpUrl) {
-    try {
-        const response = await fetch(phpUrl);
-        const text = await response.text();
 
-        // استخراج رابط الـ manifestUri فقط
-        const manifestUriMatch = text.match(/const manifestUri\s*=\s*["']([^"']+)["']/);
-        const manifestUri = manifestUriMatch ? manifestUriMatch[1] : null;
+   // دالة لجلب رابط البث المباشر من YouTube
+        async function fetchFromYouTube(youtubeUrl) {
+            try {
+                const response = await fetch(youtubeUrl);
+                const text = await response.text();
 
-        if (!manifestUri) {
-            console.error("لم يتم العثور على رابط البث في ملف PHP.");
+                // البحث عن رابط البث المباشر (Live Stream) باستخدام hlsManifestUrl
+                const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
+                if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
+                    const hlsManifestUrl = hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
+                    return hlsManifestUrl;
+                } else {
+                    console.error("لم يتم العثور على رابط البث المباشر في صفحة YouTube.");
+                    return null;
+                }
+            } catch (error) {
+                console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${youtubeUrl}`, error);
+                return null;
+            }
         }
 
-        return { manifestUri };
-    } catch (error) {
-        console.error("حدث خطأ أثناء جلب البيانات من ملف PHP:", error);
-        return { manifestUri: null };
-    }
-}
+        // دالة لتشغيل القناة
+        async function playChannel(url, key) {
+            if (!url) {
+                console.error("الرابط غير موجود!");
+                return;
+            }
 
-    // دالة لتحويل clearkeys إلى التنسيق المطلوب
-   async function playChannel(url, key) {
-    if (!url) {
-        console.error("رابط القناة غير موجود!");
-        return;
-    }
+            let finalUrl = url;
+            let streamType = getStreamType(url);
 
-    let finalUrl = url;
-    let finalKey = key;
+            // إذا كان الرابط من YouTube، جلب رابط البث المباشر
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                const youtubeStreamUrl = await fetchFromYouTube(url);
+                if (youtubeStreamUrl) {
+                    finalUrl = youtubeStreamUrl;
+                    streamType = getStreamType(youtubeStreamUrl);
+                } else {
+                    console.error("لم يتم العثور على رابط البث المباشر من YouTube.");
+                    return;
+                }
+            }
 
-    // إذا كان الرابط ينتهي بـ .php، جلب البيانات منه
-    if (url.endsWith('.php')) {
-        const { manifestUri } = await fetchManifestAndKeys(url);
-        if (manifestUri) {
-            finalUrl = manifestUri; // استخدام الرابط المسحوب
-            console.log("تم سحب الرابط النهائي:", finalUrl);
+            // إذا لم يتم تحديد نوع الملف، لا نقوم بتشغيل الرابط
+            if (!streamType) {
+                console.error("نوع الملف غير مدعوم أو غير معروف:", finalUrl);
+                return;
+            }
 
-            // استخدام المفاتيح الثابتة عند سحبها من ملف الـ .php
-            const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
-            const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
-            finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
-            console.log("تم استخدام المفاتيح الثابتة:", finalKey);
-        } else {
-            console.error("لم يتم العثور على رابط البث في ملف PHP.");
-            return;
+            // تحويل التنسيق keyid:key إلى إعدادات DRM
+            const drmConfig = key ? {
+                clearkey: {
+                    keyId: key.split(':')[0], // الجزء الأول هو keyid
+                    key: key.split(':')[1]   // الجزء الثاني هو key
+                },
+                robustness: 'SW_SECURE_CRYPTO' // إضافة robustness
+            } : null;
+
+            // التأكد من وجود عنصر المشغل في DOM
+            const playerElement = document.getElementById("player");
+            if (!playerElement) {
+                console.error("عنصر المشغل غير موجود في الصفحة.");
+                return;
+            }
+
+            // إعداد المشغل
+            try {
+                const playerInstance = jwplayer("player").setup({
+                    playlist: [{
+                        sources: [{
+                            file: finalUrl,
+                            type: streamType, // تحديد نوع الملف تلقائيًا
+                            drm: drmConfig
+                        }]
+                    }],
+                    width: "100%",
+                    height: "100%",
+                    autostart: true,
+                    cast: {},
+                    sharing: false
+                });
+
+                // إعداد الأحداث للمشغل
+                playerInstance.on('ready', () => {
+                    console.log("المشغل جاهز للتشغيل");
+                });
+
+                playerInstance.on('error', (error) => {
+                    console.error("حدث خطأ في المشغل:", error);
+                    if (error.code === 246012) {
+                        console.error("السبب المحتمل: الرابط أو المفاتيح غير صحيحة.");
+                    }
+                });
+
+                playerInstance.on('setupError', (error) => {
+                    console.error("حدث خطأ في إعداد المشغل:", error);
+                });
+            } catch (error) {
+                console.error("حدث خطأ أثناء إعداد المشغل:", error);
+            }
         }
-    }
 
-    // إذا تمت إضافة مفتاح جديد يدويًا (بالطريقة التقليدية)، استخدامه بدلاً من المفاتيح الثابتة
-    if (key) {
-        finalKey = key; // استخدام المفتاح الجديد
-        console.log("تم استخدام المفتاح الجديد:", finalKey);
-    }
-
-    // تحويل التنسيق keyid:key إلى إعدادات DRM
-    const drmConfig = finalKey ? {
-        clearkey: {
-            keyId: finalKey.split(':')[0], // الجزء الأول هو keyid
-            key: finalKey.split(':')[1]   // الجزء الثاني هو key
-        },
-        robustness: 'SW_SECURE_CRYPTO' // إضافة robustness
-    } : null;
-
-    // إعداد المشغل
-    const playerInstance = jwplayer("player").setup({
-        playlist: [{
-            sources: [{
-                file: finalUrl,
-                type: getStreamType(finalUrl),
-                drm: drmConfig
-            }]
-        }],
-        width: "100%",
-        height: "100%",
-        autostart: true,
-        cast: {},
-        sharing: false
-    });
-
-    // إعداد الأحداث للمشغل
-    playerInstance.on('ready', () => {
-        console.log("المشغل جاهز للتشغيل!");
-    });
-
-    playerInstance.on('error', (error) => {
-        console.error("حدث خطأ في المشغل:", error);
-        if (error.code === 246012) {
-            console.error("السبب المحتمل: الرابط أو المفاتيح غير صحيحة.");
+        // تحديد نوع الملف تلقائيًا
+        function getStreamType(url) {
+            if (url.includes(".m3u8")) {
+                return "hls"; // تنسيق HLS
+            } else if (url.includes(".mpd")) {
+                return "dash"; // تنسيق DASH
+            } else if (url.includes(".mp4") || url.includes(".m4v")) {
+                return "mp4"; // تنسيق MP4
+            } else if (url.includes(".ts") || url.includes(".mpegts")) {
+                return "mpegts"; // تنسيق MPEG-TS
+            } else {
+                return null; // نوع غير معروف
+            }
         }
-    });
 
-    playerInstance.on('setupError', (error) => {
-        console.error("حدث خطأ في إعداد المشغل:", error);
-    });
-}
-    // تحديد نوع الملف تلقائيًا
-    function getStreamType(url) {
-        if (url.includes(".m3u8")) {
-            return "hls";
-        } else if (url.includes(".mpd")) {
-            return "dash";
-        } else if (url.includes(".mp4") || url.includes(".m4v")) {
-            return "mp4";
-        } else if (url.includes(".ts") || url.includes(".mpegts")) {
-            return "mpegts";
-        } else if (url.includes(".php") || url.includes(".embed")) {
-            return "html5";
-        } else {
-            return "auto";
-        }
-    }
-    
     // البحث عن القنوات
     searchInput.addEventListener("input", () => {
         const searchTerm = searchInput.value.toLowerCase();
