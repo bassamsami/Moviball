@@ -67,122 +67,111 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-   // دالة لجلب رابط البث المباشر من YouTube
-        async function fetchFromYouTube(youtubeUrl) {
-            try {
-                const response = await fetch(youtubeUrl);
-                const text = await response.text();
+  // دالة لجلب رابط البث المباشر من YouTube
+async function fetchFromYouTube(youtubeUrl) {
+    try {
+        const response = await fetch(youtubeUrl);
+        const text = await response.text();
 
-                // البحث عن رابط البث المباشر (Live Stream) باستخدام hlsManifestUrl
-                const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
-                if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
-                    const hlsManifestUrl = hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
-                    return hlsManifestUrl;
-                } else {
-                    console.error("لم يتم العثور على رابط البث المباشر في صفحة YouTube.");
-                    return null;
-                }
-            } catch (error) {
-                console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${youtubeUrl}`, error);
-                return null;
-            }
+        // البحث عن رابط البث المباشر (Live Stream) باستخدام hlsManifestUrl
+        const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
+        if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
+            const hlsManifestUrl = hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
+            return hlsManifestUrl;
+        } else {
+            console.error("لم يتم العثور على رابط البث المباشر في صفحة YouTube.");
+            return null;
         }
+    } catch (error) {
+        console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${youtubeUrl}`, error);
+        return null;
+    }
+}
 
-        // دالة لتشغيل القناة
-        async function playChannel(url, key) {
-            if (!url) {
-                console.error("الرابط غير موجود!");
-                return;
-            }
+// دالة لتشغيل القناة
+async function playChannel(url) {
+    if (!url) {
+        console.error("الرابط غير موجود!");
+        return;
+    }
 
-            let finalUrl = url;
-            let streamType = getStreamType(url);
+    let finalUrl = url;
+    let streamType = getStreamType(url);
 
-            // إذا كان الرابط من YouTube، جلب رابط البث المباشر
-            if (url.includes('youtube.com') || url.includes('youtu.be')) {
-                const youtubeStreamUrl = await fetchFromYouTube(url);
-                if (youtubeStreamUrl) {
-                    finalUrl = youtubeStreamUrl;
-                    streamType = getStreamType(youtubeStreamUrl);
-                } else {
-                    console.error("لم يتم العثور على رابط البث المباشر من YouTube.");
-                    return;
-                }
-            }
-
-            // إذا لم يتم تحديد نوع الملف، لا نقوم بتشغيل الرابط
-            if (!streamType) {
-                console.error("نوع الملف غير مدعوم أو غير معروف:", finalUrl);
-                return;
-            }
-
-            // تحويل التنسيق keyid:key إلى إعدادات DRM
-            const drmConfig = key ? {
-                clearkey: {
-                    keyId: key.split(':')[0], // الجزء الأول هو keyid
-                    key: key.split(':')[1]   // الجزء الثاني هو key
-                },
-                robustness: 'SW_SECURE_CRYPTO' // إضافة robustness
-            } : null;
-
-            // التأكد من وجود عنصر المشغل في DOM
-            const playerElement = document.getElementById("player");
-            if (!playerElement) {
-                console.error("عنصر المشغل غير موجود في الصفحة.");
-                return;
-            }
-
-            // إعداد المشغل
-            try {
-                const playerInstance = jwplayer("player").setup({
-                    playlist: [{
-                        sources: [{
-                            file: finalUrl,
-                            type: streamType, // تحديد نوع الملف تلقائيًا
-                            drm: drmConfig
-                        }]
-                    }],
-                    width: "100%",
-                    height: "100%",
-                    autostart: true,
-                    cast: {},
-                    sharing: false
-                });
-
-                // إعداد الأحداث للمشغل
-                playerInstance.on('ready', () => {
-                    console.log("المشغل جاهز للتشغيل");
-                });
-
-                playerInstance.on('error', (error) => {
-                    console.error("حدث خطأ في المشغل:", error);
-                    if (error.code === 246012) {
-                        console.error("السبب المحتمل: الرابط أو المفاتيح غير صحيحة.");
-                    }
-                });
-
-                playerInstance.on('setupError', (error) => {
-                    console.error("حدث خطأ في إعداد المشغل:", error);
-                });
-            } catch (error) {
-                console.error("حدث خطأ أثناء إعداد المشغل:", error);
-            }
+    // إذا كان الرابط من YouTube، جلب رابط البث المباشر
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        const youtubeStreamUrl = await fetchFromYouTube(url);
+        if (youtubeStreamUrl) {
+            finalUrl = youtubeStreamUrl;
+            streamType = getStreamType(youtubeStreamUrl);
+        } else {
+            console.error("لم يتم العثور على رابط البث المباشر من YouTube.");
+            return;
         }
+    }
 
-        // تحديد نوع الملف تلقائيًا
-        function getStreamType(url) {
-            if (url.includes(".m3u8")) {
-                return "hls"; // تنسيق HLS
-            } else if (url.includes(".mpd")) {
-                return "dash"; // تنسيق DASH
-            } else if (url.includes(".mp4") || url.includes(".m4v")) {
-                return "mp4"; // تنسيق MP4
-            } else if (url.includes(".ts") || url.includes(".mpegts")) {
-                return "mpegts"; // تنسيق MPEG-TS
-            } else {
-                return null; // نوع غير معروف
+    // إذا لم يتم تحديد نوع الملف، لا نقوم بتشغيل الرابط
+    if (!streamType) {
+        console.error("نوع الملف غير مدعوم أو غير معروف:", finalUrl);
+        return;
+    }
+
+    // التأكد من وجود عنصر المشغل في DOM
+    if (!document.getElementById("player")) {
+        console.error("عنصر المشغل غير موجود في الصفحة.");
+        return;
+    }
+
+    // إعداد المشغل
+    try {
+        const playerInstance = jwplayer("player").setup({
+            playlist: [{
+                sources: [{
+                    file: finalUrl,
+                    type: streamType // تحديد نوع الملف تلقائيًا
+                }]
+            }],
+            width: "100%",
+            height: "100%",
+            autostart: true,
+            cast: {},
+            sharing: false
+        });
+
+        // إعداد الأحداث للمشغل
+        playerInstance.on('ready', () => {
+            console.log("المشغل جاهز للتشغيل");
+        });
+
+        playerInstance.on('error', (error) => {
+            console.error("حدث خطأ في المشغل:", error);
+            if (error.code === 246012) {
+                console.error("السبب المحتمل: الرابط غير صحيح.");
             }
-        }
+        });
+
+        playerInstance.on('setupError', (error) => {
+            console.error("حدث خطأ في إعداد المشغل:", error);
+        });
+    } catch (error) {
+        console.error("حدث خطأ أثناء إعداد المشغل:", error);
+    }
+}
+
+// تحديد نوع الملف تلقائيًا
+function getStreamType(url) {
+    if (url.includes(".m3u8")) {
+        return "hls"; // تنسيق HLS
+    } else if (url.includes(".mpd")) {
+        return "dash"; // تنسيق DASH
+    } else if (url.includes(".mp4") || url.includes(".m4v")) {
+        return "mp4"; // تنسيق MP4
+    } else if (url.includes(".ts") || url.includes(".mpegts")) {
+        return "mpegts"; // تنسيق MPEG-TS
+    } else {
+        return null; // نوع غير معروف
+    }
+}
 
     // البحث عن القنوات
     searchInput.addEventListener("input", () => {
