@@ -68,34 +68,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
     
-// دالة لجلب الرابط من API (نص عادي)
-async function get(apiUrl) {
+// دالة لجلب manifestUri و clearkeys من ملف PHP
+ async function fetchManifestAndKeys(phpUrl) {
     try {
-        const response = await fetch(apiUrl);
-        const text = await response.text(); // النص العادي وليس JSON
+        const response = await fetch(phpUrl);
+        const text = await response.text();
 
-        // البحث عن الرابط باستخدام تعبير منتظم
-        const streamUrlMatch = text.match(/"stream_url":\s*"([^"]+)"/);
-        const streamUrl = streamUrlMatch ? streamUrlMatch[1] : null;
+        // استخراج رابط البث المباشر بعد الوسم file: "
+        const fileUrlMatch = text.match(/file:\s*"([^"]+)"/);
+        const fileUrl = fileUrlMatch ? fileUrlMatch[1] : null;
 
-        if (!streamUrl) {
-            console.error("لم يتم العثور على رابط البث في API.");
-            return { streamUrl: null, finalKey: null };
+        if (!fileUrl) {
+            console.error("لم يتم العثور على رابط البث في ملف PHP.");
         }
 
-        // استخدام المفاتيح الثابتة
-        const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
-        const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
-        const finalKey = `${staticKeyid}:${staticKey}`;
-
-        return { streamUrl, finalKey };
+        return { fileUrl };
     } catch (error) {
-        console.error("حدث خطأ أثناء جلب البيانات من API:", error);
-        return { streamUrl: null, finalKey: null };
+        console.error("حدث خطأ أثناء جلب البيانات من ملف PHP:", error);
+        return { fileUrl: null };
     }
 }
 
-// دالة لجلب رابط البث المباشر من YouTube
 async function fetchFromYouTube(youtubeUrl) {
     try {
         const response = await fetch(youtubeUrl);
@@ -116,55 +109,48 @@ async function fetchFromYouTube(youtubeUrl) {
     }
 }
 
-// دالة لتشغيل القناة
-async function playChannel(url) {
+async function playChannel(url, key) {
     if (!url) {
-        console.error("الرابط غير موجود!");
+        console.error("رابط القناة غير موجود!");
         return;
     }
 
-    let finalUrl = null;
-    let finalKey = null;
+    let finalUrl = url;
+    let finalKey = key;
 
-    // إذا كان الرابط ينتهي بـ .php، جلب الرابط والمفاتيح من API
+    // إذا كان الرابط ينتهي بـ .php، جلب البيانات منه
     if (url.endsWith('.php')) {
-        const { streamUrl, finalKey: apiKey } = await get(url);
-        if (streamUrl) {
-            finalUrl = streamUrl;
-            finalKey = apiKey;
+        const { fileUrl } = await fetchManifestAndKeys(url);
+        if (fileUrl) {
+            finalUrl = fileUrl; // استخدام الرابط المسحوب
+
+            // استخدام المفاتيح الثابتة عند سحبها من ملف الـ .php
+            const staticKeyid = "0a7934dddc3136a6922584b96c3fd1e5";
+            const staticKey = "676e6d1dd00bfbe266003efaf0e3aa02";
+            finalKey = `${staticKeyid}:${staticKey}`; // استخدام المفاتيح الثابتة
         } else {
-            console.error("لم يتم العثور على رابط بث صالح في API.");
+            console.error("لم يتم العثور على رابط البث في ملف PHP.");
             return;
         }
     }
 
     // إذا كان الرابط من YouTube، جلب رابط البث المباشر
-    else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
         const youtubeStreamUrl = await fetchFromYouTube(url);
         if (youtubeStreamUrl) {
-            finalUrl = youtubeStreamUrl;
+            finalUrl = youtubeStreamUrl; // استخدام الرابط المسحوب من YouTube
         } else {
             console.error("لم يتم العثور على رابط البث المباشر من YouTube.");
             return;
         }
     }
 
-    // إذا لم يتم العثور على رابط صالح
-    if (!finalUrl) {
-        console.error("الرابط غير صالح أو غير مدعوم.");
-        return;
+    // إذا تمت إضافة مفتاح جديد يدويًا (بالطريقة التقليدية)، استخدامه بدلاً من المفاتيح الثابتة
+    if (key) {
+        finalKey = key; // استخدام المفتاح الجديد
     }
 
-    // تحديد نوع الملف تلقائيًا
-    const streamType = getStreamType(finalUrl);
-
-    // إذا لم يتم تحديد نوع الملف، لا نقوم بتشغيل الرابط
-    if (!streamType) {
-        console.error("نوع الملف غير مدعوم أو غير معروف:", finalUrl);
-        return;
-    }
-
-    // تحويل التنسيق keyid:key إلى إعدادات DRM (فقط لروابط API)
+    // تحويل التنسيق keyid:key إلى إعدادات DRM
     const drmConfig = finalKey ? {
         clearkey: {
             keyId: finalKey.split(':')[0], // الجزء الأول هو keyid
@@ -173,63 +159,54 @@ async function playChannel(url) {
         robustness: 'SW_SECURE_CRYPTO' // إضافة robustness
     } : null;
 
-    // التأكد من وجود عنصر المشغل في DOM
-    if (!document.getElementById("player")) {
-        console.error("عنصر المشغل غير موجود في الصفحة.");
-        return;
-    }
-
     // إعداد المشغل
-    try {
-        const playerInstance = jwplayer("player").setup({
-            playlist: [{
-                sources: [{
-                    file: finalUrl,
-                    type: streamType, // تحديد نوع الملف تلقائيًا
-                    drm: drmConfig
-                }]
-            }],
-            width: "100%",
-            height: "100%",
-            autostart: true,
-            cast: {},
-            sharing: false
-        });
+    const playerInstance = jwplayer("player").setup({
+        playlist: [{
+            sources: [{
+                file: finalUrl,
+                type: getStreamType(finalUrl),
+                drm: drmConfig
+            }]
+        }],
+        width: "100%",
+        height: "100%",
+        autostart: true,
+        cast: {},
+        sharing: false
+    });
 
-        // إعداد الأحداث للمشغل
-        playerInstance.on('ready', () => {
-            console.log("المشغل جاهز للتشغيل");
-        });
+    // إعداد الأحداث للمشغل
+    playerInstance.on('ready', () => {
+        console.log("المشغل جاهز للتشغيل");
+    });
 
-        playerInstance.on('error', (error) => {
-            console.error("حدث خطأ في المشغل:", error);
-            if (error.code === 246012) {
-                console.error("السبب المحتمل: الرابط أو المفاتيح غير صحيحة.");
-            }
-        });
+    playerInstance.on('error', (error) => {
+        console.error("حدث خطأ في المشغل:", error);
+        if (error.code === 246012) {
+            console.error("السبب المحتمل: الرابط أو المفاتيح غير صحيحة.");
+        }
+    });
 
-        playerInstance.on('setupError', (error) => {
-            console.error("حدث خطأ في إعداد المشغل:", error);
-        });
-    } catch (error) {
-        console.error("حدث خطأ أثناء إعداد المشغل:", error);
-    }
+    playerInstance.on('setupError', (error) => {
+        console.error("حدث خطأ في إعداد المشغل:", error);
+    });
 }
-
-// تحديد نوع الملف تلقائيًا
-function getStreamType(url) {
-    if (url.includes(".m3u8")) {
-        return "hls"; // تنسيق HLS
-    } else if (url.includes(".mpd")) {
-        return "dash"; // تنسيق DASH
-    } else if (url.includes(".mp4") || url.includes(".m4v")) {
-        return "mp4"; // تنسيق MP4
-    } else if (url.includes(".ts") || url.includes(".mpegts")) {
-        return "mpegts"; // تنسيق MPEG-TS
-    } else {
-        return null; // نوع غير معروف
+    // تحديد نوع الملف تلقائيًا
+    function getStreamType(url) {
+        if (url.includes(".m3u8")) {
+            return "hls";
+        } else if (url.includes(".mpd")) {
+            return "dash";
+        } else if (url.includes(".mp4") || url.includes(".m4v")) {
+            return "mp4";
+        } else if (url.includes(".ts") || url.includes(".mpegts")) {
+            return "mpegts";
+        } else if (url.includes(".php") || url.includes(".embed")) {
+            return "html5";
+        } else {
+            return "auto";
+        }
     }
-}
     
     // البحث عن القنوات
     searchInput.addEventListener("input", () => {
