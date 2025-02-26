@@ -90,7 +90,8 @@ async function fetchFromYouTube(youtubeUrl) {
 }
 
 // دالة لتشغيل القناة
-async function playChannel(url) {
+// دالة لتشغيل القناة
+async function playChannel(url, key) {
     if (!url) {
         console.error("الرابط غير موجود!");
         return;
@@ -117,8 +118,18 @@ async function playChannel(url) {
         return;
     }
 
+    // تحويل التنسيق keyid:key إلى إعدادات DRM
+    const drmConfig = key ? {
+        clearkey: {
+            keyId: key.split(':')[0], // الجزء الأول هو keyid
+            key: key.split(':')[1]   // الجزء الثاني هو key
+        },
+        robustness: 'SW_SECURE_CRYPTO' // إضافة robustness
+    } : null;
+
     // التأكد من وجود عنصر المشغل في DOM
-    if (!document.getElementById("player")) {
+    const playerElement = document.getElementById("player");
+    if (!playerElement) {
         console.error("عنصر المشغل غير موجود في الصفحة.");
         return;
     }
@@ -129,7 +140,8 @@ async function playChannel(url) {
             playlist: [{
                 sources: [{
                     file: finalUrl,
-                    type: streamType // تحديد نوع الملف تلقائيًا
+                    type: streamType, // تحديد نوع الملف تلقائيًا
+                    drm: drmConfig
                 }]
             }],
             width: "100%",
@@ -147,7 +159,7 @@ async function playChannel(url) {
         playerInstance.on('error', (error) => {
             console.error("حدث خطأ في المشغل:", error);
             if (error.code === 246012) {
-                console.error("السبب المحتمل: الرابط غير صحيح.");
+                console.error("السبب المحتمل: الرابط أو المفاتيح غير صحيحة.");
             }
         });
 
