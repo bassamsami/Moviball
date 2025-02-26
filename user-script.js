@@ -60,7 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             const key = channelCard.getAttribute("data-key");
                             playChannel(url, key);
                             channelsSidebar.style.display = "none";
-                            playerPlaceholder.style.display = "none";
                         });
                     });
                 });
