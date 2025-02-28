@@ -24,18 +24,62 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.toggle("dark-theme");
         themeToggle.innerHTML = document.body.classList.contains("dark-theme") ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     });
-// منع Developer Tools (F12, Ctrl+U, Ctrl+Shift+I)
-document.addEventListener("contextmenu", (e) => e.preventDefault());
-document.addEventListener("keydown", (e) => {
+
+ <script>
+        // التحقق من VPN أو Proxy
+fetch("https://ipinfo.io/json")
+    .then(response => response.json())
+    .then(data => {
+        if (data.vpn || data.proxy) {
+            console.error("VPN or Proxy detected!");
+            alert("VPN or Proxy is not allowed!");
+            window.location.href = "about:blank"; // منع الدخول بدلاً من إعادة التحميل
+        }
+    })
+    .catch(error => console.error("Failed to check VPN/Proxy:", error));
+	
+	// التحقق من User Agent
+const userAgent = navigator.userAgent;
+if (!userAgent.includes("Mozilla") || !userAgent.includes("Chrome")) {
+    console.error("Invalid user agent detected!");
+    alert("Unsupported browser detected!");
+    window.location.href = "about:blank"; // منع الدخول بدلاً من إعادة التحميل
+}
+
+// التحقق من سلامة الجلسة
+if (!localStorage.getItem("validSession")) {
+    console.error("Invalid session detected!");
+    localStorage.setItem("validSession", "true");
+}
+
+// منع Developer Tools
+(function preventDevTools() {
+    const element = new Image();
+    Object.defineProperty(element, "id", {
+        get: function () {
+            alert("Developer Tools detected!");
+            window.location.href = "about:blank";
+        }
+    });
+    console.log("%c", element);
+})();
+
+// منع F12, Ctrl+U, Ctrl+Shift+I
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", e => {
     if (
-        e.key === "F12" || // منع F12
-        (e.ctrlKey && e.key === "u") || // منع Ctrl+U
-        (e.ctrlKey && e.shiftKey && e.key === "I") // منع Ctrl+Shift+I
+        e.key === "F12" ||
+        (e.ctrlKey && e.key.toLowerCase() === "u") ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i")
     ) {
         e.preventDefault();
         alert("Developer Tools are disabled!");
+        window.location.href = "about:blank";
     }
 });
+
+    </script>
+    
     // تحميل القنوات
     function loadChannels() {
         channelsList.innerHTML = "";
