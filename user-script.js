@@ -24,7 +24,18 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.toggle("dark-theme");
         themeToggle.innerHTML = document.body.classList.contains("dark-theme") ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     });
-
+// منع Developer Tools (F12, Ctrl+U, Ctrl+Shift+I)
+document.addEventListener("contextmenu", (e) => e.preventDefault());
+document.addEventListener("keydown", (e) => {
+    if (
+        e.key === "F12" || // منع F12
+        (e.ctrlKey && e.key === "u") || // منع Ctrl+U
+        (e.ctrlKey && e.shiftKey && e.key === "I") // منع Ctrl+Shift+I
+    ) {
+        e.preventDefault();
+        alert("Developer Tools are disabled!");
+    }
+});
     // تحميل القنوات
     function loadChannels() {
         channelsList.innerHTML = "";
