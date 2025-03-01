@@ -25,8 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         themeToggle.innerHTML = document.body.classList.contains("dark-theme") ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     });
 
- <script>
-        // التحقق من VPN أو Proxy
+// التحقق من VPN أو Proxy
 fetch("https://ipinfo.io/json")
     .then(response => response.json())
     .then(data => {
@@ -77,8 +76,6 @@ document.addEventListener("keydown", e => {
         window.location.href = "about:blank";
     }
 });
-
-    </script>
     
     // تحميل القنوات
     function loadChannels() {
