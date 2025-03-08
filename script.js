@@ -1,302 +1,110 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const themeToggle = document.getElementById("theme-toggle");
-    const channelsList = document.getElementById("channels-list");
-    const searchInput = document.getElementById("search-input");
-    const clearSearch = document.getElementById("clear-search");
-    const matchesButton = document.getElementById("matches-button");
-    const playerContainer = document.getElementById("player-container");
-    const playerPlaceholder = document.getElementById("player-placeholder");
-    const channelsSidebar = document.getElementById("channels-sidebar");
-    const channelsToggle = document.getElementById("channels-toggle");
-    const closeSidebar = document.getElementById("close-sidebar");
-    const matchesDialog = document.getElementById("matches-dialog");
-    const closeMatchesDialog = document.getElementById("close-matches-dialog");
+function showLoadingDialog(message = "Updating channels...") {
+    const dialog = document.getElementById("loading-dialog");
+    dialog.querySelector("p").textContent = message;
+    dialog.style.display = "block";
+}
 
-    // إخفاء القائمة عند النقر خارجها
-    document.addEventListener("click", (event) => {
-        if (!channelsSidebar.contains(event.target) && !channelsToggle.contains(event.target)) {
-            channelsSidebar.style.display = "none";
-        }
-    });
+function hideLoadingDialog() {
+    const dialog = document.getElementById("loading-dialog");
+    dialog.style.display = "none";
+}
 
-    // تبديل الثيم
-    themeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark-theme");
-        themeToggle.innerHTML = document.body.classList.contains("dark-theme") ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    });
+function showSuccessDialog(message) {
+    const dialog = document.getElementById("success-dialog");
+    dialog.querySelector("p").textContent = message;
+    dialog.style.display = "block";
+    setTimeout(() => {
+        dialog.style.display = "none";
+    }, 2000);
+}
 
-    // تحميل القنوات
-    function loadChannels() {
-        channelsList.innerHTML = "";
-        db.collection("groups").orderBy("createdAt", "asc").get().then((groupsSnapshot) => {
-            groupsSnapshot.forEach((groupDoc) => {
-                const group = groupDoc.data();
-                const groupSection = document.createElement("div");
-                groupSection.classList.add("group-section");
-                groupSection.setAttribute("data-group-id", groupDoc.id);
-                groupSection.innerHTML = `
-                    <h3 class="group-name">${group.name}</h3>
-                    <div class="channels-container"></div>
-                `;
-                channelsList.appendChild(groupSection);
+function showErrorDialog(message) {
+    const dialog = document.getElementById("error-dialog");
+    dialog.querySelector("p").textContent = message;
+    dialog.style.display = "block";
+    setTimeout(() => {
+        dialog.style.display = "none";
+    }, 1000); 
+}
 
-                const channelsContainer = groupSection.querySelector(".channels-container");
-
-                db.collection("channels").where("group", "==", groupDoc.id).orderBy("createdAt", "asc").get().then((channelsSnapshot) => {
-                    channelsSnapshot.forEach((channelDoc) => {
-                        const channel = channelDoc.data();
-                        const channelCard = document.createElement("div");
-                        channelCard.classList.add("channel-card");
-                        channelCard.innerHTML = `
-                            <img src="${channel.image}" alt="${channel.name}">
-                            <p>${channel.name}</p>
-                        `;
-                        channelCard.setAttribute("data-url", channel.url);
-                        channelCard.setAttribute("data-key", channel.key || "");
-                        channelsContainer.appendChild(channelCard);
-
-                        channelCard.addEventListener("click", () => {
-                            const url = channelCard.getAttribute("data-url");
-                            const key = channelCard.getAttribute("data-key");
-                            playChannel(url, key);
-                            channelsSidebar.style.display = "none";
-                        });
-                    });
-                });
-            });
-        });
-    }
-
-  // دالة لجلب رابط البث المباشر من YouTube
-async function fetchFromYouTube(youtubeUrl) {
+async function fetchNewUrl() {
     try {
-        const response = await fetch(youtubeUrl);
-        const text = await response.text();
+        
+        const response = await fetch('https://alraqi-tv.com/AAAA/2025//api.php');
+        const newUrl = await response.text();
+        console.log("Successfully fetched the new URL:", newUrl);
 
-        // البحث عن رابط البث المباشر (Live Stream) باستخدام hlsManifestUrl
-        const hlsManifestUrlMatch = text.match(/"hlsManifestUrl":"([^"]+)"/);
-        if (hlsManifestUrlMatch && hlsManifestUrlMatch[1]) {
-            const hlsManifestUrl = hlsManifestUrlMatch[1].replace(/\\\//g, '/'); // إصلاح الرابط
-            return hlsManifestUrl;
+        
+        if (newUrl && newUrl.startsWith("http")) {
+            return newUrl.trim();
         } else {
-            console.error("لم يتم العثور على رابط البث المباشر في صفحة YouTube.");
-            return null;
+            throw new Error("The fetched URL is invalid.");
         }
     } catch (error) {
-        console.error(`حدث خطأ أثناء جلب البيانات من الرابط: ${youtubeUrl}`, error);
+        console.error("An error occurred while fetching the new URL:", error);
         return null;
     }
 }
 
-// دالة لتشغيل القناة
-async function playChannel(url) {
-    if (!url) {
-        console.error("الرابط غير موجود!");
-        return;
-    }
 
-    let finalUrl = url;
-    let streamType = getStreamType(url);
-
-    // إذا كان الرابط من YouTube، جلب رابط البث المباشر
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-        const youtubeStreamUrl = await fetchFromYouTube(url);
-        if (youtubeStreamUrl) {
-            finalUrl = youtubeStreamUrl;
-            streamType = getStreamType(youtubeStreamUrl);
-        } else {
-            console.error("لم يتم العثور على رابط البث المباشر من YouTube.");
-            return;
-        }
-    }
-
-    // إذا لم يتم تحديد نوع الملف، لا نقوم بتشغيل الرابط
-    if (!streamType) {
-        console.error("نوع الملف غير مدعوم أو غير معروف:", finalUrl);
-        return;
-    }
-
-    // التأكد من وجود عنصر المشغل في DOM
-    if (!document.getElementById("player")) {
-        console.error("عنصر المشغل غير موجود في الصفحة.");
-        return;
-    }
-
-    // إعداد المشغل
+async function updateLinksWithNewUrl(newUrl) {
     try {
-        const playerInstance = jwplayer("player").setup({
-            playlist: [{
-                sources: [{
-                    file: finalUrl,
-                    type: streamType // تحديد نوع الملف تلقائيًا
-                }]
-            }],
-            width: "100%",
-            height: "100%",
-            autostart: true,
-            cast: {},
-            sharing: false
-        });
+        console.log("Updating links with the new URL:", newUrl);
 
-        // إعداد الأحداث للمشغل
-        playerInstance.on('ready', () => {
-            console.log("المشغل جاهز للتشغيل");
-        });
+       
+        const stMatch = newUrl.match(/st=(\d+)/);
+        const expMatch = newUrl.match(/exp=(\d+)/);
+        const dataMatch = newUrl.match(/data=([a-f0-9-]+)/);
+        const hmacMatch = newUrl.match(/hmac=([a-f0-9]+)/);
 
-        playerInstance.on('error', (error) => {
-            console.error("حدث خطأ في المشغل:", error);
-            if (error.code === 246012) {
-                console.error("السبب المحتمل: الرابط غير صحيح.");
+        if (stMatch && expMatch && dataMatch && hmacMatch) {
+            const newSt = stMatch[1];
+            const newExp = expMatch[1];
+            const newData = dataMatch[1];
+            const newHmac = hmacMatch[1];
+
+            console.log("Extracted new values:", { newSt, newExp, newData, newHmac });
+
+            
+            if (newUrl.includes("acl=/Content/*")) {
+                
+                console.log("Updating links containing `acl=/Content/*`...");
+                await updateCollectionLinks("channels", newSt, newExp, newData, newHmac, "acl=/Content/*");
+                await updateCollectionLinks("matches", newSt, newExp, newData, newHmac, "acl=/Content/*");
+            } else if (newUrl.includes("variant/v1blackout/spo-hd-38-d-shortdvr")) {
+                
+                console.log("Updating links containing `variant/v1blackout/spo-hd-38-d-shortdvr`...");
+                await updateCollectionLinks("channels", newSt, newExp, newData, newHmac, "variant/v1blackout/spo-hd-38-d-shortdvr");
+                await updateCollectionLinks("matches", newSt, newExp, newData, newHmac, "variant/v1blackout/spo-hd-38-d-shortdvr");
             }
-        });
 
-        playerInstance.on('setupError', (error) => {
-            console.error("حدث خطأ في إعداد المشغل:", error);
-        });
+            console.log("All links updated successfully!");
+            showSuccessDialog("All links updated successfully!");
+        } else {
+            throw new Error("The new URL does not contain all required values (st, exp, data, hmac).");
+        }
     } catch (error) {
-        console.error("حدث خطأ أثناء إعداد المشغل:", error);
+        console.error("An error occurred while updating the links:", error);
+        showErrorDialog("An error occurred while updating the links: " + error.message);
     }
 }
 
-// تحديد نوع الملف تلقائيًا
-function getStreamType(url) {
-    if (url.includes(".m3u8")) {
-        return "hls"; // تنسيق HLS
-    } else if (url.includes(".mpd")) {
-        return "dash"; // تنسيق DASH
-    } else if (url.includes(".mp4") || url.includes(".m4v")) {
-        return "mp4"; // تنسيق MP4
-    } else if (url.includes(".ts") || url.includes(".mpegts")) {
-        return "mpegts"; // تنسيق MPEG-TS
+
+async function autoUpdate() {
+    console.log("Starting auto-update...");
+    showLoadingDialog("Updating channels...");
+    const newUrl = await fetchNewUrl();
+    if (newUrl) {
+        await updateLinksWithNewUrl(newUrl);
     } else {
-        return null; // نوع غير معروف
+        console.error("No new URL found.");
+        showErrorDialog("No new URL found.");
     }
+    hideLoadingDialog();
 }
 
-    // البحث عن القنوات
-    searchInput.addEventListener("input", () => {
-        const searchTerm = searchInput.value.toLowerCase();
-        document.querySelectorAll(".group-section").forEach((group) => {
-            const groupName = group.querySelector(".group-name").textContent.toLowerCase();
-            const channels = group.querySelectorAll(".channel-card");
-            let hasVisibleChannels = false;
 
-            channels.forEach((channel) => {
-                const channelName = channel.querySelector("p").textContent.toLowerCase();
-                if (channelName.includes(searchTerm)) {
-                    channel.style.display = "flex";
-                    hasVisibleChannels = true;
-                } else {
-                    channel.style.display = "none";
-                }
-            });
-
-            group.style.display = hasVisibleChannels || groupName.includes(searchTerm) ? "block" : "none";
-        });
-    });
-
-    // مسح البحث
-    clearSearch.addEventListener("click", () => {
-        searchInput.value = "";
-        document.querySelectorAll(".group-section, .channel-card").forEach((element) => {
-            element.style.display = "block";
-        });
-    });
-
-    // عرض قائمة القنوات
-    channelsToggle.addEventListener("click", () => {
-        channelsSidebar.style.display = "block";
-    });
-
-    // إغلاق قائمة القنوات
-    closeSidebar.addEventListener("click", () => {
-        channelsSidebar.style.display = "none";
-    });
-
-    // عرض ديالوج المباريات
-    matchesButton.addEventListener("click", () => {
-        matchesDialog.style.display = "block";
-        loadMatches();
-    });
-
-    // إغلاق ديالوج المباريات
-    closeMatchesDialog.addEventListener("click", () => {
-        matchesDialog.style.display = "none";
-    });
-
-    // تحميل المباريات
-    function loadMatches() {
-        const matchesTable = document.getElementById("matches-table");
-        matchesTable.innerHTML = "";
-
-        db.collection("matches").orderBy("createdAt", "asc").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                const match = doc.data();
-                const matchItem = document.createElement("div");
-                matchItem.classList.add("match-item");
-
-                const team1Image = match.team1Image;
-                const team2Image = match.team2Image;
-                const matchTimeUTC = new Date(match.matchTime);
-                const currentTimeUTC = new Date();
-
-                const timeDiff = (currentTimeUTC - matchTimeUTC) / (1000 * 60);
-
-                let matchStatus = "";
-                let matchStatusClass = "";
-                if (timeDiff < -15) {
-                    matchStatus = `الوقت: ${matchTimeUTC.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-                    matchStatusClass = "match-status";
-                } else if (timeDiff >= -15 && timeDiff < 0) {
-                    matchStatus = "تبدأ قريبًا";
-                    matchStatusClass = "match-status soon";
-                } else if (timeDiff >= 0 && timeDiff < 120) {
-                    matchStatus = "جارية الآن";
-                    matchStatusClass = "match-status live";
-                } else {
-                    db.collection("matches").doc(doc.id).delete();
-                    return;
-                }
-
-                matchItem.innerHTML = `
-                    <div class="teams-section">
-                        <div class="team">
-                            <img src="${team1Image}" alt="${match.team1}">
-                            <p>${match.team1}</p>
-                        </div>
-                        <div class="vs-time">
-                            <div class="vs">VS</div>
-                            <div class="${matchStatusClass}">${matchStatus}</div>
-                        </div>
-                        <div class="team">
-                            <img src="${team2Image}" alt="${match.team2}">
-                            <p>${match.team2}</p>
-                        </div>
-                    </div>
-                    <div class="match-details">
-                        <p><span class="icon">🏆</span> ${match.matchLeague}</p>
-                        <p><span class="icon">🎤</span> ${match.commentator}</p>
-                    </div>
-                    <button class="watch-button ${timeDiff >= -15 && timeDiff < 120 ? 'active' : 'inactive'}" data-url="${match.channelUrl}" data-key="${match.key || ''}" ${timeDiff >= -15 && timeDiff < 120 ? '' : 'disabled'}>
-                        مشاهدة المباراة
-                    </button>
-                `;
-
-                matchesTable.appendChild(matchItem);
-            });
-
-            document.querySelectorAll(".watch-button").forEach(button => {
-                button.addEventListener("click", () => {
-                    const url = button.getAttribute("data-url");
-                    const key = button.getAttribute("data-key");
-                    playChannel(url, key);
-                    matchesDialog.style.display = "none";
-                    playerPlaceholder.style.display = "none";
-                });
-            });
-        });
-    }
-
-    // تحميل القنوات عند بدء التشغيل
-    loadChannels();
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Page loaded, starting auto-update...");
+    autoUpdate();
 });
