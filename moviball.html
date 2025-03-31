@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>alraqi-tv</title>
+    <style>
+        div a img{visibility:hidden;}
+        body{margin:0;background-color: black;}
+        .shaka-seek-bar-container .shaka-seek-bar {
+            background: linear-gradient(to right, #051937, #00205b, #00247e, #22229f, #510dbc);
+        }
+        .shaka-volume-bar-container .shaka-volume-bar {
+            background: linear-gradient(to right, #051937, #00205b, #00247e, #22229f, #510dbc);
+        }
+        .shaka-video-container .material-icons-round {
+            color: #00abe2;
+        }
+        .shaka-spinner-path {
+            stroke-dasharray: 1, 2000;
+            stroke-dashoffset: 0;
+            animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+            stroke-linecap: round;
+        }
+        @keyframes color {
+            100%, 0% { stroke: #d62d20; }
+            40% { stroke: #0057e7; }
+            66% { stroke: #008744; }
+            80%, 90% { stroke: #ffa700; }
+        }
+        
+        #video {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        /* ستايل لصفحة التحويل */
+        .redirect-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding-top: 20%;
+            z-index: 9999;
+            font-family: Arial, sans-serif;
+        }
+        .redirect-container h1 {
+            color: #00abe2;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .redirect-container p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .redirect-container a {
+            color: #00abe2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .redirect-container .countdown {
+            font-size: 20px;
+            color: #ff5722;
+            margin-top: 20px;
+        }
+    </style>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <meta name="referrer" content="no-referrer" />
+    <script src='//cdnjs.cloudflare.com/ajax/libs/shaka-player/4.10.0/shaka-player.ui.min.js' crossorigin='alraqi-tv'></script>
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/shaka-player/4.10.0/controls.min.css' crossorigin='alraqi-tv' />
+</head>
+<body>
+    
+    <!-- قسم التحويل إلى التلجرام -->
+    <div id="redirectContainer" class="redirect-container">
+        <h1>عذرًا، هذا المحتوى متاح فقط عبر موقع pleaxy.com</h1>
+        <p>سيتم تحويلك إلى قناة التلجرام خلال <span id="countdown">5</span> ثواني</p>
+        <p>إذا لم يتم التحويل تلقائيًا، يرجى النقر <a href="https://t.me/moviball" id="manualRedirect">هنا</a></p>
+    </div>
+    
+    <!-- مشغل الفيديو -->
+    <div data-shaka-player-container style='position:absolute;z-index: -1;top: 0;left: 0;width: 100%; height: 100%;'>
+        <video autoplay data-shaka-player poster="https://up6.cc/2025/03/174328078975161.png" id='video'></video>
+    </div>
+
+    <script>
+        // ==============================================
+        // قسم حماية الدومين - لا تعدل هذا القسم
+        // ==============================================
+        (function() {
+            // قائمة الدومينات المسموح بها
+            const allowedDomains = [
+                'pleaxy.com',
+                'www.pleaxy.com',
+                'https://tv.moviball.online',
+                'tv.moviball.online/'
+            ];
+            
+            // رابط التحويل
+            const telegramChannel = 'https://t.me/moviball';
+            
+            // التحقق من الدومين الحالي
+            const currentDomain = window.location.hostname;
+            const isAllowed = allowedDomains.some(domain => 
+                currentDomain === domain || currentDomain.endsWith('.' + domain)
+            );
+            
+            if (!isAllowed) {
+                // إظهار رسالة التحويل
+                const redirectContainer = document.getElementById('redirectContainer');
+                const countdownElement = document.getElementById('countdown');
+                const manualRedirect = document.getElementById('manualRedirect');
+                
+                redirectContainer.style.display = 'block';
+                
+                // عد تنازلي للتحويل التلقائي
+                let seconds = 5;
+                const countdown = setInterval(() => {
+                    seconds--;
+                    countdownElement.textContent = seconds;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(countdown);
+                        window.location.href = telegramChannel;
+                    }
+                }, 1000);
+                
+                // منع تحميل أي شيء آخر
+                throw new Error('Access denied - Domain not allowed');
+            }
+        })();
+        // ==============================================
+        // نهاية قسم حماية الدومين
+        // ==============================================
+
+        // Configuration object
+        var config = {
+            manifestUri: "https://pleaxy.com/test/index.php?channel=ent-hd-01",
+            drm: {
+                clearKeys: {
+                    '46260944530c33a591951f99e121c893': 'd224e6053527f3676e4e7c545a11d4dc',
+                    '5604a5946fe23c389ea3dbe4497ae302': '673f8d300f32e531c50b7f4510f25e7d',
+                    'c0eaa7532d4e33869413abed6992e653': 'fd923db35f9a8b1f3f9f2d7048855904'
+                }
+            },
+            ui: {
+                controlPanelElements: ['spacer','rewind','playback_rate','fast_forward','play_pause','mute','volume','time_and_duration','captions','language','quality','fullscreen','statistics','picture_in_picture','skip','cast','share','spacer'],
+                customContextMenu: true,
+                contextMenuElements: ['statistics','ad_statistics'],
+                statisticsList: ['width','height','playTime','bufferingTime','started','playedCompletely'],
+                playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+                fastForwardRates: [2, 4, 8, 1],
+                rewindRates: [-1, -2, -4, -8],
+                volumeBarColors: {base:"rgba(255, 255, 255)",level:"rgba(255,87,34)"},
+                seekBarColors: {base: '#00EC00', buffered: '#ffffff', played: '#ff5722'}
+            },
+            player: {
+                abr: {
+                    defaultBandwidthEstimate: 16888,
+                    enabled: true,
+                    restrictions: {
+                        minHeight: 359,
+                        maxHeight: 720
+                    }
+                }
+            }
+        };
+
+        async function init() {
+            const video = document.getElementById('video');
+            const ui = video['ui'];
+            const controls = ui.getControls();
+            const player = controls.getPlayer();
+            
+            // Apply UI configuration
+            ui.configure(config.ui);
+            
+            window.player = player;
+            window.ui = ui;
+            
+            player.setTextTrackVisibility(true);
+            player.configure({
+                drm: config.drm,
+                abr: config.player.abr
+            });
+            
+            // تأكيد تطبيق object-fit: fill
+            video.style.objectFit = 'fill';
+            video.style.width = '100%';
+            video.style.height = '100%';
+            
+            player.addEventListener('error', onPlayerErrorEvent);
+            controls.addEventListener('error', onUIErrorEvent);
+            
+            try {
+                await player.load(config.manifestUri);
+                console.log('The video has now been loaded!');
+            } catch (error) {
+                onPlayerError(error);
+            }
+        }
+
+        function onPlayerErrorEvent(errorEvent) {
+            onPlayerError(event.detail);
+        }
+
+        function onPlayerError(error) {
+            console.error('Error code', error.code, 'object', error);
+            // Auto-retry after 30 seconds
+            setTimeout(() => {
+                window.location.reload();
+            }, 30000);
+        }
+
+        function onUIErrorEvent(errorEvent) {
+            onPlayerError(event.detail);
+        }
+
+        function initFailed(errorEvent) {
+            console.error('Unable to load the UI library!');
+        }
+
+        document.addEventListener('shaka-ui-loaded', init);
+        document.addEventListener('shaka-ui-load-failed', initFailed);
+    </script>
+</body>
+</html>
