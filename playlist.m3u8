@@ -2,12 +2,12 @@
 #EXT-X-VERSION:3
 
 #EXT-X-STREAM-INF:BANDWIDTH=400000,RESOLUTION=426x240
-https:\\/\\/mejarserver.site\\/api?id=svc-spo-low-08-dt&type=m3u8
+https://mejarserver.site/api?id=svc-spo-low-08-dt&type=m3u8
 #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=528000,RESOLUTION=640x360
-https:\\/\\/mejarserver.site\\/api?id=svc-spo-low-08-dt&type=m3u8
+https://mejarserver.site/api?id=svc-spo-low-08-dt&type=m3u8
 #EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=854x480
-https:\\/\\/mejarserver.site\\/api?id=svc-spo-sd-08-dt&type=m3u8
+https://mejarserver.site/api?id=svc-spo-sd-08-dt&type=m3u8
 #EXT-X-STREAM-INF:BANDWIDTH=1500000,RESOLUTION=1280x720
-https:\\/\\/mejarserver.site\\/api?id=svc-spo-hd-08-dt&type=m3u8
+https://mejarserver.site/api?id=svc-spo-hd-08-dt&type=m3u8
 #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2628000,RESOLUTION=1920x1080
-https:\\/\\/mejarserver.site\\/api?id=svc-spo-fhd-08-dt&type=m3u8
+https://mejarserver.site/api?id=svc-spo-fhd-08-dt&type=m3u8
