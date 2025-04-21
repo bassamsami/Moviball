@@ -1,6 +1,10 @@
 #EXTM3U
 #EXT-X-VERSION:3
-#EXT-X-STREAM-INF:BANDWIDTH=1500000,RESOLUTION=1280x720
-https://bestgoal.xyz/moviball/fajer.php?c=ftv1&q=720
-#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2628000,RESOLUTION=1920x1080
+
+# جودة 1080p (الأعلى)
+#EXT-X-STREAM-INF:BANDWIDTH=2628000,RESOLUTION=1920x1080,CODECS="avc1.640028,mp4a.40.2"
 https://bestgoal.xyz/moviball/fajer.php?c=ftv1
+
+# جودة 720p (متوسطة)
+#EXT-X-STREAM-INF:BANDWIDTH=1500000,RESOLUTION=1280x720,CODECS="avc1.64001F,mp4a.40.2"
+https://bestgoal.xyz/moviball/fajer.php?c=ftv1&q=720
