@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" profiles="urn:mpeg:dash:profile:isoff-live:2011" type="dynamic" minBufferTime="PT1.5S" mediaPresentationDuration="PT0H10M0S">
+  <Period>
+    <!-- جودة 1080p -->
+    <AdaptationSet mimeType="video/mp2t" segmentAlignment="true" startWithSAP="1">
+      <Representation id="1080p" bandwidth="2628000" width="1920" height="1080" frameRate="30">
+        <BaseURL>https://bestgoal.xyz/moviball/fajer.php?c=ftv1</BaseURL>
+        <SegmentTemplate media="fajer.php?c=ftv1" initialization="fajer.php?c=ftv1"/>
+      </Representation>
+    </AdaptationSet>
+    
+    <!-- جودة 720p -->
+    <AdaptationSet mimeType="video/mp2t" segmentAlignment="true" startWithSAP="1">
+      <Representation id="720p" bandwidth="1500000" width="1280" height="720" frameRate="30">
+        <BaseURL>https://bestgoal.xyz/moviball/fajer.php?c=ftv1&amp;q=720</BaseURL>
+        <SegmentTemplate media="fajer.php?c=ftv1&amp;q=720" initialization="fajer.php?c=ftv1&amp;q=720"/>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>
