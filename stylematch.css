@@ -1,0 +1,1897 @@
+:root {
+            --bg-primary: #101010;
+            --bg-secondary: #1A1A1A;
+            --bg-tertiary: #242424;
+            --accent-primary: #e50914;
+            --text-primary: #f5f5f5;
+            --text-secondary: #b5b5b5;
+            --border-color: #2d2d2d;
+            --font-arabic: 'Cairo', sans-serif;
+            --status-live: #f00707;
+            --status-pending: #28a745;
+            --status-ended: #6c757d;
+            --status-postponed: #ffc107;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Base styles (Default: PC/Desktop) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font-arabic);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            direction: rtl;
+            overflow-x: hidden;
+            font-size: 1rem; /* Default font size for PC */
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px; /* Default padding for PC */
+        }
+
+        /* --- Date Header (PC) --- */
+        .date-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            background-color: var(--bg-secondary);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--box-shadow);
+            position: sticky; /* Made sticky */
+            top: 0; /* Stays at the top */
+            z-index: 999; /* Ensures it's above other content */
+        }
+        .date-btn {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .date-btn:hover {
+            background-color: var(--accent-primary);
+        }
+        .date-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+        .current-date {
+            font-weight: 700;
+            font-size: 1.2rem;
+            white-space: nowrap;
+        }
+        #date-input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* --- Matches Container (PC) --- */
+        .matches-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .competition-section {
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--box-shadow);
+        }
+        .competition-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background-color: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+        .competition-logo {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+        .competition-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-grow: 1;
+            cursor: pointer;
+        }
+        .matches-list {
+            padding: 10px 0;
+        }
+        .match-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative; /* Crucial for absolute positioning of .live-indicator */
+        }
+        .match-item:last-child {
+            border-bottom: none;
+        }
+        .match-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .match-teams {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+        .team.right {
+            justify-content: flex-end;
+            text-align: right;
+        }
+        .team.left {
+            justify-content: flex-start;
+            text-align: left;
+        }
+        .team-logo {
+            width: 25px;
+            height: 25px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        .team-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .match-score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            min-width: 70px;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .score {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .match-status-small {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-family: var(--font-arabic);
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70px;
+            display: block;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .match-status-small.live-blink {
+            animation: blinker 1s linear infinite;
+        }
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+        /* Style for live stream available indicator - Positioned Absolutely */
+        .live-indicator {
+            position: absolute;
+            top: 5px; /* Adjust as needed to position within the match item */
+            left: 5px; /* Adjust as needed for RTL positioning */
+            font-size: 0.75em;
+            color: var(--status-live);
+            font-weight: bold;
+            animation: blinker 1s linear infinite;
+            z-index: 10; /* Ensure it's above other content */
+            padding: 2px 5px;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+            border-radius: 4px;
+            white-space: nowrap; /* Prevent text wrapping */
+            display: flex; /* Allow content to be flexed (for dot and text) */
+            align-items: center; /* Vertically align dot and text */
+            gap: 4px; /* Space between dot and text */
+        }
+        .live-indicator .fas.fa-circle {
+            font-size: 0.7em; /* Size of the dot */
+            color: var(--status-live); /* Red color for the dot */
+        }
+
+        /* Interest button (now inside competition-header) */
+        .interest-btn {
+            background: none;
+            border: none;
+            font-size: 1.1em;
+            cursor: pointer;
+            padding: 0 5px;
+            transition: color 0.2s ease;
+            flex-shrink: 0;
+            color: var(--text-secondary); /* Default color */
+            margin-right: 0; /* Align to the far left in RTL */
+            margin-left: auto; /* Push to the left */
+            padding-left: 15px; /* Ensure click area doesn't overlap text */
+        }
+        .interest-btn:hover {
+            color: var(--text-primary);
+        }
+        .interest-btn.active {
+            color: #ffbd00; /* Gold color for active/interested */
+        }
+
+
+        /* --- Top Match Card (PC) --- */
+        .match-card {
+            background: linear-gradient(rgba(10,10,10,0.7), rgba(10,10,10,0.7)), url('https://i.postimg.cc/Ls08QsB8/match-detail-stadium.jpg') center/cover;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px; /* PC default margin, consistent with tabs-container */
+            box-shadow: var(--box-shadow);
+        }
+        .match-card .card-content {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .match-card .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 120px;
+            margin: 10px 0;
+        }
+        .match-card .team-logo {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            background: var(--bg-secondary);
+        }
+        .match-card .team-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .match-card .score-info {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            min-width: 150px;
+        }
+        .match-card .score {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        .match-status-card-text {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--text-secondary);
+            font-family: var(--font-arabic);
+            margin-bottom: 5px;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .match-status-card-text.live-blink {
+            animation: blinker 1s linear infinite;
+        }
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+        .match-time-large {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .competition-name-large {
+            text-align: center;
+            font-size: 1rem;
+            color: #ffbd00;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        /* --- Tabs Container (PC) --- */
+        .tabs-container {
+            margin-top: 25px; /* PC default margin, consistent with tabs-container */
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        .tabs-nav {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .tabs-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .tab-btn {
+            flex-grow: 1; /* Allow tabs to grow and fill space */
+            flex-basis: 0; /* Important for even distribution when combined with flex-grow */
+            min-width: 100px;
+            padding: 12px 15px; /* Consistent padding for PC tabs */
+            border: none;
+            background-color: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-arabic);
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center; /* Ensure text is centered within the button */
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            display: flex; /* Make it a flex container */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+        .tab-btn.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--accent-primary);
+        }
+
+        .tabs-content {
+            background-color: var(--bg-secondary);
+            padding: 25px;
+            min-height: 400px;
+        }
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .placeholder-text {
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 50px 0;
+            font-size: 1.1rem;
+        }
+
+        /* --- Info Tab (PC) --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .info-item {
+            background: var(--bg-tertiary);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid var(--border-color);
+        }
+        .info-item i {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            width: 30px;
+            text-align: center;
+        }
+        .info-item .label {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .info-item .value {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .timezones-section h3 {
+            text-align: center;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .timezones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 10px;
+        }
+        .tz-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-tertiary);
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+        }
+        .tz-item .city {
+            font-weight: 700;
+        }
+        .tz-item .time {
+            font-weight: 500;
+            font-size: 1.1rem;
+            direction: ltr;
+        }
+
+        /* --- Live Stream Tab (PC) --- */
+        .player-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .iframe-player {
+            width: 100%;
+            height: 500px;
+            border: none;
+            background: black;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+        }
+        .stream-buttons-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            justify-content: center; /* Center stream buttons */
+            text-align: center; /* Center text within buttons if they wrap */
+        }
+        .stream-buttons-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .stream-buttons-container::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+        }
+        .stream-buttons-container::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        .stream-buttons-container::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+        .stream-btn {
+            padding: 10px 18px;
+            font-size: 1rem;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            transition: all 0.2s;
+            white-space: nowrap;
+            border: 1px solid var(--border-color);
+            font-family: var(--font-arabic);
+        }
+        .stream-btn:hover {
+            background: #444;
+        }
+        .stream-btn.active {
+            background: var(--accent-primary);
+        }
+
+        /* --- Lineup Tab (PC) --- */
+        /* PC layout: Show both lineups in a grid */
+        .lineup-main-container {
+            display: none; /* Hide mobile-specific lineup tabs container on PC */
+        }
+        .lineup-container { /* Original PC grid layout for both teams */
+            display: grid; /* Make it a grid for two columns */
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        /* Ensure PC team-lineup panes are block and have no extra padding/margins from mobile */
+        #home-team-lineup-pane, #away-team-lineup-pane {
+            display: block !important;
+            padding-top: 0;
+            margin-bottom: 0;
+        }
+        /* Mobile specific lineup tab styles */
+        .lineup-tabs-nav {
+            display: flex;
+            background-color: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .lineup-tab-btn {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: none;
+            background-color: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-arabic); /* Apply Cairo font */
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Add transition */
+            text-align: center;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+        }
+        .lineup-tab-btn:hover {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .lineup-tab-btn.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--accent-primary);
+            background-color: var(--bg-secondary);
+        }
+
+        .team-lineup h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .team-lineup .formation {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+        .lineup-section-title {
+            font-weight: 700;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+        .player-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-tertiary);
+            padding: 8px;
+            border-radius: var(--border-radius);
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .player-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #333;
+        }
+        .player-info .name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .player-info .position {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- Stats Tab (PC) --- */
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .stats-table thead th {
+            background-color: var(--bg-tertiary);
+            padding: 12px 15px;
+            text-align: center;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .stats-table tbody td {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .stats-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .stats-table .stat-name {
+            text-align: center;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        .stats-table .team-value {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+        .stats-table .team-logo-small {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+
+        /* --- Events Tab --- */
+        .events-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .events-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Left Col, Middle, Right Col */
+            align-items: start;
+            gap: 5px;
+            border: none;
+            padding: 0;
+        }
+
+        .team-events-column {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        /* PC Specific Event Ordering (min-width: 768px) */
+        @media (min-width: 768px) {
+            .events-row {
+                /* Define named areas for easier positioning */
+                grid-template-areas: "left-events minute-marker right-events";
+            }
+            /* Map the HTML elements (based on data's right/left team) to visual grid areas */
+            /* In HTML, .team-events-column:first-of-type holds data.Place 'right' events (Home Team) */
+            /* In HTML, .team-events-column:last-of-type holds data.Place 'left' events (Away Team) */
+            /* For PC, we want Home Team events (from data.Place 'right') on the visual LEFT column in RTL. */
+            /* And Away Team events (from data.Place 'left') on the visual RIGHT column in RTL. */
+            .events-row > .team-events-column:first-of-type { /* This column holds Right Team (Home) events from data */
+                grid-area: left-events; /* Map to the visual left column in RTL grid */
+            }
+            .events-row > .event-minute-marker {
+                grid-area: minute-marker; /* Map to the center column */
+            }
+            .events-row > .team-events-column:last-of-type { /* This column holds Left Team (Away) events from data */
+                grid-area: right-events; /* Map to the visual right column in RTL grid */
+            }
+
+            /* Line on PC */
+            .events-row .event-minute-marker::before {
+                right: calc(100% + 5px); /* Line extends from minute to left events (right side of marker for RTL) */
+            }
+            .events-row .event-minute-marker::after {
+                left: calc(100% + 5px); /* Line extends from minute to right events (left side of marker for RTL) */
+            }
+
+            /* Event item text alignment for PC */
+            /* Right team events (Home): visually on left, text align left */
+            .event-item.right-team {
+                flex-direction: row; /* Icon then text */
+                justify-content: flex-start;
+                text-align: left;
+            }
+            .event-item.right-team .event-player-img {
+                order: 1; /* Image first */
+                margin-right: 5px;
+                margin-left: 0;
+            }
+            .event-item.right-team .event-text {
+                order: 3; /* Text last */
+                text-align: left;
+            }
+
+            /* Left team events (Away): visually on right, text align right */
+            .event-item.left-team {
+                flex-direction: row-reverse; /* Text then icon */
+                justify-content: flex-start; /* Still flex-start, but row-reverse makes it visually right-aligned */
+                text-align: right;
+            }
+            .event-item.left-team .event-player-img {
+                order: 3; /* Image last */
+                margin-left: 5px;
+                margin-right: 0;
+            }
+            .event-item.left-team .event-text {
+                order: 1; /* Text first */
+                text-align: right;
+            }
+        }
+        
+        /* Mobile Specific Event Ordering (max-width: 767px) */
+        @media (max-width: 767px) {
+            .events-container::before { /* Central vertical line */
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%; /* Center the line */
+                width: 1px;
+                background-color: var(--border-color);
+                z-index: 0;
+                transform: translateX(-50%); /* Adjust for line thickness */
+            }
+
+            .events-row .event-minute-marker::before,
+            .events-row .event-minute-marker::after {
+                content: none; /* Remove horizontal lines on mobile */
+            }
+
+            .events-row {
+                /* Mobile: Data Right Team on visual left, Minute in middle, Data Left Team on visual right */
+                grid-template-areas: "right-events-mobile minute-marker left-events-mobile";
+            }
+            .events-row > .team-events-column:first-of-type { /* This column holds Right Team (Home) events from data */
+                grid-area: right-events-mobile; /* Map to the visual left column */
+            }
+            .events-row > .event-minute-marker {
+                grid-area: minute-marker; /* Map to the center column */
+            }
+            .events-row > .team-events-column:last-of-type { /* This column holds Left Team (Away) events from data */
+                grid-area: left-events-mobile; /* Map to the visual right column */
+            }
+
+            .event-minute-marker {
+                padding: 2px 5px;
+                background-color: var(--bg-secondary);
+                border-radius: 4px;
+                border: 1px solid var(--border-color);
+            }
+
+            /* Event item text alignment for Mobile */
+            /* Right team events (Home): visually on left, text align left */
+            .event-item.right-team {
+                flex-direction: row; /* Icon then text */
+                justify-content: flex-start;
+                text-align: left;
+            }
+            .event-item.right-team .event-player-img {
+                order: 1; /* Image first */
+                margin-right: 5px;
+                margin-left: 0;
+            }
+            .event-item.right-team .event-text {
+                order: 3; /* Text last */
+                text-align: left;
+            }
+            
+            /* Left team events (Away): visually on right, text align right */
+            .event-item.left-team {
+                flex-direction: row-reverse; /* Text then icon */
+                justify-content: flex-start; /* Still flex-start, but row-reverse makes it visually right-aligned */
+                text-align: right;
+            }
+            .event-item.left-team .event-player-img {
+                order: 3; /* Image last */
+                margin-left: 5px;
+                margin-right: 0;
+            }
+            .event-item.left-team .event-text {
+                order: 1; /* Text first */
+                text-align: right;
+            }
+        }
+
+
+        .event-minute-marker {
+            white-space: nowrap;
+            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 0.9em;
+            position: relative;
+            z-index: 1;
+            padding: 0 5px;
+            text-align: center;
+            margin: 0 auto; /* Center on PC */
+        }
+        
+        .event-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-tertiary);
+            padding: 4px 6px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            min-height: 32px;
+        }
+
+        .event-player-img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #333;
+            flex-shrink: 0;
+        }
+
+        .event-icon-wrapper {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 0 4px;
+        }
+        .event-icon {
+            width: 14px;
+            height: 14px;
+            object-fit: contain;
+        }
+            
+        .event-text {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            min-width: 0;
+            margin: 0; /* Reset margins */
+        }
+        
+        .event-player-name {
+            font-weight: normal;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.8em;
+        }
+        .event-type-description {
+            font-weight: normal;
+            color: var(--text-secondary);
+            font-size: 0.7em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+            
+        /* Specific styling for substitution events */
+        .event-type-description.substitution-main {
+            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 0.85em;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 2px;
+        }
+        .substitution-player-line {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            font-size: 0.75em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2;
+            justify-content: center;
+        }
+        .substitution-player-line .player-name-text {
+            color: var(--text-secondary);
+        }
+        .substitution-player-line.player-in-line .player-name-text {
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .substitution-player-line .fa-arrow-up-long,
+        .substitution-player-line .fa-arrow-down-long {
+            font-size: 0.75em;
+            flex-shrink: 0;
+            margin: 0 2px;
+            color: var(--text-primary);
+        }
+
+
+        /* --- Server Management Modal (PC) --- */
+        .servers-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .servers-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .servers-container {
+            background: var(--bg-secondary);
+            width: 100%;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--box-shadow);
+        }
+        .servers-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+        .servers-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .servers-header .servers-match-info {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-right: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .close-servers {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .server-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .form-label {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .form-input {
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-family: var(--font-arabic);
+        }
+        .servers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+        .servers-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        .servers-list::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+        }
+        .servers-list::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        .servers-list::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+        .server-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+        }
+        .server-name {
+            flex: 1;
+            font-weight: 500;
+            font-family: var(--font-arabic);
+        }
+        .server-url {
+            flex: 2;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            direction: ltr;
+            font-family: var(--font-arabic);
+        }
+        .server-actions {
+            display: flex;
+            gap: 5px;
+        }
+        .server-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .server-btn.delete {
+            color: var(--accent-primary);
+        }
+        .server-btn.edit {
+            color: #007bff;
+        }
+        .server-btn.play {
+            color: var(--status-pending);
+        }
+        .add-server-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        /* Fixed back to matches button */
+        #back-to-matches {
+            position: sticky;
+            top: 10px;
+            z-index: 500;
+            width: fit-content;
+            margin-bottom: 15px;
+            box-shadow: var(--box-shadow);
+            font-family: var(--font-arabic);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            transition: background-color 0.2s ease;
+        }
+        #back-to-matches:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+
+        /* --- Responsive Adjustments for general mobile screens (max-width: 767px) --- */
+        /* These styles will apply to devices with screen width up to 767px */
+        @media (max-width: 767px) {
+            body {
+                font-size: 0.85rem; /* Base font size for general mobile */
+            }
+            .main-container {
+                padding: 10px; /* Adjusted padding */
+            }
+
+            .date-header {
+                gap: 8px;
+                margin-bottom: 12px;
+                padding: 8px;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .date-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            .date-info {
+                gap: 8px;
+                flex-grow: 1;
+                justify-content: center;
+            }
+            .current-date {
+                font-size: 1rem;
+            }
+
+            .competition-header {
+                gap: 8px;
+                padding: 10px;
+            }
+            .competition-logo {
+                width: 25px;
+                height: 25px;
+            }
+            .competition-name {
+                font-size: 1rem;
+            }
+            .matches-list {
+                padding: 8px 0;
+            }
+            .match-item {
+                padding: 10px;
+                gap: 8px;
+            }
+            .team-logo {
+                width: 20px;
+                height: 20px;
+            }
+            .team-name {
+                font-size: 0.85rem; /* Default mobile team name */
+            }
+            .match-score {
+                min-width: 60px;
+            }
+            .score {
+                font-size: 1rem;
+            }
+            .match-status-small {
+                font-size: 0.65em;
+                max-width: 60px;
+            }
+            .live-indicator {
+                font-size: 0.65em;
+                top: 5px; /* Adjusted for mobile */
+                left: 5px; /* Adjusted for mobile */
+            }
+            .interest-btn {
+                font-size: 1em;
+                padding: 0 5px;
+                margin-left: auto;
+                padding-left: 10px;
+            }
+
+            .match-card {
+                padding: 15px;
+                margin-bottom: 25px; /* Consistent with PC, increased for mobile */
+            }
+            .match-card .card-content {
+                justify-content: space-between; /* Better distribution on small screens */
+            }
+            .match-card .team {
+                width: 80px;
+                gap: 8px;
+                margin: 8px 0;
+            }
+            .match-card .team-logo {
+                width: 60px;
+                height: 60px;
+            }
+            .match-card .team-name {
+                font-size: 0.9rem; /* Default mobile team name in card */
+            }
+            .match-card .score-info {
+                min-width: 120px;
+                margin: 8px 0;
+            }
+            .match-card .score {
+                font-size: 2rem;
+            }
+            .match-status-card-text {
+                font-size: 0.8rem;
+            }
+            .match-time-large {
+                font-size: 0.8rem;
+            }
+            .competition-name-large {
+                font-size: 0.95rem;
+                margin-bottom: 10px;
+            }
+
+            .tabs-container {
+                margin-top: 25px; /* Consistent with match-card margin-bottom */
+            }
+            .tab-btn {
+                min-width: 70px;
+                padding: 10px 5px; /* Adjusted padding for mobile tabs */
+                font-size: 0.8rem;
+            }
+            .tabs-content {
+                padding: 15px;
+                min-height: 250px;
+            }
+            .placeholder-text {
+                padding: 30px 0;
+                font-size: 1rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            .info-item {
+                padding: 10px;
+                gap: 10px;
+            }
+            .info-item i {
+                font-size: 1.2rem;
+                width: 25px;
+            }
+            .info-item .label {
+                font-size: 0.75rem;
+            }
+            .info-item .value {
+                font-size: 0.85rem;
+            }
+
+            .timezones-section h3 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+                padding-bottom: 8px;
+            }
+            .timezones-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .tz-item {
+                padding: 10px 12px;
+            }
+            .tz-item .city {
+                font-size: 0.9rem;
+            }
+            .tz-item .time {
+                font-size: 1rem;
+            }
+
+            .iframe-player {
+                height: 200px;
+            }
+            .stream-buttons-container {
+                gap: 5px;
+                padding-bottom: 5px;
+                justify-content: center; /* Center stream buttons on mobile */
+            }
+            .stream-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                gap: 5px;
+            }
+
+            /* Lineup Tabs for mobile */
+            .lineup-main-container { /* Show flex for mobile */
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .lineup-tabs-nav { /* Show inner tabs nav for mobile */
+                display: flex;
+            }
+            .lineup-tabs-content .team-lineup-pane { /* Control display via active class on mobile */
+                display: none;
+                padding-top: 10px;
+            }
+            .lineup-tabs-content .team-lineup-pane.active {
+                display: block;
+            }
+            .lineup-container { /* Hide PC layout on mobile */
+                display: none !important;
+            }
+            /* Make sure the mobile-specific content divs (`home-team-lineup-content`, `away-team-lineup-content`) are correctly handled */
+            /* No need for explicit display: block here as they are inside team-lineup-pane which has block when active */
+
+            .team-lineup h4 {
+                font-size: 1.1rem;
+            }
+            .team-lineup .formation {
+                font-size: 0.8rem;
+            }
+            .lineup-section-title {
+                margin-top: 15px;
+                margin-bottom: 8px;
+                font-size: 0.95rem;
+            }
+            .player-card {
+                padding: 6px;
+                gap: 8px;
+                margin-bottom: 5px;
+            }
+            .player-logo {
+                width: 35px;
+                height: 35px;
+            }
+            .player-info .name {
+                font-size: 0.9rem;
+            }
+            .player-info .position {
+                font-size: 0.75rem;
+            }
+            
+            /* Add space between home and away team lineups when stacked on mobile */
+            .team-lineup + .team-lineup {
+                margin-top: 15px; /* Space between two stacked team lineups */
+            }
+
+            .stats-table th, .stats-table td { /* General adjustment for smaller screens */
+                font-size: 0.8rem;
+                padding: 8px 5px;
+            }
+            .stats-table .team-value {
+                font-size: 0.9rem;
+            }
+            .stats-table .team-logo-small {
+                width: 18px;
+                height: 18px;
+            }
+
+            /* Events Tab for Mobile (Yalla Shoot style) */
+            .events-container {
+                gap: 15px; /* Increased gap between event rows for better separation */
+                padding: 5px 0; /* Add some overall padding */
+                position: relative;
+            }
+            .events-container::before { /* Vertical line down the middle for timeline effect */
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%; /* Center the line */
+                width: 1px;
+                background-color: var(--border-color);
+                z-index: 0;
+                transform: translateX(-50%); /* Adjust for line thickness */
+            }
+
+            .events-row .event-minute-marker::before,
+            .events-row .event-minute-marker::after {
+                content: none; /* Remove horizontal lines on mobile */
+            }
+
+            .events-row {
+                /* Mobile: Data Right Team on visual left, Minute in middle, Data Left Team on visual right */
+                grid-template-areas: "right-events-mobile minute-marker left-events-mobile";
+            }
+            .events-row > .team-events-column:first-of-type { /* This column holds Right Team (Home) events from data */
+                grid-area: right-events-mobile; /* Map to the visual left column */
+            }
+            .events-row > .event-minute-marker {
+                grid-area: minute-marker; /* Map to the center column */
+            }
+            .events-row > .team-events-column:last-of-type { /* This column holds Left Team (Away) events from data */
+                grid-area: left-events-mobile; /* Map to the visual right column */
+            }
+
+            .event-minute-marker {
+                padding: 2px 5px;
+                background-color: var(--bg-secondary);
+                border-radius: 4px;
+                border: 1px solid var(--border-color);
+            }
+
+            /* Event item text alignment for Mobile */
+            /* Right team events (Home): visually on left, text align left */
+            .event-item.right-team {
+                flex-direction: row; /* Icon then text */
+                justify-content: flex-start;
+                text-align: left;
+            }
+            .event-item.right-team .event-player-img {
+                order: 1; /* Image first */
+                margin-right: 5px;
+                margin-left: 0;
+            }
+            .event-item.right-team .event-text {
+                order: 3; /* Text last */
+                text-align: left;
+            }
+            
+            /* Left team events (Away): visually on right, text align right */
+            .event-item.left-team {
+                flex-direction: row-reverse; /* Text then icon */
+                justify-content: flex-start; /* Still flex-start, but row-reverse makes it visually right-aligned */
+                text-align: right;
+            }
+            .event-item.left-team .event-player-img {
+                order: 3; /* Image last */
+                margin-left: 5px;
+                margin-right: 0;
+            }
+            .event-item.left-team .event-text {
+                order: 1; /* Text first */
+                text-align: right;
+            }
+
+            .event-player-img {
+                width: 20px;
+                height: 20px;
+            }
+            .event-icon-wrapper {
+                width: 16px;
+                height: 16px;
+            }
+            .event-icon {
+                width: 11px;
+                height: 11px;
+            }
+            .event-player-name {
+                font-size: 0.65em;
+            }
+            .event-type-description {
+                font-size: 0.55em;
+            }
+            .substitution-player-line {
+                font-size: 0.6em;
+            }
+            .substitution-player-line .fa-arrow-up-long,
+            .substitution-player-line .fa-arrow-down-long {
+                font-size: 0.6em;
+            }
+
+            .servers-container {
+                max-width: 400px;
+                padding: 15px;
+            }
+            .servers-title {
+                font-size: 1.1rem;
+            }
+            .servers-header .servers-match-info {
+                font-size: 0.8em;
+            }
+            .close-servers {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
+            .form-input {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            .servers-list {
+                max-height: 200px;
+                gap: 8px;
+            }
+            .server-item {
+                padding: 8px;
+                gap: 8px;
+            }
+            .server-name {
+                font-size: 0.9rem;
+            }
+            .server-url {
+                font-size: 0.75rem;
+            }
+            .server-btn {
+                width: 26px;
+                height: 26px;
+                font-size: 13px;
+            }
+            .add-server-btn {
+                padding: 10px 15px;
+                font-size: 0.95rem;
+                gap: 8px;
+            }
+            #back-to-matches {
+                top: 8px;
+                margin-bottom: 12px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+                gap: 8px;
+            }
+        }
+        /* --- Responsive Adjustments for very small phones (max-width: 360px) --- */
+        @media (max-width: 360px) {
+            body {
+                font-size: 0.75rem; /* Even smaller base font size for very small phones (~12px) */
+            }
+            .main-container {
+                padding: 4px; /* Minimal padding */
+            }
+            .date-header {
+                gap: 4px;
+                margin-bottom: 8px;
+                padding: 4px;
+                align-items: center; /* Ensure vertical alignment */
+            }
+            .date-btn {
+                width: 28px; /* Slightly larger buttons for touch targets */
+                height: 28px;
+                font-size: 16px; /* **Larger icon size for arrows** */
+            }
+            .date-info {
+                gap: 4px;
+                flex-grow: 1; /* Allow info to take space */
+                justify-content: center;
+            }
+            .current-date {
+                font-size: 0.7rem; /* **Even smaller font for date text** */
+            }
+
+            .competition-header {
+                gap: 4px;
+                padding: 5px;
+            }
+            .competition-logo {
+                width: 18px;
+                height: 18px;
+            }
+            .competition-name {
+                font-size: 0.75rem;
+            }
+            .match-item {
+                padding: 5px;
+                gap: 4px;
+            }
+            .team-logo {
+                width: 14px;
+                height: 14px;
+            }
+            .team-name {
+                font-size: 0.6rem; /* **Extra small team name in table for 360px** */
+            }
+            .match-score {
+                min-width: 45px;
+            }
+            .score {
+                font-size: 0.8rem;
+            }
+            .match-status-small {
+                font-size: 0.5em;
+                max-width: 45px;
+            }
+            .live-indicator {
+                font-size: 0.5em;
+                top: 3px; /* Adjusted for very small mobile */
+                left: 3px; /* Adjusted for very small mobile */
+            }
+            .interest-btn {
+                font-size: 0.8em;
+                padding: 0 2px;
+                padding-left: 5px;
+            }
+
+            .match-card {
+                padding: 8px;
+                margin-bottom: 20px; /* **Maintain increased margin for separation** */
+            }
+            .match-card .card-content {
+                justify-content: space-between; /* Better distribution on small screens */
+            }
+            .match-card .team {
+                width: 60px;
+                gap: 4px;
+                margin: 4px 0;
+            }
+            .match-card .team-logo {
+                width: 45px;
+                height: 45px;
+            }
+            .match-card .team-name {
+                font-size: 0.7rem; /* **Extra small team name in card for 360px** */
+            }
+            .match-card .score-info {
+                min-width: 80px;
+                margin: 4px 0;
+            }
+            .match-card .score {
+                font-size: 1.4rem;
+            }
+            .match-status-card-text {
+                font-size: 0.65rem;
+            }
+            .match-time-large {
+                font-size: 0.65rem;
+            }
+            .competition-name-large {
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+            }
+
+            .tabs-container {
+                margin-top: 20px; /* **Maintain increased margin for separation** */
+            }
+            .tab-btn {
+                min-width: 50px; /* Even smaller min-width for tabs */
+                padding: 6px 5px; /* Consistent padding for very small mobile tabs */
+                font-size: 0.75rem; /* **Slightly larger font for "التفاصيل" tab itself** */
+            }
+            .tabs-content {
+                padding: 8px;
+                min-height: 160px;
+            }
+            .placeholder-text {
+                padding: 15px 0;
+                font-size: 0.85rem;
+            }
+
+            .info-grid {
+                gap: 5px;
+                margin-bottom: 10px;
+            }
+            .info-item {
+                padding: 6px;
+                gap: 5px;
+            }
+            .info-item i {
+                font-size: 0.9rem;
+                width: 18px;
+            }
+            .info-item .label {
+                font-size: 0.6rem; /* **Even smaller font for info labels** */
+            }
+            .info-item .value {
+                font-size: 0.7rem; /* **Even smaller font for info values** */
+            }
+
+            .timezones-section h3 {
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+                padding-bottom: 4px;
+            }
+            .timezones-grid {
+                gap: 4px;
+            }
+            .tz-item {
+                padding: 6px 7px;
+            }
+            .tz-item .city {
+                font-size: 0.75rem;
+            }
+            .tz-item .time {
+                font-size: 0.85rem;
+            }
+
+            .iframe-player {
+                height: 140px;
+            }
+            .stream-buttons-container {
+                gap: 2px;
+                padding-bottom: 2px;
+                justify-content: center; /* Center stream buttons on mobile */
+            }
+            .stream-btn {
+                padding: 4px 7px;
+                font-size: 0.75rem;
+                gap: 2px;
+            }
+            
+            /* Mobile specific lineup tab styles */
+            .lineup-tabs-nav {
+                border-radius: var(--border-radius);
+            }
+            .lineup-tab-btn {
+                padding: 6px 4px;
+                font-size: 0.75rem;
+            }
+            .lineup-tabs-content .team-lineup-pane {
+                padding-top: 8px;
+            }
+            .team-lineup h4 {
+                font-size: 0.85rem;
+            }
+            .team-lineup .formation {
+                font-size: 0.65rem;
+            }
+            .lineup-section-title {
+                margin-top: 8px;
+                margin-bottom: 4px;
+                font-size: 0.75rem;
+            }
+            .player-card {
+                padding: 3px;
+                gap: 4px;
+                margin-bottom: 2px;
+            }
+            .player-logo {
+                width: 24px;
+                height: 24px;
+            }
+            .player-info .name {
+                font-size: 0.75rem;
+            }
+            .player-info .position {
+                font-size: 0.6rem;
+            }
+
+            .stats-table th, .stats-table td {
+                font-size: 0.65rem;
+                padding: 6px 4px;
+            }
+            .stats-table .team-value {
+                font-size: 0.7rem;
+            }
+            .stats-table .team-logo-small {
+                width: 12px;
+                height: 12px;
+            }
+
+            .events-container {
+                gap: 6px; /* Adjusted gap for very small screens */
+                padding: 5px 0; /* Adjusted padding for very small screens */
+            }
+            .events-container::before {
+                left: 50%; /* Re-center line */
+                transform: translateX(-50%); /* Adjust for line thickness */
+            }
+            .event-minute-marker {
+                font-size: 0.65em;
+                padding: 1px 3px; /* Smaller padding for minute marker */
+            }
+            .team-events-column {
+                gap: 1px;
+            }
+            
+            /* Specific positioning for Right Team events (HTML-order first, visual left) for 360px */
+            .event-item.right-team {
+                flex-direction: row; /* Icon then text */
+                justify-content: flex-start;
+                text-align: left;
+            }
+            .event-item.right-team .event-player-img {
+                order: 1; /* Image first */
+                margin-right: 3px;
+                margin-left: 0;
+            }
+            .event-item.right-team .event-text {
+                order: 3; /* Text last */
+                text-align: left;
+            }
+
+            /* Specific positioning for Left Team events (HTML-order second, visual right) for 360px */
+            .event-item.left-team {
+                flex-direction: row-reverse; /* Text then icon */
+                justify-content: flex-start; /* Still flex-start, but row-reverse makes it visually right-aligned */
+                text-align: right;
+            }
+            .event-item.left-team .event-player-img {
+                order: 3; /* Image last */
+                margin-left: 3px;
+                margin-right: 0;
+            }
+            .event-item.left-team .event-text {
+                order: 1; /* Text first */
+                text-align: right;
+            }
+
+
+            .event-player-img {
+                width: 14px;
+                height: 14px;
+            }
+            .event-icon-wrapper {
+                width: 12px;
+                height: 12px;
+            }
+            .event-icon {
+                width: 9px;
+                height: 9px;
+            }
+            .event-player-name {
+                font-size: 0.55em;
+            }
+            .event-type-description {
+                font-size: 0.45em;
+            }
+            .substitution-player-line {
+                font-size: 0.5em;
+            }
+            .substitution-player-line .fa-arrow-up-long,
+            .substitution-player-line .fa-arrow-down-long {
+                font-size: 0.5em;
+            }
+            .servers-container {
+                max-width: 300px;
+                padding: 8px;
+            }
+            .servers-title {
+                font-size: 0.85rem;
+            }
+            .servers-header .servers-match-info {
+                font-size: 0.65em;
+            }
+            .close-servers {
+                width: 22px;
+                height: 22px;
+                font-size: 10px;
+            }
+            .form-input {
+                padding: 5px 7px;
+                font-size: 0.75rem;
+            }
+            .servers-list {
+                max-height: 150px;
+                gap: 4px;
+            }
+            .server-item {
+                padding: 4px;
+                gap: 4px;
+            }
+            .server-name {
+                font-size: 0.75rem;
+            }
+            .server-url {
+                font-size: 0.6rem;
+            }
+            .server-btn {
+                width: 20px;
+                height: 20px;
+                font-size: 9px;
+            }
+            .add-server-btn {
+                padding: 6px 9px;
+                font-size: 0.8rem;
+                gap: 2px;
+            }
+            #back-to-matches {
+                top: 4px;
+                margin-bottom: 8px;
+                padding: 4px 7px;
+                font-size: 0.75rem;
+                gap: 4px;
+            }
+        }
