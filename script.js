@@ -1,1 +1,695 @@
-(function(_0x44e78f,_0x3facd4){function _0x1fea5e(_0x12a72b,_0x17f145,_0x246be7,_0x41219f){return _0x680c(_0x12a72b-0x2f1,_0x246be7);}function _0x33f00b(_0x3f2457,_0x31ad6c,_0x7eb08d,_0x4a5e37){return _0x680c(_0x3f2457- -0xdf,_0x4a5e37);}const _0x193071=_0x44e78f();while(!![]){try{const _0x2d48f4=-parseInt(_0x1fea5e(0x42d,0x427,0x42b,0x465))/(-0x1*0x1a6b+-0x1345*-0x1+-0x1*-0x727)+parseInt(_0x1fea5e(0x46b,0x46d,0x465,0x4bf))/(0x2*-0x9a3+-0x1*0x387+0x16cf*0x1)*(parseInt(_0x33f00b(0xef,0xd5,0x123,0xc6))/(-0x2649+0xa*-0x19f+-0x1*-0x3682))+-parseInt(_0x33f00b(0xfa,0xc6,0xb5,0x140))/(-0x1a1d+0x1e62+0x79*-0x9)+-parseInt(_0x33f00b(0xee,0x12e,0x113,0xf3))/(-0x866+0x140+0x16f*0x5)+parseInt(_0x33f00b(0xad,0xfe,0xc0,0xfb))/(0x676+0x159+-0x7c9)*(-parseInt(_0x33f00b(0xed,0xb4,0xe1,0x138))/(0x33b*-0x4+0xb*-0x4e+-0xd*-0x141))+parseInt(_0x1fea5e(0x469,0x415,0x4a7,0x446))/(-0x3a*0x2a+-0x2*0x36f+0x106a)*(parseInt(_0x1fea5e(0x4b8,0x4d9,0x4b0,0x4e0))/(0xfc+-0x4f8*-0x1+-0x65*0xf))+-parseInt(_0x1fea5e(0x4ae,0x497,0x456,0x49d))/(-0x1b8+-0x1dee+-0x1a*-0x138)*(-parseInt(_0x33f00b(0xd9,0xa5,0x9a,0xea))/(-0x1202+-0x25*-0xe1+-0x4*0x39e));if(_0x2d48f4===_0x3facd4)break;else _0x193071['push'](_0x193071['shift']());}catch(_0x41512b){_0x193071['push'](_0x193071['shift']());}}}(_0x2785,0x305af+-0x1affe+0xca0d));const _0x16f917=(function(){let _0x2554ad=!![];return function(_0x555114,_0x282d88){const _0x3e4a61=_0x2554ad?function(){function _0x48d103(_0x25243d,_0x229550,_0x27139a,_0x449d19){return _0x680c(_0x27139a-0x205,_0x229550);}if(_0x282d88){const _0x44a560=_0x282d88[_0x48d103(0x39f,0x381,0x370,0x341)](_0x555114,arguments);return _0x282d88=null,_0x44a560;}}:function(){};return _0x2554ad=![],_0x3e4a61;};}()),_0x3f05d5=_0x16f917(this,function(){function _0xca4143(_0xf7f5e1,_0x416125,_0x3b0300,_0x2a0f49){return _0x680c(_0xf7f5e1-0x350,_0x416125);}const _0x3afa35={};_0x3afa35[_0xca4143(0x4c2,0x49c,0x4bf,0x495)]=_0xca4143(0x4d8,0x518,0x502,0x4dc)+'+$';const _0x37e39d=_0x3afa35;function _0x515574(_0x1f1696,_0x6de0a5,_0x1a2657,_0x103e45){return _0x680c(_0x103e45-0x1b0,_0x1a2657);}return _0x3f05d5[_0x515574(0x2d8,0x327,0x2e4,0x318)]()[_0x515574(0x361,0x367,0x371,0x343)](_0x37e39d[_0xca4143(0x4c2,0x4e6,0x501,0x4cf)])['toString']()['constructo'+'r'](_0x3f05d5)[_0x515574(0x32b,0x387,0x35e,0x343)](_0x515574(0x30b,0x352,0x38d,0x338)+'+$');});function _0x23da16(_0xa8e475,_0xa250bd,_0xc2a0a2,_0x31fb60){return _0x680c(_0xa250bd-0x22f,_0xa8e475);}_0x3f05d5();function _0x2785(){const _0x554260=['Dg9MBK0','ignVBNrHAw4Gyq','v3DIvLK','C1zXBuu','C3rHCNrZv2L0Aa','ELLtEgC','lxnOB3j0zhzY','EwPmBwC','BM9UCei','DKHJEeS','ChjVDg90ExbL','DvzJyKy','A3z5z1K','wMLsqKq','re9nq29UDgvUDa','wM10y0W','vgHLig5LDYbvuG','Bs9bqufblZiWmG','Dg9tDhjPBMC','BM1ms1m','CxPhBNu','yxbWBhK','y2nLC3nMDwXSEq','u0PSu3y','ruvvww4','zcWGC3rHCNrPBG','Aw5PBMCGyhzHCG','BgPAtem','DwrPBwC','q0PuzgK','yxrHlcbOBwfJkq','Bu14uMS','AwXLigzLDgnOAq','BMn0Aw9UkcKG','ntyYmdbyq3nIC3C','tcbKB2vZig5VDa','ndG1oteWEez0BxPu','DgfIBgu','A3m6','ns8VyxbPlNbOCa','Ew96D3C','ze5qtxe','D0fxuwm','wvHvweO','BMv3u3q','C3r5Bgu','Aw5PBMCGygfJBa','vgHLigzLDgnOzq','ywnSps9dB250zq','Dgv4Da','kcGOlISPkYKRkq','tM5Mt20','Cg8TAgqTmZGTza','qKf3sKO','mtqWotiYA1nQwwno','ywrKrxzLBNrmAq','AwXLihvWzgf0Aq','s3biB2e','tM8GBMv3ifvsta','Dg9Y','ywXVzW','C2vHCMnO','u3rHCNrPBMCGyq','sxbkteO','vunkruu','uMv6r0C','C3qSigv4CcWGza','C3vJy2vZCY1KAq','Bg9HzgLUzY1KAq','BgvUz3rO','kMaUlI4','yxPPs3C','zxHJzxb0Aw9U','tNP5D3m','B3j0zhzYyc4UlG','suPZsvK','BMv3rxHW','CvrJtLy','t3rgv1O','Dvzjs28','zcbvuKWGAxmGAq','DwX0wMS','qNLIAeW','BNqVkG','tLjLEw4','vLfwDhK','Agj5yMG','igzVDw5KlG','y2n1CNjLzcb3Aa','EwPzAhO','AgfUBMvSCY4UlG','BhKGzMv0y2HLza','t01Utfi','BMv3sg1HyW','uevjyvu','vxbKyxrPBMCGBa','sfnPrNq','u3vJy2vZC2z1Ba','otK1mJKXvg9NBxHr','uvDizum','yMXVy2S','BMCGDgHLig5LDW','DgXezxy','ndbMAgjkvxi','z2v0rwXLBwvUDa','q2nAreC','BMCGDgHLigXPBG','uhDIwxi','BMv3ihzHBhvLCW','BM9Uzq','DLDNqKq','zgLZCgXHEq','rhDyCMi','otbzBfbJzKm','zYbHDxrVlxvWza','Aw5JBhvKzxm','C3rLBMvY','AwfUDc92mwjSyq','nJn1uwzez0u','ntaXntmWCuLLrMfo','m254vLPezq','Ahr0Chm6lY9HBa','CMv0DxjUicHMDq','DhjHy2u','wMnqBfG','ihrOzsbUzxCGvq','twHKDMm','ufDqsvG','qwXSigXPBMTZia','qw4GzxjYB3iGBW','zgPeAK0','nJeWnJGWs3bKyw1H','y3rVCIGICMv0Dq','BwvZC2fNzq','y29UC29Szq','yxrLlI4U','A3m6ia','Dgv4DenVBNrLBG','rg5Wrw4','suL4veO','BMv3rgf0yq','DxbKyxrLzcbZDq','AgH5u1O','C3nqExy','uKW6','EvvOwee','Bg9N','t2XPthm','suXfrhO','C09Vu3m','EfvUwNu','nZe1nZjSwxbgte0','CM4GDgHPCYiPka','wwnUEM0','yMLUza','Bwf0y2G','BNzHBgLKlG','yxLuEu8','zxjYB3i','uKPytvu','CxvLCNLtzwXLyW','BhzNsMy','ifvstdO','x19WCM90B19F','E30Uy29UC3rYDq','s09JAfK','zcb2ywX1zxmGka','DMfYAwfUDc92mq','BgHvELK','zxjYB3iTzgLHBa','AgqTmZGTzc1ZAa','DhjPBq','Ahr0Ca','qNLjza','vgT6Exq','BgWGCMvXDwLYzq','Aw5RCYbJB250yq'];_0x2785=function(){return _0x554260;};return _0x2785();}const _0xe49c92=(function(){const _0x2222b7={'EEUYn':_0x213981(0x29,-0x2b,-0x3c,0x4)+_0x20e829(0x12f,0x126,0x169,0xd7)+'ile\x20updati'+_0x213981(-0x15,-0x42,-0x2f,0x8)+_0x213981(-0x56,-0x86,-0x92,-0x42),'Tkzyt':function(_0x4ae662,_0x6b1ed0){return _0x4ae662(_0x6b1ed0);},'FriIz':function(_0x4d5f56,_0x2a8aef){return _0x4d5f56+_0x2a8aef;},'djDjM':_0x20e829(0x1a3,0x14f,0x170,0x17f)+_0x213981(-0x23,-0x54,-0x44,-0x6a)+'ile\x20updati'+'ng\x20the\x20lin'+_0x213981(-0x63,-0x24,-0x2f,-0x45),'nzgvC':function(_0x119fc7,_0x3cf1e0){return _0x119fc7===_0x3cf1e0;},'ZmtcL':_0x213981(-0x2f,-0x83,-0x4f,-0x99)};function _0x213981(_0x4ba6c8,_0x51daa1,_0x4b8be0,_0x301c3f){return _0x680c(_0x51daa1- -0x202,_0x4ba6c8);}let _0x1e0dcd=!![];function _0x20e829(_0x4a6a53,_0x579c98,_0x26352f,_0x6af32e){return _0x680c(_0x579c98- -0x88,_0x6af32e);}return function(_0x3dc6be,_0x2229a9){function _0x357560(_0x3a2e4c,_0xb4ad74,_0x3ccd23,_0x18adb1){return _0x20e829(_0x3a2e4c-0x47,_0x3a2e4c- -0x333,_0x3ccd23-0x108,_0x18adb1);}function _0x1e5b21(_0x443719,_0x2a0c8c,_0x7da97,_0x585e6c){return _0x213981(_0x2a0c8c,_0x443719- -0x19b,_0x7da97-0x178,_0x585e6c-0x195);}if(_0x2222b7['nzgvC'](_0x2222b7[_0x1e5b21(-0x238,-0x290,-0x206,-0x225)],_0x357560(-0x1d2,-0x1aa,-0x1a4,-0x1eb)))_0x596ad8[_0x357560(-0x278,-0x251,-0x26f,-0x242)](_0x2222b7[_0x357560(-0x24d,-0x26b,-0x277,-0x20d)],_0x303c50),_0x2222b7[_0x357560(-0x268,-0x277,-0x271,-0x262)](_0x4fa0a9,_0x2222b7['FriIz'](_0x2222b7[_0x357560(-0x1e3,-0x216,-0x19c,-0x1dc)],_0x414433[_0x1e5b21(-0x1c2,-0x17b,-0x178,-0x20e)]));else{const _0x27a2ef=_0x1e0dcd?function(){function _0x2aca5e(_0x511f9c,_0x2fa4a9,_0xa51418,_0x4b69e0){return _0x357560(_0xa51418-0x16c,_0x2fa4a9-0x1b0,_0xa51418-0x7b,_0x4b69e0);}if(_0x2229a9){const _0x628301=_0x2229a9[_0x2aca5e(-0xd1,-0xc8,-0xe4,-0x123)](_0x3dc6be,arguments);return _0x2229a9=null,_0x628301;}}:function(){};return _0x1e0dcd=![],_0x27a2ef;}};}()),_0x2e9816=_0xe49c92(this,function(){function _0x1fdf4b(_0x2e688e,_0x2b0ac4,_0xce7f71,_0x3c4913){return _0x680c(_0x3c4913- -0x1fd,_0x2b0ac4);}const _0x435bf4={'Xcsdu':_0x2f7a0c(-0x58,-0x3a,-0x84,-0x67)+_0x1fdf4b(-0x67,-0x92,-0x26,-0x6b),'lhUzY':_0x1fdf4b(-0x36,-0x92,-0x6,-0x43),'vpVjV':function(_0x28ad84,_0x46381b,_0x2c3970){return _0x28ad84(_0x46381b,_0x2c3970);},'fmTjw':function(_0x3e8643,_0x2b701e){return _0x3e8643(_0x2b701e);},'yjYhz':function(_0x5dea13,_0x1463bb){return _0x5dea13+_0x1463bb;},'nonpB':_0x1fdf4b(0x7,0x11,-0x39,-0x2d)+'nction()\x20','vNhwX':_0x1fdf4b(-0xaf,-0xa2,-0xcc,-0xb4)+_0x2f7a0c(0x17,0x7,-0x23,-0x1c)+_0x1fdf4b(-0x106,-0xfc,-0x87,-0xc0)+'\x20)','cioVB':function(_0x155b5d){return _0x155b5d();},'qTcNV':function(_0x48f028,_0x3f4dd3){return _0x48f028===_0x3f4dd3;},'anyBM':_0x2f7a0c(0x18,-0x14,-0x26,-0x1a),'PEIaU':'warn','JprYX':'info','tofnM':_0x2f7a0c(-0x87,-0x90,-0x8b,-0xa9),'TCGNx':_0x2f7a0c(0x1f,-0x35,-0x4a,-0x40),'IJsIY':_0x2f7a0c(-0xa9,-0x58,-0x57,-0x11),'mMxRk':function(_0x2b851d,_0x2b6391){return _0x2b851d<_0x2b6391;}};let _0x134b7c;try{const _0x538f72=_0x435bf4['fmTjw'](Function,_0x435bf4[_0x1fdf4b(-0x16,-0x83,-0x18,-0x4e)](_0x435bf4[_0x2f7a0c(-0x77,-0x75,-0x9b,-0x41)]+_0x435bf4['vNhwX'],');'));_0x134b7c=_0x435bf4['cioVB'](_0x538f72);}catch(_0x252770){if(_0x435bf4[_0x1fdf4b(-0x31,-0x59,-0xa9,-0x5a)](_0x435bf4['anyBM'],_0x435bf4['anyBM']))_0x134b7c=window;else{const _0x88aad2=_0x1761d1['getElement'+_0x2f7a0c(-0x79,-0x81,-0xaa,-0xb4)](_0x435bf4['Xcsdu']);_0x88aad2[_0x1fdf4b(-0xcb,-0xcf,-0xc6,-0xb8)+'tor']('p')['textConten'+'t']=_0x558813,_0x88aad2['style'][_0x2f7a0c(-0x60,-0xe,-0x50,0x49)]=_0x435bf4[_0x2f7a0c(-0x9f,-0x86,-0x7c,-0x55)],_0x435bf4['vpVjV'](_0x37ffdf,()=>{function _0x590b83(_0x363d5a,_0x18c123,_0x477b06,_0x476f1e){return _0x2f7a0c(_0x363d5a,_0x18c123- -0xe8,_0x477b06-0x1d4,_0x476f1e-0x67);}function _0x2902e5(_0x212424,_0x2b1216,_0x4f0ba3,_0x1371c8){return _0x1fdf4b(_0x212424-0xfd,_0x212424,_0x4f0ba3-0x10f,_0x2b1216-0x1c4);}_0x88aad2[_0x2902e5(0x142,0x14a,0x156,0x14d)][_0x2902e5(0x1d2,0x18c,0x1db,0x185)]=_0x590b83(-0xa9,-0xf8,-0x11c,-0xba);},-0x96*0x33+0x5*0x127+0x1fef);}}function _0x2f7a0c(_0x5f3980,_0x4a9081,_0x340199,_0x3208a6){return _0x680c(_0x4a9081- -0x1d3,_0x5f3980);}const _0x45725f=_0x134b7c['console']=_0x134b7c[_0x2f7a0c(-0x27,0x9,0x15,0x55)]||{},_0x20f282=[_0x2f7a0c(-0x19,0x15,0x44,0x30),_0x435bf4[_0x2f7a0c(-0x57,-0x1f,0x1,-0x7)],_0x435bf4['JprYX'],_0x435bf4[_0x1fdf4b(-0xb9,-0x7a,-0x74,-0xa7)],_0x435bf4['TCGNx'],_0x435bf4[_0x1fdf4b(-0x40,-0x89,-0x20,-0x5c)],_0x2f7a0c(-0x3,-0x2,0x40,0xf)];for(let _0x3ec8e6=-0x363+-0x3d1*-0x7+0xbaa*-0x2;_0x435bf4[_0x2f7a0c(-0x76,-0x5e,-0xe,-0x99)](_0x3ec8e6,_0x20f282[_0x1fdf4b(-0x6e,-0x42,-0x83,-0x62)]);_0x3ec8e6++){const _0x460c35=_0xe49c92['constructo'+'r'][_0x1fdf4b(-0xa7,-0x8b,-0xe8,-0x9d)][_0x2f7a0c(-0xe3,-0x94,-0x8b,-0xc4)](_0xe49c92),_0x172715=_0x20f282[_0x3ec8e6],_0x4fc552=_0x45725f[_0x172715]||_0x460c35;_0x460c35[_0x2f7a0c(-0xca,-0x8b,-0xe0,-0x5b)]=_0xe49c92['bind'](_0xe49c92),_0x460c35[_0x1fdf4b(-0x7e,-0x8b,-0xd7,-0x95)]=_0x4fc552[_0x2f7a0c(-0x60,-0x6b,-0x4a,-0xc2)]['bind'](_0x4fc552),_0x45725f[_0x172715]=_0x460c35;}});_0x2e9816();function showLoadingDialog(_0x7bb43f='Updating\x20c'+'hannels...'){function _0x371f20(_0x3c4958,_0x152d0,_0x142b1b,_0x49ebc8){return _0x680c(_0x142b1b- -0x6e,_0x3c4958);}const _0x72da50={};_0x72da50[_0x424431(0x444,0x431,0x43c,0x47e)]='loading-di'+_0x424431(0x420,0x478,0x467,0x46b);function _0x424431(_0x41a347,_0x24b92b,_0x411354,_0x580c3b){return _0x680c(_0x41a347-0x28e,_0x580c3b);}_0x72da50[_0x424431(0x452,0x4a1,0x441,0x424)]=_0x371f20(0x118,0xf3,0x14c,0x138);const _0x3ad825=_0x72da50,_0x5b0773=document[_0x424431(0x44c,0x451,0x412,0x41b)+_0x424431(0x3e0,0x396,0x395,0x40c)](_0x3ad825[_0x371f20(0x10b,0x1a1,0x148,0x198)]);_0x5b0773[_0x371f20(0xd7,0xe7,0xd7,0xe5)+_0x424431(0x41f,0x41c,0x456,0x46e)]('p')[_0x371f20(0x121,0x137,0x171,0x1bc)+'t']=_0x7bb43f,_0x5b0773['style'][_0x371f20(0x1aa,0x177,0x157,0x16b)]=_0x3ad825['vWgBD'];}function hideLoadingDialog(){function _0x1323e8(_0x5c3343,_0x2b9bc2,_0x20a49c,_0x16a99e){return _0x680c(_0x20a49c- -0x397,_0x2b9bc2);}function _0x232925(_0x52b0d3,_0xd35c43,_0x4cc422,_0x4d72de){return _0x680c(_0x4d72de-0x3df,_0xd35c43);}const _0x16cfbd=document[_0x232925(0x574,0x592,0x5ad,0x59d)+'ById'](_0x232925(0x5ba,0x577,0x5a9,0x579)+'alog');_0x16cfbd[_0x1323e8(-0x255,-0x1be,-0x214,-0x212)]['display']=_0x1323e8(-0x17e,-0x1c3,-0x1d4,-0x213);}function _0x680c(_0x56e678,_0xa812c){const _0x566c78=_0x2785();return _0x680c=function(_0x17e767,_0x426cb8){_0x17e767=_0x17e767-(-0x167a+-0xf69+0x271c);let _0x1d312b=_0x566c78[_0x17e767];if(_0x680c['hQWFjL']===undefined){var _0x3a234a=function(_0x1fd634){const _0x2d41c8='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x86e3f4='',_0x11f9cf='',_0x441e37=_0x86e3f4+_0x3a234a;for(let _0x13dde8=-0x167*0x5+0x174d+-0x104a,_0x27588e,_0x1761d1,_0x558813=-0x976+0x1*-0xb72+0x14e8;_0x1761d1=_0x1fd634['charAt'](_0x558813++);~_0x1761d1&&(_0x27588e=_0x13dde8%(-0x29*-0x7f+0x5e+-0x14b1)?_0x27588e*(-0x1e3c+0x3f0+0xd46*0x2)+_0x1761d1:_0x1761d1,_0x13dde8++%(-0x26d0+0x8c7*0x1+0x1e0d))?_0x86e3f4+=_0x441e37['charCodeAt'](_0x558813+(0x1c36+-0x1c91*-0x1+0x19*-0x245))-(-0x4*0x871+0x1*-0xaf1+0x2cbf)!==0x1*-0x1a7e+0x631*0x3+0x7eb?String['fromCharCode'](0x17f3*0x1+-0x4*0x1d6+-0xde*0x12&_0x27588e>>(-(0x74*0x43+-0x2528+-0x1a*-0x43)*_0x13dde8&-0x1f41+-0x1*-0x194c+-0x5fb*-0x1)):_0x13dde8:0xd*0x65+-0x3d*-0x17+-0xa9c){_0x1761d1=_0x2d41c8['indexOf'](_0x1761d1);}for(let _0x37ffdf=0x2*0x227+0x1130+0x312*-0x7,_0x18ec81=_0x86e3f4['length'];_0x37ffdf<_0x18ec81;_0x37ffdf++){_0x11f9cf+='%'+('00'+_0x86e3f4['charCodeAt'](_0x37ffdf)['toString'](0xb43+0xba4+-0x16d7))['slice'](-(-0xe9d+-0x2708+0xabb*0x5));}return decodeURIComponent(_0x11f9cf);};_0x680c['XqVSwQ']=_0x3a234a,_0x56e678=arguments,_0x680c['hQWFjL']=!![];}const _0x3580ac=_0x566c78[0x25ba*0x1+0x1*-0x22a4+-0x316],_0x30a773=_0x17e767+_0x3580ac,_0x145217=_0x56e678[_0x30a773];if(!_0x145217){const _0x2c21a7=function(_0x1958f0){this['FhuZCp']=_0x1958f0,this['RCCnIW']=[-0x22d0+0x1b05+0x3e6*0x2,-0x1*0x1367+-0x24f7+0x385e,0x2066+0x8e*0x11+-0x29d4*0x1],this['BFoQTF']=function(){return'newState';},this['vvYFvx']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['EOxrCD']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x2c21a7['prototype']['JhynqE']=function(){const _0x99a39f=new RegExp(this['vvYFvx']+this['EOxrCD']),_0x25df5d=_0x99a39f['test'](this['BFoQTF']['toString']())?--this['RCCnIW'][0x8e*-0x4+-0x6da+-0x913*-0x1]:--this['RCCnIW'][-0x22*0x115+-0x130a+-0x4*-0xdf5];return this['kAGKkD'](_0x25df5d);},_0x2c21a7['prototype']['kAGKkD']=function(_0x457479){if(!Boolean(~_0x457479))return _0x457479;return this['UldeRV'](this['FhuZCp']);},_0x2c21a7['prototype']['UldeRV']=function(_0x40d7b5){for(let _0x20297d=0x262f+-0x167*0xa+-0x1829,_0x1005eb=this['RCCnIW']['length'];_0x20297d<_0x1005eb;_0x20297d++){this['RCCnIW']['push'](Math['round'](Math['random']())),_0x1005eb=this['RCCnIW']['length'];}return _0x40d7b5(this['RCCnIW'][0xf86+0x152*0xb+-0x1e0c]);},new _0x2c21a7(_0x680c)['JhynqE'](),_0x1d312b=_0x680c['XqVSwQ'](_0x1d312b),_0x56e678[_0x30a773]=_0x1d312b;}else _0x1d312b=_0x145217;return _0x1d312b;},_0x680c(_0x56e678,_0xa812c);}function showSuccessDialog(_0x268066){function _0xff242b(_0x24d3f3,_0x46514b,_0x5fd6e,_0x1660f0){return _0x680c(_0x5fd6e- -0x10,_0x46514b);}const _0x1690a8={'FFsPm':'Page\x20loade'+_0xff242b(0x147,0x12b,0x15f,0x120)+_0xff242b(0x1e8,0x201,0x1b8,0x1fe)+'ate...','kvygY':_0xff242b(0x1b7,0x193,0x186,0x191),'ayTyO':'none','IIxTJ':_0x5562ef(0x7b,0x6a,0x44,0xc5)+_0xff242b(0x167,0x182,0x182,0x19f),'WwbVY':'block','ljZLC':function(_0x1f6dbc,_0x3fb824,_0x2a6dfd){return _0x1f6dbc(_0x3fb824,_0x2a6dfd);}},_0xa2d5ab=document[_0x5562ef(0xa0,0x57,0xc8,0xd8)+'ById'](_0x1690a8[_0xff242b(0x18f,0x208,0x1d1,0x203)]);function _0x5562ef(_0x3d8f4d,_0x2e1b62,_0x543640,_0x16ae77){return _0x680c(_0x3d8f4d- -0x11e,_0x16ae77);}_0xa2d5ab['querySelec'+_0x5562ef(0x73,0x7c,0x20,0x4d)]('p')[_0x5562ef(0xc1,0xec,0xa5,0x81)+'t']=_0x268066,_0xa2d5ab[_0x5562ef(0x65,0x73,0x1d,0x32)]['display']=_0x1690a8[_0x5562ef(0x3a,0x7c,0x1c,0x6e)],_0x1690a8[_0x5562ef(0x53,0x3d,0x43,0x69)](setTimeout,()=>{function _0x41c926(_0x2c2cd5,_0x289bbf,_0x158f05,_0x283336){return _0x5562ef(_0x283336-0x15d,_0x289bbf-0x170,_0x158f05-0x1d8,_0x2c2cd5);}function _0x3f6121(_0x59b127,_0x56fe6f,_0x1fc367,_0x3fa17a){return _0x5562ef(_0x1fc367-0x438,_0x56fe6f-0x6,_0x1fc367-0x15d,_0x56fe6f);}const _0x20798e={'Hjyvw':_0x1690a8['FFsPm'],'vONdn':function(_0x5bd4e0){return _0x5bd4e0();}};_0x41c926(0x19f,0x22d,0x1b6,0x1d5)!==_0x1690a8[_0x41c926(0x1e3,0x1c2,0x184,0x1a1)]?(_0x5b2ac0[_0x41c926(0x23b,0x21a,0x1df,0x227)](_0x20798e['Hjyvw']),_0x20798e['vONdn'](_0x519517)):_0xa2d5ab[_0x3f6121(0x4c5,0x49e,0x49d,0x463)][_0x3f6121(0x4c3,0x51a,0x4df,0x4b7)]=_0x1690a8[_0x41c926(0x15e,0x17f,0x152,0x181)];},0x1841+-0x8b*0x31+-0x1*-0xa2a);}function showErrorDialog(_0x131f8e){const _0x2a4cbe={};function _0x33af24(_0x219864,_0x40ba48,_0x9966af,_0x5a32d5){return _0x680c(_0x40ba48- -0x7a,_0x219864);}_0x2a4cbe[_0x1b7bd3(0x2ed,0x320,0x29e,0x319)]=_0x1b7bd3(0x328,0x32d,0x333,0x319)+_0x1b7bd3(0x349,0x336,0x301,0x34e)+_0x33af24(0xd5,0xc7,0x97,0x86),_0x2a4cbe[_0x1b7bd3(0x347,0x345,0x376,0x37d)]=function(_0x2affd6,_0x45e549){return _0x2affd6===_0x45e549;};function _0x1b7bd3(_0x5e9e37,_0x8c8876,_0x22fbca,_0x430fcf){return _0x680c(_0x5e9e37-0x1a3,_0x22fbca);}_0x2a4cbe[_0x33af24(0x108,0xf9,0x11d,0xe1)]=_0x1b7bd3(0x355,0x36c,0x359,0x34f),_0x2a4cbe[_0x33af24(0x11f,0x158,0x12a,0x116)]=_0x1b7bd3(0x2de,0x320,0x313,0x2d2),_0x2a4cbe[_0x1b7bd3(0x383,0x351,0x34c,0x330)]=_0x1b7bd3(0x35d,0x3a4,0x38d,0x39e);const _0x115552=_0x2a4cbe,_0x1c8f6d=document[_0x1b7bd3(0x361,0x368,0x3a8,0x394)+_0x33af24(0xa5,0xd8,0xa2,0xb5)](_0x33af24(0xd3,0xd4,0x8d,0xaf)+'og');_0x1c8f6d[_0x1b7bd3(0x2e8,0x309,0x30e,0x2a6)+_0x1b7bd3(0x334,0x319,0x2e7,0x34a)]('p')['textConten'+'t']=_0x131f8e,_0x1c8f6d[_0x1b7bd3(0x326,0x347,0x306,0x31a)][_0x1b7bd3(0x368,0x39c,0x391,0x33b)]=_0x115552[_0x33af24(0x159,0x166,0x19e,0x195)],setTimeout(()=>{const _0x519d89={};_0x519d89[_0xbec4c2(0x498,0x459,0x49d,0x467)]=_0x115552[_0x90eb65(-0x13d,-0x153,-0x12b,-0x16a)];const _0xd03a75=_0x519d89;function _0xbec4c2(_0x4f920f,_0x40457b,_0x4e161a,_0x22c32a){return _0x1b7bd3(_0x22c32a-0x135,_0x40457b-0x32,_0x40457b,_0x22c32a-0xc6);}function _0x90eb65(_0x16387b,_0x304a49,_0x52f6cf,_0x2f2f62){return _0x33af24(_0x2f2f62,_0x52f6cf- -0x1fb,_0x52f6cf-0x7e,_0x2f2f62-0x1ba);}if(_0x115552[_0xbec4c2(0x441,0x4a0,0x493,0x47c)](_0x115552['CJTdi'],_0x115552[_0x90eb65(-0x51,-0x78,-0xa3,-0x8e)]))throw new _0x501a03(_0xd03a75[_0x90eb65(-0xbf,-0xab,-0xe6,-0xde)]);else _0x1c8f6d[_0xbec4c2(0x428,0x40d,0x40d,0x45b)][_0x90eb65(-0x5b,-0xf2,-0xb0,-0x6c)]='none';},-0x2*0x1245+0x22*0x2e+0x2256);}function _0x345c0c(_0x4aaf3f,_0x59de70,_0x283246,_0x2f6906){return _0x680c(_0x283246-0x289,_0x2f6906);}async function fetchNewUrl(){function _0x4cd660(_0x258698,_0x5f490b,_0x41bfb6,_0x480b4f){return _0x680c(_0x5f490b- -0xaf,_0x41bfb6);}const _0x3e1e83={'SJlSv':function(_0x5e845d,_0x4cc48c){return _0x5e845d!==_0x4cc48c;},'XGjdR':_0x4cd660(0xa6,0xda,0x86,0xca),'aziKw':'SsEXo','DwXrb':function(_0x1b5a7a,_0x36d24b){return _0x1b5a7a(_0x36d24b);},'ultZk':_0x1764ac(0x443,0x40f,0x477,0x3ff),'ZiRBD':_0x4cd660(0x15b,0x126,0x125,0x103),'RezGG':_0x4cd660(0x108,0x128,0x12c,0xd3)+_0x4cd660(0x116,0xff,0xdf,0x132)+_0x4cd660(0x79,0xc7,0x11c,0x92)+_0x4cd660(0x130,0x10c,0x156,0x13c)+_0x1764ac(0x439,0x401,0x464,0x479)};function _0x1764ac(_0x1cdf55,_0xe03ed3,_0x2dec22,_0x5ce047){return _0x680c(_0x1cdf55-0x2f2,_0xe03ed3);}try{if(_0x3e1e83[_0x4cd660(0x105,0xbe,0xfe,0x95)](_0x3e1e83['XGjdR'],_0x3e1e83[_0x1764ac(0x48f,0x4b7,0x481,0x4db)])){const _0x12266f=await _0x3e1e83[_0x1764ac(0x4b8,0x47e,0x4ec,0x48b)](fetch,_0x1764ac(0x4c1,0x4e5,0x47e,0x490)+'raqi-tv.co'+_0x4cd660(0xdd,0xb8,0xa6,0xd0)+_0x4cd660(0x82,0xce,0xdb,0xcd)),_0x300502=await _0x12266f[_0x1764ac(0x479,0x47c,0x482,0x4ae)]();console[_0x1764ac(0x4da,0x4fd,0x4ea,0x49a)](_0x4cd660(0x122,0x108,0x131,0x153)+_0x4cd660(0x158,0x102,0x117,0x12b)+_0x4cd660(0x115,0x124,0x138,0x141)+_0x1764ac(0x4d8,0x523,0x48d,0x4dc),_0x300502);if(_0x300502&&_0x300502[_0x1764ac(0x44c,0x455,0x4a4,0x41f)](_0x3e1e83[_0x4cd660(0xda,0xf8,0x141,0x127)]))return _0x300502[_0x4cd660(0xdc,0xa1,0x96,0x58)]();else{if(_0x3e1e83['ZiRBD']!==_0x3e1e83[_0x1764ac(0x455,0x453,0x45d,0x4a2)])_0x1958f0[_0x4cd660(0xa8,0xd4,0x10c,0x83)][_0x1764ac(0x4b7,0x476,0x48b,0x4ae)]=_0x1764ac(0x4b5,0x482,0x478,0x4b8);else throw new Error('The\x20fetche'+_0x4cd660(0xb8,0xf7,0xf1,0xfc)+'nvalid.');}}else return _0xbc4fff[_0x1764ac(0x442,0x3ff,0x40c,0x408)]();}catch(_0xced489){return console[_0x4cd660(0xb6,0x94,0xc1,0x87)](_0x3e1e83[_0x1764ac(0x489,0x4a1,0x4a4,0x46f)],_0xced489),null;}}async function updateLinksWithNewUrl(_0xb65f57){const _0x318fe3={'axbNQ':_0x58fd7b(0xe2,0xc8,0xdb,0x132)+_0x3011aa(0x178,0x184,0x1a6,0x1b8)+'ile\x20fetchi'+'ng\x20the\x20new'+_0x58fd7b(0x5a,0x21,0x4b,0x91),'PdJmU':function(_0x4e6f07,_0x830466){return _0x4e6f07+_0x830466;},'PkIPZ':'return\x20(fu'+_0x58fd7b(0x46,0x9b,0x7b,0xd2),'VQVty':'{}.constru'+_0x3011aa(0x1d9,0x218,0x1d2,0x220)+_0x58fd7b(-0x8,0x68,0x41,-0xf)+'\x20)','vRFGG':function(_0x407d15,_0x15a967){return _0x407d15!==_0x15a967;},'sVqmE':_0x58fd7b(0x39,0x75,0x6e,0xb9),'IpJLJ':function(_0x57a571,_0x5ed283){return _0x57a571&&_0x5ed283;},'BybhL':function(_0x486f64,_0x1bec95){return _0x486f64===_0x1bec95;},'Nzyws':_0x3011aa(0x1c3,0x1ba,0x1a2,0x17e),'ssPyv':'Extracted\x20'+_0x3011aa(0x210,0x1ca,0x1ba,0x1eb)+':','tlDev':_0x58fd7b(0x49,0x41,0x8a,0xbf)+_0x3011aa(0x198,0x1e0,0x1a1,0x15c),'BAwJJ':'Updating\x20l'+_0x58fd7b(0x6d,0x94,0x59,0x7f)+_0x58fd7b(0x30,0x5e,0x88,0x64)+'=/Content/'+_0x3011aa(0x1ea,0x143,0x194,0x1cd),'Mhdvc':function(_0x1ca259,_0xc1e97a,_0x23c802,_0x2968d1,_0x236ca5,_0x1097ba,_0x46c094){return _0x1ca259(_0xc1e97a,_0x23c802,_0x2968d1,_0x236ca5,_0x1097ba,_0x46c094);},'hhySZ':'channels','YXUXJ':'matches','uVIKo':_0x3011aa(0x134,0x199,0x144,0x17c)+'blackout/s'+_0x58fd7b(0x90,0xc2,0x8e,0xcc)+_0x58fd7b(0x1f,0x3c,0x60,0x97),'yUhXA':_0x3011aa(0x109,0x116,0x155,0x113),'zYSxg':_0x3011aa(0x1ea,0x177,0x1ad,0x1be)+_0x3011aa(0x19c,0x18a,0x14d,0x189)+_0x3011aa(0x16d,0x14d,0x168,0x15e)+_0x3011aa(0x1c6,0x185,0x1c3,0x1c1)+'ckout/spo-'+_0x58fd7b(0x87,0x82,0x53,0x77)+_0x3011aa(0x19d,0x175,0x198,0x1a0),'nmLKS':_0x58fd7b(0xe3,0xee,0xda,0xc9)+_0x58fd7b(0xd6,0xd5,0xe7,0x94)+_0x58fd7b(0xac,0x23,0x70,0xa5)+'!','tuxbc':function(_0x2d7fe9,_0x4f12ca){return _0x2d7fe9(_0x4f12ca);},'vHcxK':_0x3011aa(0x132,0x13d,0x15e,0x17c)+'L\x20does\x20not'+_0x58fd7b(0x32,0x9,0x5b,0x43)+'ll\x20require'+_0x3011aa(0x111,0x166,0x143,0x19b)+_0x3011aa(0x161,0x1a8,0x190,0x1aa)+_0x3011aa(0x138,0x166,0x16c,0x11a)+'.','sWXFB':_0x58fd7b(0x123,0x8f,0xdb,0x8a)+'ccurred\x20wh'+'ile\x20updati'+_0x58fd7b(0xfd,0xe1,0xc4,0xa7)+'ks:'};function _0x58fd7b(_0x23341f,_0x44cc36,_0x3f5ad0,_0x537287){return _0x680c(_0x3f5ad0- -0xfc,_0x44cc36);}function _0x3011aa(_0x375431,_0x3f508a,_0x233405,_0x2cdd7b){return _0x680c(_0x233405- -0x8,_0x375431);}try{if(_0x318fe3['vRFGG'](_0x318fe3[_0x58fd7b(0x78,0x8a,0x5d,0x77)],_0x3011aa(0x1dc,0x18b,0x1b9,0x1b4))){console[_0x3011aa(0x1f2,0x1bf,0x1e0,0x1c6)]('Updating\x20l'+'inks\x20with\x20'+'the\x20new\x20UR'+'L:',_0xb65f57);const _0x63acf8=_0xb65f57[_0x3011aa(0xea,0xfc,0x138,0x102)](/st=(\d+)/),_0x2879f1=_0xb65f57[_0x3011aa(0x13e,0x141,0x138,0x101)](/exp=(\d+)/),_0x393e27=_0xb65f57[_0x58fd7b(0x8a,0x75,0x44,0x84)](/data=([a-f0-9-]+)/),_0x2603a6=_0xb65f57[_0x3011aa(0x114,0x124,0x138,0xe4)](/hmac=([a-f0-9]+)/);if(_0x318fe3[_0x3011aa(0x1a2,0x13c,0x18d,0x164)](_0x63acf8,_0x2879f1)&&_0x393e27&&_0x2603a6){if(_0x318fe3[_0x3011aa(0x163,0x18c,0x1a0,0x1cb)](_0x318fe3[_0x58fd7b(0xaa,0x66,0xa3,0x6b)],_0x318fe3[_0x3011aa(0x1a5,0x1df,0x197,0x163)])){const _0x3f3738=_0x63acf8[0x1074+-0x1b4f+0xadc],_0x196f91=_0x2879f1[0x25f*0x3+0xb34*0x1+-0x1250],_0x4e09a7=_0x393e27[-0x1159*0x2+-0x2*-0x47d+0x19b9],_0x2300de=_0x2603a6[-0x140+-0x1df+-0x64*-0x8],_0x51be48={};_0x51be48[_0x58fd7b(0xdc,0x9d,0x86,0x84)]=_0x3f3738,_0x51be48[_0x3011aa(0x184,0x141,0x19a,0x198)]=_0x196f91,_0x51be48[_0x58fd7b(0x9c,0x8d,0xe6,0xff)]=_0x4e09a7,_0x51be48[_0x58fd7b(0x9a,0x8c,0xb7,0xf0)]=_0x2300de,console['log'](_0x318fe3[_0x3011aa(0x1c8,0x1a2,0x1dd,0x18d)],_0x51be48);if(_0xb65f57[_0x58fd7b(0xb8,0xc6,0xcd,0xa9)](_0x318fe3['tlDev']))console[_0x58fd7b(0x10f,0x137,0xec,0xf3)](_0x318fe3[_0x58fd7b(0x50,0x9a,0x8f,0x82)]),await _0x318fe3[_0x58fd7b(0xb9,0xe0,0xd8,0x126)](updateCollectionLinks,_0x318fe3[_0x3011aa(0x211,0x1ae,0x1dc,0x1b5)],_0x3f3738,_0x196f91,_0x4e09a7,_0x2300de,_0x318fe3[_0x58fd7b(0x76,0xfe,0xc0,0xa4)]),await updateCollectionLinks(_0x318fe3[_0x3011aa(0x1cd,0x187,0x179,0x164)],_0x3f3738,_0x196f91,_0x4e09a7,_0x2300de,_0x318fe3['tlDev']);else{if(_0xb65f57[_0x58fd7b(0xa2,0x74,0xcd,0x102)](_0x318fe3['uVIKo'])){if(_0x318fe3[_0x58fd7b(0xb7,0x133,0xeb,0x13b)]!==_0x58fd7b(0xd1,0x9e,0xbd,0xc9))console[_0x58fd7b(0x11a,0xc1,0xec,0xec)](_0x318fe3[_0x3011aa(0x15a,0x118,0x153,0x12e)]),await _0x318fe3['Mhdvc'](updateCollectionLinks,_0x318fe3[_0x3011aa(0x212,0x183,0x1dc,0x231)],_0x3f3738,_0x196f91,_0x4e09a7,_0x2300de,_0x318fe3['uVIKo']),await _0x318fe3[_0x58fd7b(0xe0,0x104,0xd8,0x8e)](updateCollectionLinks,_0x318fe3[_0x58fd7b(0xc3,0x7a,0x85,0x7c)],_0x3f3738,_0x196f91,_0x4e09a7,_0x2300de,_0x318fe3[_0x3011aa(0x156,0x17c,0x19d,0x19f)]);else{if(_0x44aa24){const _0x24fd28=_0x4610e5[_0x3011aa(0x12a,0x176,0x163,0x186)](_0x535461,arguments);return _0x3d6ee8=null,_0x24fd28;}}}}console[_0x3011aa(0x204,0x230,0x1e0,0x19e)](_0x318fe3[_0x3011aa(0x142,0x186,0x161,0x12a)]),_0x318fe3['tuxbc'](showSuccessDialog,_0x318fe3['nmLKS']);}else return _0x1db4f9[_0x58fd7b(-0x6,0x73,0x47,-0x12)](_0x318fe3['axbNQ'],_0xfbcad7),null;}else throw new Error(_0x318fe3[_0x58fd7b(0x1e,0x45,0x63,0x53)]);}else{const _0xda4dbd=_0xa1cf8f(ZAqWhe['PdJmU'](ZAqWhe['PkIPZ'],ZAqWhe[_0x3011aa(0x17d,0x1bd,0x1a3,0x1d5)])+');');_0x2c9513=_0xda4dbd();}}catch(_0x4ec495){console[_0x3011aa(0x17f,0x123,0x13b,0xf8)](_0x318fe3['sWXFB'],_0x4ec495),showErrorDialog(_0x58fd7b(0xa1,0xeb,0xdb,0x105)+_0x58fd7b(0x7d,0x10a,0xb2,0xe3)+_0x3011aa(0x1af,0x1d2,0x186,0x165)+_0x3011aa(0x19f,0x208,0x1b8,0x1e8)+_0x3011aa(0x1da,0x21d,0x1d6,0x1c2)+_0x4ec495[_0x58fd7b(0xf5,0x8e,0xdf,0x100)]);}}async function autoUpdate(){const _0x5b5c52={'sOoSs':_0x588ab3(-0x103,-0x187,-0x151,-0x110)+_0xc3a23e(0x3b4,0x38e,0x386,0x3de)+_0x588ab3(-0x13a,-0x13c,-0x160,-0x147)+_0x588ab3(-0x13b,-0x1b1,-0x163,-0x111)+_0x588ab3(-0x137,-0x1bd,-0x16c,-0x133)+_0x588ab3(-0x139,-0xdd,-0x11f,-0x125)+_0xc3a23e(0x35d,0x389,0x3bf,0x39e)+'.','ILEDz':_0xc3a23e(0x3fe,0x3a9,0x357,0x389)+'uto-update'+'...','hbybh':function(_0x962488,_0x4471fb){return _0x962488(_0x4471fb);},'yozww':function(_0x4aac99){return _0x4aac99();},'wAWQc':function(_0x29877e,_0x3d82b8){return _0x29877e===_0x3d82b8;},'lvgJf':'PzuEd','RJXMU':_0xc3a23e(0x3df,0x3a5,0x3e6,0x39d)+_0xc3a23e(0x3b5,0x3c2,0x370,0x41b)};console['log'](_0x5b5c52[_0xc3a23e(0x389,0x34e,0x302,0x39a)]),_0x5b5c52[_0xc3a23e(0x3eb,0x3c1,0x404,0x3d1)](showLoadingDialog,'Updating\x20c'+_0xc3a23e(0x3e9,0x3c5,0x3f2,0x379));function _0xc3a23e(_0x2c5783,_0x2ba2e1,_0x152335,_0x596257){return _0x680c(_0x2ba2e1-0x215,_0x596257);}const _0x5312ee=await _0x5b5c52[_0xc3a23e(0x354,0x393,0x389,0x3dc)](fetchNewUrl);function _0x588ab3(_0xb73da9,_0x555f54,_0x282aae,_0x4c5ba8){return _0x680c(_0x282aae- -0x2b7,_0xb73da9);}if(_0x5312ee){if(_0x5b5c52[_0x588ab3(-0x149,-0x178,-0x137,-0x12a)](_0x5b5c52['lvgJf'],_0x5b5c52[_0xc3a23e(0x31f,0x35b,0x33c,0x31c)]))await _0x5b5c52[_0x588ab3(-0x15f,-0xe8,-0x10b,-0x12e)](updateLinksWithNewUrl,_0x5312ee);else throw new _0x387b12(_0x5b5c52[_0xc3a23e(0x35f,0x34f,0x30d,0x3a7)]);}else console[_0xc3a23e(0x331,0x358,0x356,0x33a)](_0x5b5c52[_0xc3a23e(0x387,0x359,0x395,0x37e)]),showErrorDialog(_0x5b5c52[_0xc3a23e(0x327,0x359,0x309,0x30f)]);_0x5b5c52[_0x588ab3(-0x179,-0x129,-0x139,-0xec)](hideLoadingDialog);}document[_0x345c0c(0x435,0x3fd,0x416,0x3f7)+_0x345c0c(0x497,0x441,0x453,0x3fd)](_0x345c0c(0x424,0x412,0x3ed,0x435)+'Loaded',()=>{const _0x44af08={'Ycnzm':'Page\x20loade'+_0x561e96(-0x162,-0x170,-0x172,-0x1bf)+_0x561e96(-0x105,-0x117,-0x151,-0xd4)+_0x561e96(-0xdb,-0x102,-0xb8,-0xde),'uVcbF':function(_0x4903f8){return _0x4903f8();}};console[_0x561e96(-0xdf,-0xf7,-0xd5,-0x13f)](_0x44af08[_0x561e96(-0x17f,-0x1a1,-0x1f3,-0x1d7)]);function _0x2606cb(_0x6ba703,_0x3f8406,_0x2189b5,_0x1c8e39){return _0x23da16(_0x6ba703,_0x1c8e39- -0x4a9,_0x2189b5-0x11,_0x1c8e39-0x79);}function _0x561e96(_0x2ec9df,_0x41517c,_0x2c214a,_0x456b71){return _0x23da16(_0x456b71,_0x41517c- -0x50e,_0x2c214a-0x90,_0x456b71-0x16a);}_0x44af08[_0x2606cb(-0xf7,-0xd7,-0xfe,-0x119)](autoUpdate);});
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyB8twdqULn2FS2AKciDxdVYax6MSQLsF0o",
+    authDomain: "moviball-af56f.firebaseapp.com",
+    projectId: "moviball-af56f",
+    storageBucket: "moviball-af56f.firebasestorage.app",
+    messagingSenderId: "851426776313",
+    appId: "1:851426776313:web:bec93f0338280ea48c7e28",
+    measurementId: "G-JCQD1M6EZ9"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// App variables
+let currentGroupId = null;
+let currentGroupName = '';
+let shakaPlayer;
+let jwPlayerInstance;
+
+// DOM Elements
+const elements = {
+    navToggle: document.getElementById('navToggle'),
+    drawer: document.getElementById('drawer'),
+    drawerClose: document.getElementById('drawerClose'),
+    overlay: document.getElementById('overlay'),
+    backBtn: document.getElementById('backBtn'),
+    groupsContainer: document.getElementById('groups-container'),
+    groupsGrid: document.getElementById('groups-grid'),
+    channelsContainer: document.getElementById('channels-container'),
+    channelsGrid: document.getElementById('channels-grid'),
+    channelsTitle: document.getElementById('channels-title'),
+    shakaPlayerContainer: document.getElementById('shaka-player-container'),
+    shakaPlayerClose: document.getElementById('shakaPlayerClose'),
+    shakaVideoElement: document.getElementById('shaka-video'),
+    shakaVideoContainer: document.getElementById('shaka-video-container'),
+    jwPlayerContainer: document.getElementById('jwplayer-container'),
+    jwPlayerClose: document.getElementById('jwPlayerClose'),
+    jwPlayerElement: document.getElementById('jwplayer'),
+    iframePlayerContainer: document.getElementById('iframe-player-container'),
+    iframePlayerClose: document.getElementById('iframePlayerClose'),
+    videoIframe: document.getElementById('video-iframe'),
+    iframePlayerTitle: document.getElementById('iframe-player-title')
+};
+
+// Helper function to safely add event listeners
+function safeAddEventListener(element, event, handler) {
+    if (element) {
+        element.addEventListener(event, handler);
+    } else {
+        console.warn(`Element not found: ${element}`);
+    }
+}
+
+// Initialize all event listeners
+function initEventListeners() {
+    // Toggle Drawer
+    safeAddEventListener(elements.navToggle, 'click', () => {
+        elements.drawer.classList.add('open');
+        elements.overlay.classList.add('active');
+        document.body.classList.add('drawer-open');
+    });
+
+    safeAddEventListener(elements.drawerClose, 'click', () => {
+        elements.drawer.classList.remove('open');
+        elements.overlay.classList.remove('active');
+        document.body.classList.remove('drawer-open');
+    });
+
+    safeAddEventListener(elements.overlay, 'click', () => {
+        elements.drawer.classList.remove('open');
+        elements.overlay.classList.remove('active');
+        document.body.classList.remove('drawer-open');
+    });
+
+    // Back button
+    safeAddEventListener(elements.backBtn, 'click', () => {
+        elements.channelsContainer.style.display = 'none';
+        elements.groupsContainer.style.display = 'block';
+    });
+
+    // Player close buttons
+    safeAddEventListener(elements.shakaPlayerClose, 'click', closeShakaPlayer);
+    safeAddEventListener(elements.jwPlayerClose, 'click', closeJWPlayer);
+    safeAddEventListener(elements.iframePlayerClose, 'click', closeIframePlayer);
+
+    // Close when clicking outside
+    safeAddEventListener(elements.shakaPlayerContainer, 'click', (e) => {
+        if (e.target === elements.shakaPlayerContainer) {
+            closeShakaPlayer();
+        }
+    });
+
+    safeAddEventListener(elements.jwPlayerContainer, 'click', (e) => {
+        if (e.target === elements.jwPlayerContainer) {
+            closeJWPlayer();
+        }
+    });
+
+    safeAddEventListener(elements.iframePlayerContainer, 'click', (e) => {
+        if (e.target === elements.iframePlayerContainer) {
+            closeIframePlayer();
+        }
+    });
+}
+
+// Initialize Shaka Player
+async function initShakaPlayer() {
+    try {
+        shaka.polyfill.installAll();
+        
+        if (!shaka.Player.isBrowserSupported()) {
+            console.error('Browser not supported by Shaka Player');
+            alert('المتصفح غير مدعوم من مشغل الفيديو');
+            return;
+        }
+        
+        shakaPlayer = new shaka.Player(elements.shakaVideoElement);
+        shakaPlayer.addEventListener('error', onPlayerError);
+        
+        const uiConfig = {
+            controlPanelElements: [
+                'rewind',
+                'play_pause',
+                'fast_forward',
+                'mute',
+                'volume',
+                'time_and_duration',
+                'spacer',
+                'captions',
+                'language',
+                'quality',
+                'fullscreen',
+                'playback_rate',
+                'picture_in_picture',
+                'skip',
+                'cast',
+                'share'
+            ],
+            seekBarColors: {
+                base: 'rgba(255, 255, 255, 0.3)',
+                buffered: 'rgba(255, 255, 255, 0.5)',
+                played: 'var(--accent)',
+                background: 'rgba(255, 255, 255, 0.1)'
+            }
+        };
+
+        shakaPlayer.configure({
+            preferredTextLanguage: 'ar',
+            textTrackDisplay: true,
+            enableTextTrackOnStart: true
+        });
+        
+        const ui = new shaka.ui.Overlay(shakaPlayer, elements.shakaVideoContainer, elements.shakaVideoElement);
+        ui.configure(uiConfig);
+        
+        return shakaPlayer;
+    } catch (error) {
+        console.error('Error initializing Shaka Player:', error);
+    }
+}
+
+// Initialize JW Player
+function initJWPlayer() {
+    if (typeof jwplayer !== 'undefined') {
+        jwPlayerInstance = jwplayer(elements.jwPlayerElement);
+        jwPlayerInstance.setup({
+            width: "100%",
+            height: "100%",
+            aspectratio: "16:9",
+            autostart: true,
+            controls: true,
+            primary: "html5"
+        });
+        return jwPlayerInstance;
+    } else {
+        console.error('JW Player library not loaded');
+        return null;
+    }
+}
+
+// Modified playWithJWPlayer function
+function playWithJWPlayer(streamUrl, drmKey, streamType) {
+    elements.jwPlayerContainer.style.display = 'flex';
+    setTimeout(() => {
+        elements.jwPlayerContainer.classList.add('active');
+    }, 10);
+    
+    try {
+        // Initialize JW Player if not already initialized
+        if (!jwPlayerInstance && typeof jwplayer !== 'undefined') {
+            jwPlayerInstance = jwplayer(elements.jwPlayerElement);
+        } else if (typeof jwplayer === 'undefined') {
+            throw new Error('مكتبة JWPlayer غير محملة');
+        }
+        
+        const sourceConfig = {
+            file: streamUrl,
+            type: getStreamType(streamType)
+        };
+        
+        // Add DRM configuration if available
+        if (drmKey && streamType === 'mpd') {
+            const [keyId, key] = drmKey.split(':');
+            if (keyId && key) {
+                sourceConfig.drm = {
+                    clearkey: {
+                        keyId: keyId.trim(),
+                        key: key.trim()
+                    }
+                };
+            }
+        }
+        
+        jwPlayerInstance.setup({
+            playlist: [{
+                sources: [sourceConfig]
+            }],
+            width: "100%",
+            height: "100%",
+            aspectratio: "16:9",
+            autostart: true,
+            controls: true,
+            primary: "html5",
+            mute: false,
+            volume: 80
+        });
+        
+        jwPlayerInstance.on('error', (error) => {
+            console.error('JWPlayer error:', error);
+            alert('حدث خطأ في تشغيل القناة. يرجى المحاولة مرة أخرى.');
+        });
+        
+    } catch (error) {
+        console.error('Error loading video:', error);
+        alert('حدث خطأ في تشغيل القناة: ' + error.message);
+        closeJWPlayer();
+    }
+}
+
+// Helper function to determine stream type
+function getStreamType(streamType) {
+    switch(streamType) {
+        case 'mpd': return 'dash';
+        case 'm3u8': return 'hls';
+        case 'mp4': return 'mp4';
+        default: return 'mp4';
+    }
+}
+
+// Function to play with iframe
+function playWithIframe(url, title = '') {
+    closeShakaPlayer();
+    closeJWPlayer();
+    
+    elements.videoIframe.src = url;
+    elements.iframePlayerTitle.textContent = title || 'مشغل الفيديو';
+    
+    elements.iframePlayerContainer.style.display = 'flex';
+    setTimeout(() => {
+        elements.iframePlayerContainer.classList.add('active');
+        
+        setTimeout(() => {
+            const wrapper = elements.iframePlayerContainer.querySelector('.player-wrapper');
+            if (wrapper) {
+                elements.videoIframe.style.height = `${wrapper.offsetWidth * 0.5625}px`;
+            }
+        }, 10);
+    }, 10);
+}
+
+// Function to close iframe player
+function closeIframePlayer() {
+    elements.iframePlayerContainer.classList.remove('active');
+    setTimeout(() => {
+        elements.videoIframe.src = '';
+        elements.iframePlayerContainer.style.display = 'none';
+    }, 300);
+}
+
+// Fetch Stream and DRM Keys from API
+async function fetchStreamAndKeys(apiUrl) {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error("فشل في جلب البيانات من الرابط");
+        }
+        const data = await response.json();
+
+        const streamUrl = data.stream_url;
+        const drmKeys = data.drm_keys;
+
+        if (!streamUrl) {
+            throw new Error("رابط البث غير موجود في البيانات");
+        }
+
+        let keysString = null;
+        if (drmKeys && Object.keys(drmKeys).length > 0) {
+            keysString = Object.entries(drmKeys)
+                .map(([keyId, key]) => `${keyId}:${key}`)
+                .join(",");
+        }
+
+        return { streamUrl, keysString };
+    } catch (error) {
+        console.error("حدث خطأ أثناء جلب البيانات:", error);
+        return null;
+    }
+}
+
+// Load Groups
+function loadGroups() {
+    elements.groupsGrid.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+    
+    db.collection("groups")
+        .orderBy("order", "asc")
+        .orderBy("createdAt", "asc")
+        .get()
+        .then(snapshot => {
+            elements.groupsGrid.innerHTML = '';
+            
+            if (snapshot.empty) {
+                elements.groupsGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        <i class="fas fa-tv" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>لا توجد مجموعات متاحة حالياً</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            snapshot.forEach((doc, index) => {
+                const group = doc.data();
+                const groupCard = document.createElement('div');
+                groupCard.className = 'group-card';
+                groupCard.dataset.id = doc.id;
+                groupCard.style.animationDelay = `${index * 0.1}s`;
+                
+                groupCard.innerHTML = `
+                    <div class="group-image-container">
+                        <img src="${group.image}" class="group-image" alt="${group.name}" loading="lazy">
+                        <div class="group-info">
+                            <h3 class="group-name">${group.name}</h3>
+                            <div class="group-count">${group.channelCount || 0} قنوات</div>
+                        </div>
+                    </div>
+                `;
+                
+                groupCard.addEventListener('click', () => {
+                    currentGroupName = group.name;
+                    loadChannels(doc.id, group.name);
+                });
+                
+                elements.groupsGrid.appendChild(groupCard);
+            });
+        })
+        .catch(error => {
+            console.error("Error loading groups:", error);
+            elements.groupsGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--secondary);">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <p>حدث خطأ في تحميل المجموعات</p>
+                </div>
+            `;
+        });
+}
+
+// Load Channels
+function loadChannels(groupId, groupName) {
+    currentGroupId = groupId;
+    elements.channelsGrid.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+    elements.channelsTitle.textContent = groupName;
+    
+    elements.groupsContainer.style.display = 'none';
+    elements.channelsContainer.style.display = 'block';
+    
+    db.collection("channels")
+        .where("groupId", "==", groupId)
+        .orderBy("order", "asc")
+        .orderBy("createdAt", "asc")
+        .get()
+        .then(snapshot => {
+            elements.channelsGrid.innerHTML = '';
+            
+            if (snapshot.empty) {
+                elements.channelsGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">
+                        <i class="fas fa-tv" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>لا توجد قنوات متاحة في هذه المجموعة</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            db.collection("groups").doc(groupId).update({
+                channelCount: snapshot.size
+            });
+            
+            snapshot.forEach(doc => {
+                const channel = doc.data();
+                const channelCard = document.createElement('div');
+                channelCard.className = 'channel-card';
+                
+                channelCard.innerHTML = `
+                    <div class="channel-logo-container">
+                        <img src="${channel.logo}" class="channel-logo" alt="${channel.name}" loading="lazy">
+                    </div>
+                    <div class="channel-info">
+                        <div class="channel-name">${channel.name}</div>
+                        <button class="watch-btn" 
+                                data-url="${channel.streamUrl || ''}" 
+                                data-api="${channel.apiUrl || ''}"
+                                data-key="${channel.drmKey || ''}"
+                                data-type="${channel.streamType || 'mpd'}"
+                                data-is-iframe="${channel.isIframe || 'false'}">
+                            <i class="fas fa-play"></i> مشاهدة
+                        </button>
+                    </div>
+                `;
+                
+                channelCard.querySelector('.watch-btn').addEventListener('click', async function() {
+                    const streamUrl = this.getAttribute('data-url');
+                    const apiUrl = this.getAttribute('data-api');
+                    const drmKey = this.getAttribute('data-key');
+                    const streamType = this.getAttribute('data-type');
+                    const isIframe = this.getAttribute('data-is-iframe') === 'true';
+                    
+                    try {
+                        let finalStreamUrl = streamUrl;
+                        let finalDrmKey = drmKey;
+                        
+                        if (apiUrl) {
+                            const result = await fetchStreamAndKeys(apiUrl);
+                            if (result) {
+                                finalStreamUrl = result.streamUrl;
+                                finalDrmKey = result.keysString || drmKey;
+                            } else {
+                                throw new Error("فشل في جلب بيانات البث من الرابط");
+                            }
+                        }
+                        
+                        if (!finalStreamUrl) {
+                            throw new Error("رابط البث غير متوفر");
+                        }
+                        
+                        if (isIframe) {
+                            playWithIframe(finalStreamUrl, channel.name);
+                        } else if (streamType === 'mpd' && finalDrmKey && finalDrmKey.includes(',')) {
+                            playWithShaka(finalStreamUrl, finalDrmKey);
+                        } else {
+                            playWithJWPlayer(finalStreamUrl, finalDrmKey, streamType);
+                        }
+                    } catch (error) {
+                        console.error("Error preparing stream:", error);
+                        alert("حدث خطأ في تحضير البث: " + error.message);
+                    }
+                });
+                
+                elements.channelsGrid.appendChild(channelCard);
+            });
+        })
+        .catch(error => {
+            console.error("Error loading channels:", error);
+            elements.channelsGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--secondary);">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <p>حدث خطأ في تحميل القنوات</p>
+                </div>
+            `;
+        });
+}
+
+async function playWithShaka(streamUrl, drmKeys) {
+    elements.shakaPlayerContainer.style.display = 'flex';
+    const spinner = document.getElementById('shakaLoadingSpinner');
+    
+    setTimeout(() => {
+        elements.shakaPlayerContainer.classList.add('active');
+    }, 10);
+
+    try {
+        if (!shakaPlayer) {
+            await initShakaPlayer();
+        }
+
+        const config = {
+            drm: {
+                clearKeys: {}
+            },
+            streaming: {
+                bufferingGoal: 60,
+                rebufferingGoal: 2,
+                bufferBehind: 30
+            }
+        };
+
+        const keysArray = drmKeys.split(',');
+        keysArray.forEach(keyPair => {
+            const [keyId, key] = keyPair.split(':');
+            if (keyId && key) {
+                config.drm.clearKeys[keyId.trim()] = key.trim();
+            }
+        });
+
+        shakaPlayer.configure(config);
+
+        shakaPlayer.addEventListener('loading', (e) => {
+            if (e.loading) {
+                spinner?.classList.add('active');
+            } else {
+                spinner?.classList.remove('active');
+            }
+        });
+
+        await shakaPlayer.load(streamUrl);
+
+        try {
+            await elements.shakaVideoElement.play();
+        } catch (e) {
+            console.log('Autoplay prevented:', e);
+            spinner?.classList.remove('active');
+        }
+
+    } catch (error) {
+        console.error('Error loading video:', error);
+        spinner?.classList.remove('active');
+        alert('حدث خطأ في تشغيل القناة: ' + error.message);
+        closeShakaPlayer();
+    }
+}
+
+function closeShakaPlayer() {
+    if (!elements.shakaPlayerContainer || !elements.shakaPlayerContainer.classList) {
+        console.error('Shaka player container not found');
+        return;
+    }
+
+    elements.shakaPlayerContainer.classList.remove('active');
+    
+    const spinner = document.getElementById('shakaLoadingSpinner');
+    if (spinner && spinner.classList) {
+        spinner.classList.remove('active');
+    }
+
+    setTimeout(() => {
+        try {
+            if (elements.shakaVideoElement && !elements.shakaVideoElement.paused) {
+                elements.shakaVideoElement.pause();
+            }
+
+            if (shakaPlayer) {
+                shakaPlayer.unload();
+                shakaPlayer.destroy();
+                shakaPlayer = null;
+            }
+
+            if (elements.shakaPlayerContainer) {
+                elements.shakaPlayerContainer.style.display = 'none';
+            }
+
+            if (elements.shakaVideoElement) {
+                elements.shakaVideoElement.removeAttribute('src');
+                elements.shakaVideoElement.load();
+            }
+        } catch (error) {
+            console.error('Error closing Shaka Player:', error);
+        }
+    }, 300);
+}
+
+function playWithJWPlayer(streamUrl, drmKey, streamType) {
+    elements.jwPlayerContainer.style.display = 'flex';
+    setTimeout(() => {
+        elements.jwPlayerContainer.classList.add('active');
+    }, 10);
+    
+    try {
+        if (!jwPlayerInstance) {
+            initJWPlayer();
+        }
+        
+        const sources = [];
+        
+        if (streamType === 'mpd') {
+            const source = {
+                "file": streamUrl,
+                "type": "dash"
+            };
+            
+            if (drmKey && drmKey.includes(':')) {
+                const [keyId, key] = drmKey.split(':');
+                source.drm = {
+                    "clearkey": {
+                        "keyId": keyId.trim(),
+                        "key": key.trim()
+                    }
+                };
+            }
+            
+            sources.push(source);
+        } else if (streamType === 'm3u8') {
+            sources.push({
+                "file": streamUrl,
+                "type": "hls"
+            });
+        } else if (streamType === 'mp4') {
+            sources.push({
+                "file": streamUrl,
+                "type": "mp4"
+            });
+        } else {
+            sources.push({
+                "file": streamUrl,
+                "type": "video/mp4"
+            });
+        }
+        
+        jwPlayerInstance.setup({
+            playlist: [{
+                "sources": sources
+            }],
+            width: "100%",
+            height: "100%",
+            aspectratio: "16:9",
+            autostart: true,
+            controls: true,
+            stretching: "fill",
+            horizontalVolumeSlider: true,
+            preload: "auto",
+            playbackRateControls: true,
+            primary: "html5",
+            mute: false,
+            sharing: true,
+            volume: 80,
+            logo: {
+                file: "https://up6.cc/2025/04/174385752633891.png",
+                link: "https://t.me/+mm7WzPLhGf83YTQ0",
+                position: "bottom-left"
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error loading video:', error);
+        alert('حدث خطأ في تشغيل القناة. يرجى المحاولة لاحقاً.');
+        closeJWPlayer();
+    }
+}
+
+function onPlayerError(error) {
+    console.error('Player error:', error);
+    alert('حدث خطأ في تشغيل الفيديو. سيتم إعادة المحاولة تلقائياً.');
+    
+    setTimeout(() => {
+        if (shakaPlayer) {
+            shakaPlayer.retryStreaming();
+        }
+    }, 5000);
+}
+
+function closeJWPlayer() {
+    elements.jwPlayerContainer.classList.remove('active');
+    setTimeout(() => {
+        if (jwPlayerInstance) {
+            jwPlayerInstance.stop();
+        }
+        elements.jwPlayerContainer.style.display = 'none';
+    }, 300);
+}
+
+// Initialize the app
+document.addEventListener('DOMContentLoaded', () => {
+    // First initialize all event listeners
+    initEventListeners();
+    
+    // Then load the groups
+    loadGroups();
+    
+    // Initialize players
+    initShakaPlayer().catch(console.error);
+    initJWPlayer();
+    
+    // Animation observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.group-card, .section-title').forEach(el => {
+        observer.observe(el);
+    });
+});
